@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+app.use(cors())
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Trip = require('./app/models/trips')
