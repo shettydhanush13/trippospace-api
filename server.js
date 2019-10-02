@@ -89,7 +89,7 @@ router.route('/trip/:tripid')
             if (err) {
                 res.send(err)
             }
-            res.send(trip)
+            res.json({ message: "trip deleted succesfully" })
         });
     });
 
