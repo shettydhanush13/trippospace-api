@@ -85,7 +85,7 @@ router.route('/trip/:tripid')
         var query = {
             _id: req.params.tripid
         };
-        Trip.deleteOne(query, function (err, trip) {
+        Trip.deleteOne(query, function (err) {
             if (err) {
                 res.send(err)
             }
