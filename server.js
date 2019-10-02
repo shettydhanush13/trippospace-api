@@ -22,12 +22,14 @@ router.use(function (req, res, next) {
     next();
 });
 
+//to test if the api is working
 router.get('/', function (req, res) {
     res.json({ message: "welcome to trippospace" });
 });
 
 router.route('/trip')
 
+    //to post a new trip
     .post(function (req, res) {
         var trip = new Trip();
         trip.title = req.body.title;
@@ -50,6 +52,7 @@ router.route('/trip')
         });
     })
 
+    //to get details of all the trips
     .get(function (req, res) {
         Trip.find(function (err, trip) {
             if (err) {
@@ -61,12 +64,11 @@ router.route('/trip')
 
 router.route('/trip/:tripid')
 
+    //to get details of a trip by tipId
     .get(function (req, res) {
-
         var query = {
             _id: req.params.tripid
         };
-
         Trip.find(query, function (err, trip) {
             if (err) {
                 res.send(err)
@@ -74,6 +76,20 @@ router.route('/trip/:tripid')
             res.send(trip)
         });
     });
+
+router.route('/from/:place')
+
+    .get(function (req, res) {
+        var query = {
+            booking: { departureCity: req.params.place }
+        }
+        Trip.find(query, function (err, trip) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(trip)
+        });
+    })
 
 app.listen(port);
 
