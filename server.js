@@ -77,11 +77,25 @@ router.route('/trip/:tripid')
             }
             res.send(trip)
         });
+    })
+
+    //5
+    //to delete a trip by tipId
+    .delete(function (req, res) {
+        var query = {
+            _id: req.params.tripid
+        };
+        Trip.deleteOne(query, function (err, trip) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(trip)
+        });
     });
 
 
 router.route('/from/:place')
-    //5
+    //6
     //to get details of a trip depatrting from a particular city
     .get(function (req, res) {
         var query = {
@@ -96,7 +110,7 @@ router.route('/from/:place')
     })
 
 router.route('/organizer/:id')
-    //6
+    //7
     //to get details of a trip from particular organizer
     .get(function (req, res) {
         var query = {
