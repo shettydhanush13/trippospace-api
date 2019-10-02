@@ -22,13 +22,14 @@ router.use(function (req, res, next) {
     next();
 });
 
+//1
 //to test if the api is working
 router.get('/', function (req, res) {
     res.json({ message: "welcome to trippospace" });
 });
 
 router.route('/trip')
-
+    //2
     //to post a new trip
     .post(function (req, res) {
         var trip = new Trip();
@@ -52,6 +53,7 @@ router.route('/trip')
         });
     })
 
+    //3
     //to get details of all the trips
     .get(function (req, res) {
         Trip.find(function (err, trip) {
@@ -63,7 +65,7 @@ router.route('/trip')
     });
 
 router.route('/trip/:tripid')
-
+    //4
     //to get details of a trip by tipId
     .get(function (req, res) {
         var query = {
@@ -77,11 +79,28 @@ router.route('/trip/:tripid')
         });
     });
 
-router.route('/from/:place')
 
+router.route('/from/:place')
+    //5
+    //to get details of a trip depatrting from a particular city
     .get(function (req, res) {
         var query = {
             "booking.departureCity": req.params.place
+        }
+        Trip.find(query, function (err, trip) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(trip)
+        });
+    })
+
+router.route('/organizer/:id')
+    //6
+    //to get details of a trip from particular organizer
+    .get(function (req, res) {
+        var query = {
+            "organizer.username": req.params.id
         }
         Trip.find(query, function (err, trip) {
             if (err) {
