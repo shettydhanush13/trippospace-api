@@ -81,7 +81,7 @@ router.route('/from/:place')
 
     .get(function (req, res) {
         var query = {
-            booking: { departureCity: req.params.place }
+            "booking.departureCity": req.params.place
         }
         Trip.find(query, function (err, trip) {
             if (err) {
