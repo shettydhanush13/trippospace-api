@@ -1,12 +1,13 @@
 var express = require('express');
 var app = express();
-app.use(cors());
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Trip = require('./app/models/trips')
+var cors = require('cors');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
+app.use(cors());
 
 var port = process.env.PORT || 3000;
 
