@@ -93,7 +93,6 @@ router.route('/trip/:tripid')
         });
     });
 
-
 router.route('/from/:place')
     //6
     //to get details of a trip depatrting from a particular city
