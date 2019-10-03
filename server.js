@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Trip = require('./app/models/trips')
+var Organizer = require('./app/models/organizers')
 var cors = require('cors');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -108,20 +109,26 @@ router.route('/from/:place')
         });
     })
 
-router.route('/organizer/:id')
+router.route('/organizer')
     //7
     //to get details of a trip from particular organizer
-    .get(function (req, res) {
-        var query = {
-            "organizer.username": req.params.id
-        }
-        Trip.find(query, function (err, trip) {
+    .post(function (req, res) {
+        var organizer = new Organizer();
+        organizer.name = req.body.name;
+        organizer.logo = req.body.logo;
+        organizer.website = req.body.website;
+        organizer.location = req.body.location;
+        organizer.description = req.body.description;
+        organizer.contact = req.body.contact;
+        organizer.save(function (err) {
             if (err) {
                 res.send(err)
             }
-            res.send(trip)
+            res.json({ message: "organizer added succesfully" })
         });
     })
+
+
 
 app.listen(port);
 
