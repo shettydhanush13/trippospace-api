@@ -110,8 +110,8 @@ router.route('/from/:place')
     })
 
 router.route('/organizer')
-    //7
-    //to get details of a trip from particular organizer
+    //8
+    //to add a new organizer
     .post(function (req, res) {
         var organizer = new Organizer();
         organizer.name = req.body.name;
@@ -128,10 +128,22 @@ router.route('/organizer')
         });
     })
 
-
+    //3
+    //to get list of all organizers
+    .get(function (req, res) {
+        Organizer.find(function (err, organizer) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(organizer)
+        });
+    });
 
 app.listen(port);
 
 console.log("working at port : ", port)
+
+
+
 
 
