@@ -147,7 +147,12 @@ router.route('/organizer/:id')
         var query = {
             _id: req.params.id
         };
-        organizer.update(query, { $set: updateObject });
+        organizer.update(query, { $set: updateObject }, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "organizer data updated succesfully" })
+        });
     });
 
 app.listen(port);
