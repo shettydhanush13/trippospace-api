@@ -141,12 +141,29 @@ router.route('/organizer')
 
 router.route('/organizer/:id')
 
+    .get(function (req, res) {
+        var query = {
+            _id: req.params.id
+        };
+        Organizer.find(query, function (err, organizer) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(organizer)
+        });
+    })
+
     .patch(function (req, res) {
         var updateObject = req.body;
         var query = {
             _id: req.params.id
         };
-        Organizer.update(query, { $set: updateObject });
+        Organizer.update(query, { $set: updateObject }, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "organizer data updated succesfully" })
+        });
     });
 
 app.listen(port);
