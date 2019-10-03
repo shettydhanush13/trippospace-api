@@ -155,6 +155,7 @@ router.route('/organizer/:id')
 
     .patch(function (req, res) {
         var updateObject = req.body;
+        console.log(req.body)
         var query = {
             _id: req.params.id
         };
@@ -162,7 +163,7 @@ router.route('/organizer/:id')
             if (err) {
                 res.send(err)
             }
-            res.json({ message: "organizer data updated succesfully" })
+            res.json({ message: req.body })
         });
     });
 
