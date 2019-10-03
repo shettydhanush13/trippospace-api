@@ -142,12 +142,11 @@ router.route('/organizer')
 router.route('/organizer/:id')
 
     .patch(function (req, res) {
-        var organizer = new Organizer();
         var updateObject = req.body;
         var query = {
             _id: req.params.id
         };
-        organizer.update(query, { $set: updateObject });
+        Organizer.update(query, { $set: updateObject });
     });
 
 app.listen(port);
