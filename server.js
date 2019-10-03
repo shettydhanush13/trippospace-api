@@ -159,7 +159,7 @@ router.route('/organizer/:id')
         var query = {
             _id: req.params.id
         };
-        Organizer.update(query, { $set: { "name": "test" } }, function (err) {
+        Organizer.update(query, { $set: req.body }, function (err) {
             if (err) {
                 res.send(err)
             }
