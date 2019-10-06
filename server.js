@@ -240,7 +240,7 @@ router.route('/customer/:tripId')
             if (err) {
                 res.send(err)
             }
-            res.send(trip)
+            res.send({ "customers": trip[0].booking.customerList })
         });
     })
 
