@@ -226,7 +226,7 @@ router.route('/customer')
             if (err) {
                 res.send(err)
             }
-            res.json({ message: "customer added succesfully" })
+            res.json({ message: res })
         });
     });
 
