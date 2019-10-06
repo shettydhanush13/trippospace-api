@@ -145,7 +145,7 @@ router.route('/organizer')
 router.route('/organizer/trips/:id')
     .get(function (req, res) {
         var query = {
-            orhanizer: req.params.id
+            organizer: req.params.id
         };
         Trips.find(query, function (err, trips) {
             if (err) {
