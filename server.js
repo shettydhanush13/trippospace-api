@@ -142,7 +142,7 @@ router.route('/organizer')
         });
     });
 
-router.route('/organizer/trips/:id')
+router.route('/organizer-trips/:id')
     .get(function (req, res) {
         var query = {
             organizer: req.params.id
