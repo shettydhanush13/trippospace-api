@@ -240,7 +240,7 @@ router.route('/customer/:tripId')
             if (err) {
                 res.send(err)
             }
-            res.send(trip.booking.customerList)
+            res.send(trip)
         });
     })
 
