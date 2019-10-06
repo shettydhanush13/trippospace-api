@@ -169,6 +169,7 @@ router.route('/organizer/:id')
         });
     })
 
+    //to delete an organizer
     .delete(function (req, res) {
         var query = {
             _id: req.params.id
@@ -198,6 +199,9 @@ router.route('/bookmark')
 router.route('/bookmark/:tripId')
     //bookmark or unbookmark a trip
     .patch(function (req, res) {
+        var query = {
+            _id: req.params.tripId
+        };
 
         Trip.update(query, { $set: req.body }, function (err) {
             if (err) {
