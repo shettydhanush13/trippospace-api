@@ -222,11 +222,11 @@ router.route('/customer')
         customer.phone = req.body.phone;
         customer.organizer = req.body.organier;
         customer.source = req.body.source;
-        customer.save(function (err) {
+        customer.save(function (err, response) {
             if (err) {
                 res.send(err)
             }
-            res.send(res)
+            res.send(response)
         });
     });
 
