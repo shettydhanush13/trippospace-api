@@ -167,6 +167,18 @@ router.route('/organizer/:id')
             }
             res.json({ message: "organizer data updated" })
         });
+    })
+
+    .delete(function (req, res) {
+        var query = {
+            _id: req.params.tripid
+        };
+        Organizer.deleteOne(query, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "organizer deleted succesfully" })
+        });
     });
 
 
