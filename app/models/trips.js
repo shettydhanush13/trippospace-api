@@ -10,6 +10,7 @@ var tripsSchema = new schema({
         detailed: String
     },
     tags: Array,
+    isFav: Boolean,
     place: Array,
     organizer: {
         id: String,
@@ -19,6 +20,8 @@ var tripsSchema = new schema({
         cancellationPolicy: String
     },
     booking: {
+        slots: Number,
+        customerList: Array,
         days: Number,
         date: String,
         departureCity: String,

@@ -3,6 +3,7 @@ var schema = mongoose.Schema
 
 var organizersSchema = new schema({
     name: String,
+    username: String,
     logo: String,
     website: String,
     location: String,

@@ -37,6 +37,7 @@ router.route('/trip')
         trip.title = req.body.title;
         trip.destination = req.body.destination;
         trip.thumb = req.body.thumb;
+        trip.isFav = req.body.isFav;
         trip.description = req.body.description;
         trip.tags = req.body.tags;
         trip.place = req.body.place;
@@ -141,6 +142,7 @@ router.route('/organizer')
 
 router.route('/organizer/:id')
 
+    //to get details of a particular organizer
     .get(function (req, res) {
         var query = {
             _id: req.params.id
@@ -153,9 +155,8 @@ router.route('/organizer/:id')
         });
     })
 
+    //to edit organizer details
     .patch(function (req, res) {
-        var updateObject = req.body;
-        console.log(req.body)
         var query = {
             _id: req.params.id
         };
@@ -163,9 +164,37 @@ router.route('/organizer/:id')
             if (err) {
                 res.send(err)
             }
-            res.json({ message: req.body })
+            res.json({ message: "organizer data updated" })
         });
     });
+
+
+router.route('/bookmark')
+    //
+    .get(function (req, res) {
+
+        Trip.find({ "isFav": true }, function (err, trip) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(trip)
+        });
+    })
+
+//
+router.route('/bookmark/:tripId')
+
+    .patch(function (req, res) {
+
+        Trip.update(query, { $set: req.body }, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "bookmarks updated" })
+        });
+    })
+
+//
 
 app.listen(port);
 
