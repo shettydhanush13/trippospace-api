@@ -48,11 +48,11 @@ router.route('/trip')
         trip.pickup = req.body.pickup;
         trip.inclusions = req.body.inclusions;
         trip.exclutions = req.body.exclutions;
-        trip.save(function (err) {
+        trip.save(function (err, response) {
             if (err) {
                 res.send(err)
             }
-            res.json({ message: "trip added succesfully" })
+            res.send({ "id": response._id })
         });
     })
 
@@ -226,7 +226,7 @@ router.route('/customer')
             if (err) {
                 res.send(err)
             }
-            res.send(response)
+            res.send({ "id": response._id })
         });
     });
 
