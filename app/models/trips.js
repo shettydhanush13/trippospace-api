@@ -12,13 +12,7 @@ var tripsSchema = new schema({
     tags: Array,
     isFav: Boolean,
     place: Array,
-    organizer: {
-        id: String,
-        logo: String,
-        name: String,
-        username: String,
-        cancellationPolicy: String
-    },
+    organizer: String,
     booking: {
         slots: Number,
         customerList: Array,

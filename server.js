@@ -116,6 +116,7 @@ router.route('/organizer')
     .post(function (req, res) {
         var organizer = new Organizer();
         organizer.name = req.body.name;
+        organizer.username = req.body.username;
         organizer.logo = req.body.logo;
         organizer.website = req.body.website;
         organizer.location = req.body.location;
@@ -170,7 +171,7 @@ router.route('/organizer/:id')
 
 
 router.route('/bookmark')
-    //
+    //get bookmarked trips for an organizer
     .get(function (req, res) {
 
         Trip.find({ "isFav": true }, function (err, trip) {
@@ -181,9 +182,9 @@ router.route('/bookmark')
         });
     })
 
-//
-router.route('/bookmark/:tripId')
 
+router.route('/bookmark/:tripId')
+    //bookmark or unbookmark a trip
     .patch(function (req, res) {
 
         Trip.update(query, { $set: req.body }, function (err) {
