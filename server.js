@@ -171,7 +171,7 @@ router.route('/organizer/:id')
 
     .delete(function (req, res) {
         var query = {
-            _id: req.params.tripid
+            _id: req.params.id
         };
         Organizer.deleteOne(query, function (err) {
             if (err) {
