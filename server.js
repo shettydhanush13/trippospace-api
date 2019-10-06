@@ -142,12 +142,12 @@ router.route('/organizer')
         });
     });
 
-router.route('/organizertrips/:id')
+router.route('/organizer/trips/:id')
     .get(function (req, res) {
         var query = {
-            "organizer": "5d996c9744d5a200179c320a"
+            organizer: req.params.id
         };
-        Trips.find(query, function (err, trip) {
+        Trip.find(query, function (err, trip) {
             if (err) {
                 res.send(err)
             }
