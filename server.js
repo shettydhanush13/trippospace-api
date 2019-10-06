@@ -142,6 +142,19 @@ router.route('/organizer')
         });
     });
 
+router.route('/organizer/trips/:id')
+    .get(function (req, res) {
+        var query = {
+            orhanizer: req.params.id
+        };
+        Trips.find(query, function (err, trips) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(trips)
+        });
+    })
+
 router.route('/organizer/:id')
 
     //to get details of a particular organizer
@@ -256,11 +269,6 @@ router.route('/customer/:tripId')
             res.json({ message: "customer list updated" })
         });
     });
-
-
-
-
-
 
 app.listen(port);
 
