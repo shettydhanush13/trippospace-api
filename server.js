@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Trip = require('./app/models/trips')
 var Organizer = require('./app/models/organizers')
+var Customer = require('./app/models/customers')
 var cors = require('cors');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -212,6 +213,54 @@ router.route('/bookmark/:tripId')
     })
 
 //
+router.route('/customer')
+    //bookmark or unbookmark a trip
+    .post(function (req, res) {
+        var customer = new Customer();
+        customer.name = req.body.name;
+        customer.mail = req.body.mail;
+        customer.phone = req.body.phone;
+        customer.organizer = req.body.organier;
+        customer.source = req.body.source;
+        customer.save(function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "customer added succesfully" })
+        });
+    });
+
+router.route('/customer/:tripId')
+
+    .get(function (req, res) {
+        var query = {
+            _id: req.params.tripId
+        }
+        Trip.find(query, function (err, trip) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(trip.booking.customerList)
+        });
+    })
+
+    //update customer list of a trip
+    .patch(function (req, res) {
+        var query = {
+            _id: req.params.tripId
+        };
+        Trip.update(query, { $set: req.body }, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "customer list updated" })
+        });
+    });
+
+
+
+
+
 
 app.listen(port);
 
