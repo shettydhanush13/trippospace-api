@@ -39,6 +39,7 @@ router.route('/trip')
         trip.destination = req.body.destination;
         trip.thumb = req.body.thumb;
         trip.isFav = req.body.isFav;
+        trip.isActive = req.body.isActive;
         trip.description = req.body.description;
         trip.tags = req.body.tags;
         trip.place = req.body.place;
@@ -206,6 +207,33 @@ router.route('/bookmark')
                 res.send(err)
             }
             res.send(trip)
+        });
+    })
+
+router.route('/inactive')
+    //get inactive trips for an organizer
+    .get(function (req, res) {
+        Trip.find({ "isActive": false }, function (err, trip) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(trip)
+        });
+    })
+
+router.route('/inactive/:tripId')
+    //active or inactive a trip
+    .patch(function (req, res) {
+
+        var query = {
+            _id: req.params.tripId
+        };
+
+        Trip.update(query, { $set: req.body }, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "trip updated" })
         });
     })
 

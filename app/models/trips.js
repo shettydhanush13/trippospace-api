@@ -11,6 +11,7 @@ var tripsSchema = new schema({
     },
     tags: Array,
     isFav: Boolean,
+    isActive: Boolean,
     place: Array,
     organizer: String,
     booking: {
