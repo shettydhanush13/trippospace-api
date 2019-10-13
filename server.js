@@ -60,7 +60,10 @@ router.route('/trip')
     //3
     //to get details of all the trips
     .get(function (req, res) {
-        Trip.find(function (err, trip) {
+        var query = {
+            isActive: true
+        };
+        Trip.find(query, function (err, trip) {
             if (err) {
                 res.send(err)
             }
@@ -201,8 +204,7 @@ router.route('/organizer/:id')
 router.route('/bookmark')
     //get bookmarked trips for an organizer
     .get(function (req, res) {
-
-        Trip.find({ "isFav": true }, function (err, trip) {
+        Trip.find({ "isFav": true, "isActive": true }, function (err, trip) {
             if (err) {
                 res.send(err)
             }
