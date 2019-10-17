@@ -122,11 +122,14 @@ router.route('/organizer')
         var organizer = new Organizer();
         organizer.name = req.body.name;
         organizer.username = req.body.username;
-        organizer.logo = req.body.logo;
+        organizer.profile_pic = req.body.profile_pic;
+        organizer.cover_pic = req.body.cover_pic;
         organizer.website = req.body.website;
         organizer.location = req.body.location;
         organizer.description = req.body.description;
         organizer.contact = req.body.contact;
+        organizer.social = req.body.social;
+        organizer.rating = req.body.rating;
         organizer.save(function (err) {
             if (err) {
                 res.send(err)
