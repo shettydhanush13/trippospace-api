@@ -262,9 +262,6 @@ router.route('/bookmark/:tripId')
 router.route('/customer')
     //bookmark or unbookmark a trip
     .post(function (req, res) {
-
-        const request = require('request');
-
         var customer = new Customer();
         customer.name = req.body.name;
         customer.mail = req.body.mail;
@@ -272,16 +269,10 @@ router.route('/customer')
         customer.organizer = req.body.organier;
         customer.source = req.body.source;
         customer.save(function (err, res) {
-            request('https://trippospace-travels.herokuapp.com/api/organizer/5da838144637d20017b18022', function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log(body)
-                }
-                res.send({ "id": response })
-            });
-            // if (err) {
-            //     res.send(err)
-            // }
-            // res.send({ "id": response })
+            if (err) {
+                res.send(err)
+            }
+            res.send({ "id": response })
         });
     });
 
