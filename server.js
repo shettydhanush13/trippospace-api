@@ -7,6 +7,7 @@ var Organizer = require('./app/models/organizers');
 var Customer = require('./app/models/customers');
 var cors = require('cors');
 var multer = require('multer');
+var multerS3 = require('multer-s3');
 var AWS = require('aws-sdk');
 
 var accessKeyId = process.env.AWS_ACCESS_KEY || "AKIAJTSIG4M3UQZ6VLRA";
@@ -19,47 +20,6 @@ AWS.config.update({
 
 var s3 = new AWS.S3();
 
-app.use(multer({ // https://github.com/expressjs/multer
-    dest: './public/uploads/',
-    limits: { fileSize: 100000 },
-    rename: function (fieldname, filename) {
-        return filename.replace(/\W+/g, '-').toLowerCase();
-    },
-    onFileUploadData: function (file, data, req, res) {
-        // file : { fieldname, originalname, name, encoding, mimetype, path, extension, size, truncated, buffer }
-        var params = {
-            Bucket: 'trippospace',
-            Key: file.name,
-            Body: data
-        };
-
-        s3.putObject(params, function (perr, pres) {
-            if (perr) {
-                console.log("Error uploading data: ", perr);
-            } else {
-                console.log("Successfully uploaded data to myBucket/myKey");
-            }
-        });
-    }
-}));
-
-// app.post('/upload', function (req, res) {
-//     if (req.files.image !== undefined) { // `image` is the field name from your form
-//         res.redirect("/uploads"); // success
-//     } else {
-//         res.send("error, no file chosen");
-//     }
-// });
-
-router.route('/upload')
-    .post(function (req, res) {
-        if (req.files.image !== undefined) { // `image` is the field name from your form
-            // res.redirect("/uploads");
-            res.send("success"); // success
-        } else {
-            res.send("error, no file chosen");
-        }
-    });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
@@ -77,6 +37,31 @@ router.use(function (req, res, next) {
     console.log("middleware");
     next();
 });
+
+
+var upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: 'trippospace',
+        key: function (req, file, cb) {
+            console.log(file);
+            cb(null, file.originalname); //use Date.now() for unique file keys
+        }
+    })
+});
+
+// app.post('/upload', function (req, res) {
+//     if (req.files.image !== undefined) { // `image` is the field name from your form
+//         res.redirect("/uploads"); // success
+//     } else {
+//         res.send("error, no file chosen");
+//     }
+// });
+
+app.post('/upload', upload.array('upl', 1), function (req, res, next) {
+    res.send("Uploaded!");
+});
+
 
 //1
 //to test if the api is working
