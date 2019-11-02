@@ -58,7 +58,7 @@ var upload = multer({
 //     }
 // });
 
-app.post('/upload', upload.array('upl', 1), function (req, res, next) {
+router.post('/upload', upload.array('upl', 1), function (req, res, next) {
     res.send("Uploaded!");
 });
 
