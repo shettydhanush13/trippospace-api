@@ -58,10 +58,14 @@ var upload = multer({
 //     }
 // });
 
-router.post('/upload', upload.array('upl', 1), function (req, res, next) {
-    res.send("Uploaded!");
+router.get('/', function (req, res) {
+    res.json({ message: "welcome to trippospace" });
 });
 
+router.route('/upload')
+    .post(upload.array('upl', 1), function (req, res, next) {
+        res.send("Uploaded!");
+    });
 
 //1
 //to test if the api is working
