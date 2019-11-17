@@ -320,11 +320,11 @@ router.route('/register')
         users.cover_pic = req.body.cover_pic;
         users.stats = req.body.stats;
         users.trips = req.body.trips;
-        users.save(function (err) {
+        users.save(function (err, trip) {
             if (err) {
                 res.send(err)
             }
-            res.json({ message: "organizer added succesfully" })
+            res.json({ message: "user added succesfully : ", trip })
         });
     });
 
