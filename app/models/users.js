@@ -12,7 +12,7 @@ var usersSchema = new schema({
     cover_pic: String,
     social: Object,
     stats: Object,
-    trips: Array
+    trips: Object
 });
 
 module.exports = mongoose.model('users', usersSchema)
