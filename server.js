@@ -27,14 +27,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(cors());
 
-// use JWT auth to secure the api
-app.use(jwt());
-
-// api routes
-app.use('/users', require('./app/users/users.controller'));
-
-// global error handler
-app.use(errorHandler);
 
 var port = process.env.PORT || 3000;
 
@@ -47,40 +39,6 @@ app.use('/api', router)
 router.use(function (req, res, next) {
     console.log("middleware");
     next();
-});
-
-
-var upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'trippospace',
-        key: function (req, file, cb) {
-            console.log(file);
-            cb(null, file.originalname); //use Date.now() for unique file keys
-        }
-    })
-});
-
-// app.post('/upload', function (req, res) {
-//     if (req.files.image !== undefined) { // `image` is the field name from your form
-//         res.redirect("/uploads"); // success
-//     } else {
-//         res.send("error, no file chosen");
-//     }
-// });
-
-router.get('/', function (req, res) {
-    res.json({ message: "welcome to trippospace" });
-});
-
-// router.route('/upload')
-//     .post(upload.array('upl', 1), function (req, res, next) {
-//         res.send("Uploaded!");
-//     });
-
-//use by upload form
-app.post('/upload', upload.array('upl', 1), function (req, res, next) {
-    res.send("Uploaded!");
 });
 
 //1
