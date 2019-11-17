@@ -320,14 +320,22 @@ router.route('/register')
         users.cover_pic = req.body.cover_pic;
         users.stats = req.body.stats;
         users.trips = req.body.trips;
-        users.save(function (err, trip) {
-            if (err) {
-                res.send(err)
+
+        Users.findOne({
+            username: req.body.username
+        }, function (err, user) {
+            if (user !== null) {
+                res.json({ "message": "username exists" })
+            } else {
+                users.save(function (err, trip) {
+                    if (err) {
+                        res.send(err)
+                    }
+                    res.json({ message: "user added succesfully : " + trip._id })
+                });
             }
-            res.json({ message: "user added succesfully : " + trip._id })
         });
     });
-
 
 router.route('/user/:userId')
 
@@ -348,8 +356,6 @@ router.route('/user/:userId')
             } res.send({ "govinda": userdata })
         });
     })
-
-
 
 router.route('/login')
     //to check if user exist
