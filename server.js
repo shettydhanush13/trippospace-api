@@ -357,13 +357,14 @@ router.route('/login')
         Users.findOne({
             username: req.body.username
         }, function (err, user) {
-            if (err) {
-                res.json({ "message": "username does not exist" })
-            }
-            if (req.body.password === user.password) {
-                res.json({ user })
+            if (user !== null) {
+                if (req.body.password === user.password) {
+                    res.json({ user })
+                } else {
+                    res.json({ "message": "incorrect password" })
+                }
             } else {
-                res.json({ "message": "invalid credentials" })
+                res.json({ "message": "username does not exist" })
             }
         });
     });
