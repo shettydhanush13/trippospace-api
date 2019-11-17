@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var Trip = require('./app/models/trips');
 var Organizer = require('./app/models/organizers');
 var Customer = require('./app/models/customers');
+var Users = require("./app/models/users")
 var cors = require('cors');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -300,6 +301,31 @@ router.route('/customer/:tripId')
                 res.send(err)
             }
             res.json({ message: "customer list updated" })
+        });
+    });
+
+router.route('/register')
+
+    //to register a new user
+    .post(function (req, res) {
+        var users = new Users();
+
+        users.first_name = req.body.first_name;
+        users.last_name = req.body.last_name;
+        users.username = req.body.username;
+        users.password = req.body.password;
+        users.email = req.body.email;
+        users.phone = req.body.phone;
+        users.profile_pic = req.body.profile_pic;
+        users.cover_pic = req.body.cover_pic;
+        users.stats = req.body.stats;
+        users.trips = req.body.trips;
+        users.social = req.body.social;
+        users.save(function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "organizer added succesfully" })
         });
     });
 
