@@ -328,6 +328,23 @@ router.route('/register')
         });
     });
 
+
+router.route('/user/:userId')
+
+    .get(function (req, res) {
+        var query = {
+            _id: req.params.userId
+        }
+        Users.find(query, function (err, user) {
+            if (err) {
+                res.send(err)
+            }
+            // var response = delete user["password"]
+            res.send({ "user : ": user })
+        });
+    })
+
+
 app.listen(port);
 
 console.log("working at port : ", port)
