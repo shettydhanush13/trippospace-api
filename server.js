@@ -6,27 +6,10 @@ var Trip = require('./app/models/trips');
 var Organizer = require('./app/models/organizers');
 var Customer = require('./app/models/customers');
 var cors = require('cors');
-var multer = require('multer');
-var multerS3 = require('multer-s3');
-var AWS = require('aws-sdk');
-const jwt = require('./app/helpers/jwt');
-const errorHandler = require('./app/helpers/error-handler');
-
-var accessKeyId = process.env.AWS_ACCESS_KEY || "AKIAJTSIG4M3UQZ6VLRA";
-var secretAccessKey = process.env.AWS_SECRET_KEY || "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";
-
-AWS.config.update({
-    accessKeyId: accessKeyId,
-    secretAccessKey: secretAccessKey
-});
-
-var s3 = new AWS.S3();
-
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(cors());
-
 
 var port = process.env.PORT || 3000;
 
