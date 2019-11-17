@@ -363,7 +363,7 @@ router.route('/login')
             if (req.body.username === user.password) {
                 res.json({ user })
             } else {
-                res.json({ "message": "invalid credentials" })
+                res.json({ "message": "invalid credentials" + user.password })
             }
         });
     });
