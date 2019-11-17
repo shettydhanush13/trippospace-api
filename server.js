@@ -339,8 +339,8 @@ router.route('/user/:userId')
             if (err) {
                 res.send(err)
             }
-            var userData = delete user[0]["password"]
-            res.send({ "user : ": userData })
+            delete user[0].password
+            res.send({ "user : ": user })
         });
     })
 
