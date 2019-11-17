@@ -350,6 +350,23 @@ router.route('/user/:userId')
     })
 
 
+
+router.route('/login')
+    //to check if user exist
+    .post(function (req, res) {
+        User.findOne({
+            username: req.body.username
+        }, function (err, user) {
+            if (err) {
+                res.json({ "message": "username does not exist" })
+            }
+            if (user) {
+                res.json({ user })
+            }
+        });
+    });
+
+
 app.listen(port);
 
 console.log("working at port : ", port)
