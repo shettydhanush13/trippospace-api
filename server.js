@@ -320,7 +320,6 @@ router.route('/register')
         users.cover_pic = req.body.cover_pic;
         users.stats = req.body.stats;
         users.trips = req.body.trips;
-        users.social = req.body.social;
         users.save(function (err) {
             if (err) {
                 res.send(err)

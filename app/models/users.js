@@ -10,7 +10,6 @@ var usersSchema = new schema({
     phone: String,
     profile_pic: String,
     cover_pic: String,
-    social: Object,
     stats: Object,
     trips: Object
 });
