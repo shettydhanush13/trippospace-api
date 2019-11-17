@@ -341,7 +341,11 @@ router.route('/user/:userId')
             }
             let userdata = user[0]
             delete userdata.password
-            res.send({ userdata })
+            if (delete userdata.password === true) {
+                res.send({ "userdata": userdata })
+            } else {
+
+            } res.send({ "govinda": userdata })
         });
     })
 
