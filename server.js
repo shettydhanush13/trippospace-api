@@ -354,15 +354,13 @@ router.route('/user/:userId')
 router.route('/login')
     //to check if user exist
     .post(function (req, res) {
-        User.findOne({
+        Users.findOne({
             username: req.body.username
         }, function (err, user) {
             if (err) {
                 res.json({ "message": "username does not exist" })
             }
-            if (user) {
-                res.json({ user })
-            }
+            res.json({ user })
         });
     });
 
