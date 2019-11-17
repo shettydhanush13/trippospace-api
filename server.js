@@ -360,7 +360,11 @@ router.route('/login')
             if (err) {
                 res.json({ "message": "username does not exist" })
             }
-            res.json({ user })
+            if (req.body.username === user.password) {
+                res.json({ user })
+            } else {
+                res.json({ "message": "invalid credentials" })
+            }
         });
     });
 
