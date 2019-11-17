@@ -9,6 +9,8 @@ var cors = require('cors');
 var multer = require('multer');
 var multerS3 = require('multer-s3');
 var AWS = require('aws-sdk');
+const jwt = require('./app/helpers/jwt');
+const errorHandler = require('./app/helpers/error-handler');
 
 var accessKeyId = process.env.AWS_ACCESS_KEY || "AKIAJTSIG4M3UQZ6VLRA";
 var secretAccessKey = process.env.AWS_SECRET_KEY || "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";
@@ -24,6 +26,15 @@ var s3 = new AWS.S3();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(cors());
+
+// use JWT auth to secure the api
+app.use(jwt());
+
+// api routes
+app.use('/users', require('./app/users/users.controller'));
+
+// global error handler
+app.use(errorHandler);
 
 var port = process.env.PORT || 3000;
 
@@ -62,10 +73,15 @@ router.get('/', function (req, res) {
     res.json({ message: "welcome to trippospace" });
 });
 
-router.route('/upload')
-    .post(upload.array('upl', 1), function (req, res, next) {
-        res.send("Uploaded!");
-    });
+// router.route('/upload')
+//     .post(upload.array('upl', 1), function (req, res, next) {
+//         res.send("Uploaded!");
+//     });
+
+//use by upload form
+app.post('/upload', upload.array('upl', 1), function (req, res, next) {
+    res.send("Uploaded!");
+});
 
 //1
 //to test if the api is working
