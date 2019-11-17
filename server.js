@@ -324,7 +324,7 @@ router.route('/register')
             if (err) {
                 res.send(err)
             }
-            res.json({ message: "user added succesfully : ", trip })
+            res.json({ message: "user added succesfully : " + trip._id })
         });
     });
 
