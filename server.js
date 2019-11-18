@@ -8,6 +8,9 @@ var Customer = require('./app/models/customers');
 var Users = require("./app/models/users")
 var cors = require('cors');
 var AWS = require('aws-sdk');
+var multer = require('multer')
+var multerS3 = require('multer-s3')
+
 
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
@@ -16,6 +19,20 @@ app.use(bodyParser.json())
 app.use(cors());
 
 s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+
+
+var upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: 'trippospace',
+        metadata: function (req, file, cb) {
+            cb(null, { fieldName: file.fieldname });
+        },
+        key: function (req, file, cb) {
+            cb(null, Date.now().toString())
+        }
+    })
+})
 
 
 var port = process.env.PORT || 3000;
@@ -30,6 +47,10 @@ router.use(function (req, res, next) {
     console.log("middleware");
     next();
 });
+
+app.post('/upload', upload.array('photo', 1), function (req, res, next) {
+    res.send('Successfully uploaded ' + req.files.length + ' files!')
+})
 
 //1
 //to test if the api is working
