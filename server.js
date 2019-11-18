@@ -7,10 +7,16 @@ var Organizer = require('./app/models/organizers');
 var Customer = require('./app/models/customers');
 var Users = require("./app/models/users")
 var cors = require('cors');
+var AWS = require('aws-sdk');
+
+AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(cors());
+
+s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+
 
 var port = process.env.PORT || 3000;
 
@@ -29,6 +35,13 @@ router.use(function (req, res, next) {
 //to test if the api is working
 router.get('/', function (req, res) {
     res.json({ message: "welcome to trippospace" });
+    s3.listBuckets(function (err, data) {
+        if (err) {
+            console.log("Error", err);
+        } else {
+            console.log("Success", data.Buckets);
+        }
+    });
 });
 
 router.route('/trip')
