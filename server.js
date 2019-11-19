@@ -395,7 +395,7 @@ router.route('/user/:userId')
             if (err) {
                 res.send(err)
             }
-            res.send({ "userdata": user })
+            res.send(user)
         });
     })
 
@@ -406,8 +406,9 @@ router.route('/user/:userId')
         Users.update(query, { $set: req.body }, function (err) {
             if (err) {
                 res.send(err)
+            } else {
+                res.json({ message: "user data updated" })
             }
-            res.json({ message: "user data updated" })
         });
     });
 
