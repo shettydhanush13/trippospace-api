@@ -391,11 +391,11 @@ router.route('/user/:userId')
         var query = {
             _id: req.params.userId
         };
-        Users.update(query, { $set: req.body }, function (err, res) {
+        Users.update(query, { $set: req.body }, function (err, user) {
             if (err) {
                 res.send(err)
             }
-            res.json({ message: "user data updated", res })
+            res.json({ message: "user data updated", user })
         });
     })
 
