@@ -50,6 +50,7 @@ router.use(function (req, res, next) {
 
 router.route('/upload')
     .post(upload.array('photo', 1), function (req, res) {
+        console.log("photo : ", req)
         res.send('Successfully uploaded ' + req.files.length + ' files!')
     })
 
