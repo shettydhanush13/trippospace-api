@@ -48,9 +48,10 @@ router.use(function (req, res, next) {
     next();
 });
 
-app.post('/upload', upload.array('photo', 1), function (req, res, next) {
-    res.send('Successfully uploaded ' + req.files.length + ' files!')
-})
+router.route('/upload')
+    .post(upload.array('photo', 1), function (req, res) {
+        res.send('Successfully uploaded ' + req.files.length + ' files!')
+    })
 
 //1
 //to test if the api is working
