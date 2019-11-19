@@ -8,13 +8,9 @@ var Customer = require('./app/models/customers');
 var Users = require("./app/models/users")
 var cors = require('cors');
 var AWS = require('aws-sdk');
-var multer = require('multer')
-var multerS3 = require('multer-s3')
 const fs = require('fs');
 const fileType = require('file-type');
-const bluebird = require('bluebird');
 const multiparty = require('multiparty');
-
 
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
@@ -31,24 +27,10 @@ const uploadFile = (buffer, name, type) => {
         Body: buffer,
         Bucket: "trippospace",
         ContentType: type.mime,
-        // Key: `${name}.${type.ext}`
-        Key: "mykey"
+        Key: `${name}.${type.ext}`
     };
     return s3.upload(params).promise();
 };
-
-// var upload = multer({
-//     storage: multerS3({
-//         s3: s3,
-//         bucket: 'trippospace',
-//         metadata: function (req, file, cb) {
-//             cb(null, { fieldName: file.fieldname });
-//         },
-//         key: function (req, file, cb) {
-//             cb(null, Date.now().toString())
-//         }
-//     })
-// })
 
 var port = process.env.PORT || 3000;
 
@@ -82,12 +64,6 @@ app.post('/upload', (request, response) => {
         }
     });
 });
-
-// router.route('/upload')
-//     .post(upload.array('photo', 1), function (req, res) {
-//         console.log("photo : ", req)
-//         res.send('Successfully uploaded ' + req.files.length + ' files!')
-//     })
 
 //1
 //to test if the api is working
