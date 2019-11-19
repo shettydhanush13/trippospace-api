@@ -399,17 +399,17 @@ router.route('/user/:userId')
         });
     })
 
-    .patch(function (req, res) {
-        var query = {
-            _id: req.params.userId
-        };
-        Users.update(query, { $set: req.body }, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "user data updated" })
-        });
-    });
+// .patch(function (req, res) {
+//     var query = {
+//         _id: req.params.userId
+//     };
+//     Users.update(query, { $set: req.body }, function (err) {
+//         if (err) {
+//             res.send(err)
+//         }
+//         res.json({ message: "user data updated" })
+//     });
+// });
 
 router.route('/login')
     //to check if user exist
