@@ -395,19 +395,13 @@ router.route('/user/:userId')
             if (err) {
                 res.send(err)
             }
-            let userdata = user[0]
-            delete userdata.password
-            if (delete userdata.password === true) {
-                res.send({ "userdata": userdata })
-            } else {
-
-            } res.send({ "govinda": userdata })
+            res.send({ "userdata": userdata })
         });
     })
 
     .patch(function (req, res) {
         var query = {
-            _id: req.params.id
+            _id: req.params.userId
         };
         Users.update(query, { $set: req.body }, function (err) {
             if (err) {
