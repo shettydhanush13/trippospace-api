@@ -391,7 +391,11 @@ router.route('/user/:userId')
         var query = {
             _id: req.params.userId
         };
-        Users.update(query, { $set: req.body }, function (err) {
+        Users.update(query, {
+            $set: {
+                "first_name": "d"
+            }
+        }, function (err) {
             if (err) {
                 res.send(err)
             }
