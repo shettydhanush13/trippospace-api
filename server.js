@@ -32,7 +32,7 @@ const uploadFile = (buffer, name, type) => {
         Bucket: "trippospace",
         ContentType: type.mime,
         // Key: `${name}.${type.ext}`
-        key: "mykey"
+        Key: "mykey"
     };
     return s3.upload(params).promise();
 };
