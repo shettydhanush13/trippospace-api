@@ -20,18 +20,6 @@ app.use(cors());
 
 s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
-// abstracts function to upload a file returning a promise
-const uploadFile = (buffer, name, type) => {
-    const params = {
-        ACL: 'public-read',
-        Body: buffer,
-        Bucket: "trippospace",
-        ContentType: type.mime,
-        Key: `${name}.${type.ext}`
-    };
-    return s3.upload(params).promise();
-};
-
 var port = process.env.PORT || 3000;
 
 mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
@@ -45,25 +33,38 @@ router.use(function (req, res, next) {
     next();
 });
 
+// abstracts function to upload a file returning a promise
+const uploadFile = (buffer, name, type) => {
+    const params = {
+        ACL: 'public-read',
+        Body: buffer,
+        Bucket: "trippospace",
+        ContentType: type.mime,
+        Key: `${name}.${type.ext}`
+    };
+    return s3.upload(params).promise();
+};
 
-// Define POST route
-app.post('/upload', (request, response) => {
-    const form = new multiparty.Form();
-    form.parse(request, async (error, fields, files) => {
-        if (error) throw new Error(error);
-        try {
-            const path = files.file[0].path;
-            const buffer = fs.readFileSync(path);
-            const type = fileType(buffer);
-            const timestamp = Date.now().toString();
-            const fileName = `bucketFolder/${timestamp}-lg`;
-            const data = await uploadFile(buffer, fileName, type);
-            return response.status(200).send(data);
-        } catch (error) {
-            return response.status(400).send(error);
-        }
-    });
-});
+router.route('/upload')
+    //2
+    //to upload an image to s3
+    .post(function (request, response) {
+        const form = new multiparty.Form();
+        form.parse(request, async (error, fields, files) => {
+            if (error) throw new Error(error);
+            try {
+                const path = files.file[0].path;
+                const buffer = fs.readFileSync(path);
+                const type = fileType(buffer);
+                const timestamp = Date.now().toString();
+                const fileName = `bucketFolder/${timestamp}-lg`;
+                const data = await uploadFile(buffer, fileName, type);
+                return response.status(200).send(data);
+            } catch (error) {
+                return response.status(400).send(error);
+            }
+        });
+    })
 
 //1
 //to test if the api is working
