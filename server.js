@@ -387,6 +387,18 @@ router.route('/register')
 
 router.route('/user/:userId')
 
+    .patch(function (req, res) {
+        var query = {
+            _id: req.params.userId
+        };
+        Users.update(query, { $set: req.body }, function (err, res) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "user data updated", res })
+        });
+    })
+
     .get(function (req, res) {
         var query = {
             _id: req.params.userId
@@ -396,19 +408,6 @@ router.route('/user/:userId')
                 res.send(err)
             }
             res.send(user)
-        });
-    })
-
-    .patch(function (req, res) {
-        var query = {
-            _id: req.params.userId
-        };
-        Users.update(query, { $set: req.body }, function (err) {
-            if (err) {
-                res.send(err)
-            } else {
-                res.json({ message: "user data updated" })
-            }
         });
     });
 
