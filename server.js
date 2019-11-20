@@ -397,12 +397,13 @@ router.route('/user/:userId')
             if (user !== null) {
                 res.json({ message: "username not available" })
             } else {
-                Users.update(query, { $set: req.body }, function (err) {
-                    if (err) {
-                        res.send(err)
-                    }
-                    res.json({ message: "users list updated" })
-                });
+                res.json({ message: user })
+                // Users.update(query, { $set: req.body }, function (err) {
+                //     if (err) {
+                //         res.send(err)
+                //     }
+                //     res.json({ message: "users list updated" })
+                // });
             }
         })
     })
