@@ -407,6 +407,8 @@ router.route('/user/:userId')
             if (err) {
                 res.send(err)
             }
+            delete user.password
+            console.log("user : ", user)
             res.send(user)
         });
     });
