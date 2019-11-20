@@ -5,7 +5,10 @@ var mongoose = require('mongoose');
 var Trip = require('./app/models/trips');
 var Organizer = require('./app/models/organizers');
 var Customer = require('./app/models/customers');
-var Users = require("./app/models/users")
+var Users = require("./app/models/users");
+var Places = require("./app/models/places");
+var Videos = require("./app/models/videos");
+var Category = require("./app/models/category")
 var cors = require('cors');
 var AWS = require('aws-sdk');
 const fs = require('fs');
@@ -98,11 +101,22 @@ router.route('/trip')
         trip.pickup = req.body.pickup;
         trip.inclusions = req.body.inclusions;
         trip.exclutions = req.body.exclutions;
+        trip.credits = req.body.credits;
+        trip.videos = req.body.videos;
         trip.save(function (err, response) {
             if (err) {
                 res.send(err)
+            } else {
+                for (let i = 0; i < req.body.tags.length; i++) {
+                    Category.update({ id: req.body.tags[i] }, { $push: { "trips": response._id.toString() } }, function (err, category) {
+                        if (err) {
+                            res.send(err)
+                        } else {
+                            res.send(response._id)
+                        }
+                    });
+                }
             }
-            res.send({ "id": response._id })
         });
     })
 
@@ -148,6 +162,36 @@ router.route('/trip/:tripid')
             res.json({ message: "trip deleted succesfully" })
         });
     });
+
+router.route('/tripCategory/:category')
+    //4
+    //to get details of a trip by tipId
+
+    .get(function (req, res) {
+        Trip.find({ tags: { $all: [req.params.category] } }, function (err, trip) {
+            if (err) {
+                res.send(err)
+            }
+            let city = ["ALL"]
+            for (let i = 0; i < trip.length; i++) {
+                city.push(trip[i].booking.departureCity)
+            }
+            var city1 = [...new Set(city)]
+            if (req.query.departure === "ALL") {
+                res.json({
+                    trips: trip,
+                    search: city1,
+                    selected: "ALL"
+                })
+            } else {
+                res.json({
+                    trips: trip.filter(ele => ele.booking.departureCity === req.query.departure),
+                    search: city1,
+                    selected: req.query.departure
+                })
+            }
+        });
+    })
 
 router.route('/from/:place')
     //6
@@ -201,7 +245,7 @@ router.route('/organizer')
 router.route('/organizer/trips/:id')
     .get(function (req, res) {
         var query = {
-            organizer: req.params.id
+            organizerId: req.params.id
         };
         Trip.find(query, function (err, trip) {
             if (err) {
@@ -403,11 +447,10 @@ router.route('/user/:userId')
         var query = {
             _id: req.params.userId
         }
-        Users.find(query, function (err, user) {
+        Users.findOne(query, function (err, user) {
             if (err) {
                 res.send(err)
             }
-            delete user[0].password
             console.log("user : ", user)
             res.send(user)
         });
@@ -421,6 +464,26 @@ router.route('/login')
         }, function (err, user) {
             if (user !== null) {
                 if (req.body.password === user.password) {
+                    user.password = null
+                    res.json({ user })
+                } else {
+                    res.json({ "message": "incorrect password" })
+                }
+            } else {
+                res.json({ "message": "username does not exist" })
+            }
+        });
+    });
+
+router.route('/agent-login')
+    //to check if user exist
+    .post(function (req, res) {
+        Organizer.findOne({
+            username: req.body.username
+        }, function (err, user) {
+            if (user !== null) {
+                if (req.body.password === user.password) {
+                    user.password = null
                     res.json({ user })
                 } else {
                     res.json({ "message": "incorrect password" })
@@ -432,7 +495,177 @@ router.route('/login')
     });
 
 
+router.route('/changePassword/:id')
+
+    .patch(function (req, res) {
+        var query = {
+            _id: req.params.id
+        };
+        Users.findOne(query, function (err, user) {
+            console.log("user : ", user)
+            console.log("req.body : ", req.body)
+            if (user.password !== req.body.currentPassword) {
+                res.json({ error: "current password is incorrect" })
+            } else {
+                Users.update(query, {
+                    $set: {
+                        password: req.body.newPassword
+                    }
+                }, function (err) {
+                    if (err) {
+                        res.send(err)
+                    }
+                    res.json({ success: "users list updated" })
+                });
+            }
+        })
+    });
+
+router.route('/places/:name')
+    .get(function (req, res) {
+        Trip.find({ place: { $all: [req.params.name] } }, function (err, trip) {
+            if (err) {
+                res.send(err)
+            } else {
+                let city = ["ALL"]
+                for (let i = 0; i < trip.length; i++) {
+                    city.push(trip[i].booking.departureCity)
+                }
+                var city1 = [...new Set(city)]
+                if (req.query.departure === "ALL") {
+                    res.json({
+                        trips: trip,
+                        search: city1,
+                        selected: "ALL"
+                    })
+                } else {
+                    res.json({
+                        trips: trip.filter(ele => ele.booking.departureCity === req.query.departure),
+                        search: city1,
+                        selected: req.query.departure
+                    })
+                }
+            }
+        })
+    });
+
+router.route('/places')
+    .get(function (req, res) {
+        Places.find({}, { title: 1 }, function (err, place) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(place)
+        });
+    });
+
+router.route('/placesSearch')
+    .get(function (req, res) {
+        Trip.find({}, { place: 1 }, function (err, places) {
+            if (err) {
+                res.send(err)
+            } else {
+                let arr = [];
+                for (let i = 0; i < places.length; i++) {
+                    arr.push(places[i].place)
+                }
+                var temp = arr.reduce((r, e) => (r.push(...e), r), [])
+                var uniqueArray = [...new Set(temp)];
+                res.send(uniqueArray)
+            }
+        });
+    });
+
+router.route('/videos/:type')
+    .get(function (req, res) {
+        Videos.find({ tags: { $all: [req.params.type] } }, function (err, video) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(video)
+        });
+    });
+
+router.route('/trips/:tripsArray')
+    //4
+    //to get details of multiple trips by ids
+    .get(function (req, res) {
+        Trip.find({ "_id": { $in: JSON.parse(req.params.tripsArray) } }, function (err, trips) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(trips)
+            }
+        });
+    });
+
+router.route('/videos')
+    .get(function (req, res) {
+        Videos.find({}, function (err, video) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(video)
+        });
+    });
+
+router.route('/home/:userId')
+    .get(function (req, res) {
+        Category.find({}, function (err, category) {
+            if (err) {
+                res.send(err)
+            } else {
+                for (let i = 0; i < category.length; i++) {
+                    if (category[i].followers.includes(req.params.userId)) {
+                        category[i].isFollowed = true
+                        category[i].followers = []
+                    } else {
+                        category[i].isFollowed = false
+                        category[i].followers = []
+                    }
+                }
+                category1 = category.filter(function (item) {
+                    return item.isFollowed;
+                });
+
+                category2 = category.filter(function (item) {
+                    return !item.isFollowed;
+                });
+
+                res.send(category1.concat(category2))
+            }
+        });
+    });
+
+router.route('/followStyle')
+    .post(function (req, res) {
+        var category = new Category();
+
+        category.user = req.body.userId;
+        category.categoryId = req.body.categoryId;
+
+        if (req.body.followed === "true") {
+            Category.update({ _id: req.body.categoryId }, { $pull: { "followers": req.body.userId } }, function (err, category) {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send("category unfollowed")
+                }
+            });
+        } else {
+            Category.update({ _id: req.body.categoryId }, { $push: { "followers": req.body.userId } }, function (err, category) {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send("category followed")
+                }
+            });
+        }
+
+    });
+
 app.listen(port);
+
 
 console.log("working at port : ", port)
 

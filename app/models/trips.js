@@ -13,12 +13,14 @@ var tripsSchema = new schema({
     isFav: Boolean,
     isActive: Boolean,
     place: Array,
-    organizer: String,
+    organizerId: String,
+    organizerName: String,
     booking: {
         slots: Number,
         customerList: Array,
         days: Number,
         date: String,
+        allDates: Array,
         departureCity: String,
         priceBefore: Number,
         priceAfter: Number
@@ -26,7 +28,9 @@ var tripsSchema = new schema({
     itinerary: Array,
     pickup: Array,
     inclusions: Array,
-    exclutions: Array
+    exclusions: Array,
+    videos: Array,
+    credits: Number
 });
 
 module.exports = mongoose.model('trip', tripsSchema)

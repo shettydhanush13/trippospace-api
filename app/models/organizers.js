@@ -4,6 +4,7 @@ var schema = mongoose.Schema
 var organizersSchema = new schema({
     name: String,
     username: String,
+    password: String,
     profile_pic: String,
     cover_pic: String,
     website: String,
