@@ -407,7 +407,7 @@ router.route('/user/:userId')
             if (err) {
                 res.send(err)
             }
-            delete user.password
+            delete user[0].password
             console.log("user : ", user)
             res.send(user)
         });
