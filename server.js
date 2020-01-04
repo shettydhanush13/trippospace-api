@@ -161,6 +161,18 @@ router.route('/trip/:tripid')
             }
             res.json({ message: "trip deleted succesfully" })
         });
+    })
+
+    .patch(function (req, res) {
+        var query = {
+            _id: req.params.id
+        };
+        Trip.update(query, { $set: req.body }, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "trip data updated" })
+        });
     });
 
 router.route('/tripCategory/:category')
