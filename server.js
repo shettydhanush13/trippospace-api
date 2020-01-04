@@ -171,7 +171,7 @@ router.route('/trip/:tripid')
             if (err) {
                 res.send(err)
             }
-            res.json({ message: "trip data updated" })
+            res.json({ message: "trips data updated" })
         });
     });
 
