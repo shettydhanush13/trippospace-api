@@ -165,7 +165,7 @@ router.route('/trip/:tripid')
 
     .patch(function (req, res) {
         var query = {
-            _id: req.params.id
+            _id: req.params.tripid
         };
         Trip.update(query, { $set: req.body }, function (err) {
             if (err) {
