@@ -257,7 +257,8 @@ router.route('/organizer')
 router.route('/organizer/trips/:id')
     .get(function (req, res) {
         var query = {
-            organizerId: req.params.id
+            organizerId: req.params.id,
+            isActive: true
         };
         Trip.find(query, function (err, trip) {
             if (err) {
