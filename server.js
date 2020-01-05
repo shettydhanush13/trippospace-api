@@ -103,6 +103,8 @@ router.route('/trip')
         trip.exclutions = req.body.exclutions;
         trip.credits = req.body.credits;
         trip.videos = req.body.videos;
+        trip.organizerId = req.body.organizerId;
+        trip.organizerName = req.body.organizerName;
         trip.save(function (err, response) {
             if (err) {
                 res.send(err)
