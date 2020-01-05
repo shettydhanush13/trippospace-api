@@ -312,10 +312,10 @@ router.route('/organizer/:id')
     });
 
 
-router.route('/bookmark')
+router.route('/bookmark/:tripId')
     //get bookmarked trips for an organizer
     .get(function (req, res) {
-        Trip.find({ "isFav": true, "isActive": true }, function (err, trip) {
+        Trip.find({ "isFav": true, "isActive": true,  _id: req.params.tripId }, function (err, trip) {
             if (err) {
                 res.send(err)
             }
@@ -323,10 +323,10 @@ router.route('/bookmark')
         });
     })
 
-router.route('/inactive')
+router.route('/inactive/:tripId')
     //get inactive trips for an organizer
     .get(function (req, res) {
-        Trip.find({ "isActive": false }, function (err, trip) {
+        Trip.find({ "isActive": false, _id: req.params.tripId }, function (err, trip) {
             if (err) {
                 res.send(err)
             }
