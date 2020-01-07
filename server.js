@@ -509,6 +509,31 @@ router.route('/agent-login')
         })
     });
 
+router.route('/changePassword-organizer/:id')
+
+.patch(function (req, res) {
+    var query = {
+        _id: req.params.id
+    };
+    Organizer.find(query, function (err, user) {
+        console.log("user : ", user)
+        console.log("req.body : ", req.body)
+        if (user.password !== req.body.currentPassword) {
+            res.json({ error: "current password is incorrect" })
+        } else {
+            Organizer.update(query, {
+                $set: {
+                    password: req.body.newPassword
+                }
+            }, function (err) {
+                if (err) {
+                    res.send(err)
+                }
+                res.json({ success: "users list updated" })
+            });
+        }
+    })
+});
 
 router.route('/changePassword/:id')
 
