@@ -506,7 +506,7 @@ router.route('/agent-login')
             } else {
                 res.json({ "message": "username does not exist" })
             }
-        });
+        })
     });
 
 
@@ -516,7 +516,7 @@ router.route('/changePassword/:id')
         var query = {
             _id: req.params.id
         };
-        Users.findOne(query, function (err, user) {
+        Users.find(query, function (err, user) {
             console.log("user : ", user)
             console.log("req.body : ", req.body)
             if (user.password !== req.body.currentPassword) {
