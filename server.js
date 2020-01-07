@@ -515,7 +515,7 @@ router.route('/changePassword-organizer/:id')
     var query = {
         _id: req.params.id
     };
-    Organizer.find(query, function (err, user) {
+    Organizer.findOne(query, function (err, user) {
         console.log("user : ", user)
         console.log("req.body : ", req.body)
         if (user.password !== req.body.currentPassword) {
