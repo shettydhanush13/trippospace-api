@@ -360,17 +360,14 @@ router.route("/inactiveAllDates")
                 }
             }
 
-                Trip.find({ _id : { $in : req.body.datesArray }}, function (err,trips) {
-                    if (err) {
-                        res.send(err)
-                    }
-                    
-                    
-
-                    // Trip.update(tripToActive._id, { $set: {"booking.allDates":tripToActive.booking.allDates} }, function (err) {
-                    //     if (err) {
-                    //         res.send(err)
-                    //     }
+                // Trip.find({ _id : { $in : req.body.datesArray }}, function (err,trips) {
+                //     if (err) {
+                //         res.send(err)
+                //     }
+                    Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":allDate} }, function (err) {
+                        if (err) {
+                            res.send(err)
+                        }
                         res.json({ message: allDate })
                     });
     });
