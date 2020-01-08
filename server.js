@@ -351,8 +351,8 @@ router.route('/inactive/:tripId')
 
 router.route("/inactiveAllDates")
     .post(function(req,res){
-
-                                    res.json({ message: req })
+            console.log("requesst body or payload : ",req)
+                                    // res.json({ message: req })
 
             // for(let i=0; i<req.body.allDate.length;i++){
             //     Trip.findOne({_id:allDate[i].value}, function (err,tripToActive) {
