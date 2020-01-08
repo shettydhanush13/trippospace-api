@@ -360,27 +360,28 @@ router.route("/inactiveAllDates")
                 res.send(err)
             }
             let allDate =  trip.booking.allDates
-            res.json({ allDate })
 
-            
-            // for(let i=0; i<allDate.length;i++){
-            //     Trip.findOne({_id:allDate[i].value}, function (err,tripToActive) {
-            //         if (err) {
-            //             res.send(err)
-            //         }
-            //         for(letj=0;j<tripToActive.booking.allDates.length;j++){
-            //             if(tripToActive.booking.allDates[j].value === tripId){
-            //                 tripToActive.booking.allDates[j].active = false
-            //             }
-            //         }
-            //         Trip.update(tripToActive._id, { $set: {"booking.allDates":tripToActive.booking.allDates} }, function (err) {
-            //             if (err) {
-            //                 res.send(err)
-            //             }
-            //             res.json({ message: "trip updated" })
-            //         });
-            //     });
-            // }
+            for(let i=0; i<allDate.length;i++){
+                Trip.findOne({_id:allDate[i].value}, function (err,tripToActive) {
+                    if (err) {
+                        res.send(err)
+                    }
+                    for(letj=0;j<tripToActive.booking.allDates.length;j++){
+                        if(tripToActive.booking.allDates[j].value === tripId){
+                            tripToActive.booking.allDates[j].active = false
+                            res.json({ "active" : tripToActive.booking.allDates[j] })
+                        }
+                    }
+                    // Trip.update(tripToActive._id, { $set: {"booking.allDates":tripToActive.booking.allDates} }, function (err) {
+                    //     if (err) {
+                    //         res.send(err)
+                    //     }
+                    //     res.json({ message: "trip updated" })
+                    // });
+                });
+            }
+
+
         });
     });
 
