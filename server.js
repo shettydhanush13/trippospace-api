@@ -341,7 +341,21 @@ router.route('/inactive/:tripId')
             _id: req.params.tripId
         };
 
-        Trip.findOne({_id:tripId}, function (err,trip) {
+        Trip.update(query, { $set: req.body }, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "trip updated" })
+        });
+    });
+
+router.route("/inactiveAllDates/:tripId")
+    .post(function(req,res){
+        var query = {
+            _id : req.params.tripId
+        }
+
+        Trip.findOne(query, function (err,trip) {
             if (err) {
                 res.send(err)
             }
@@ -366,14 +380,7 @@ router.route('/inactive/:tripId')
             }
             res.json({ message: "trip updated" })
         });
-
-        Trip.update(query, { $set: req.body }, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "trip updated" })
-        });
-    })
+    });
 
 
 router.route('/bookmark/:tripId')
