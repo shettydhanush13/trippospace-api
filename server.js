@@ -366,8 +366,8 @@ router.route("/inactiveAllDates/:tripId")
                         res.send(err)
                     }
                     for(letj=0;j<tripToActive.booking.allDates.length;j++){
-                        if(tripToActive.booking.allDates[i].value === tripId){
-                            tripToActive.booking.allDates[i].active = false
+                        if(tripToActive.booking.allDates[j].value === tripId){
+                            tripToActive.booking.allDates[j].active = false
                         }
                     }
                     Trip.update(tripToActive._id, { $set: {"booking.allDates":tripToActive.booking.allDates} }, function (err) {
