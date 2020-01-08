@@ -367,7 +367,7 @@ router.route("/inactiveAllDates")
                 if (err) {
                     res.send(err)
                 }
-                res.json({ message: allDate })
+                res.json({ message: "all dates updated" })
             });
     });
 
