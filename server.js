@@ -354,22 +354,21 @@ router.route("/inactiveAllDates")
             let allDate = req.body.allDates
             let activeId = req.body.activeId
 
-            for(let i = 0;i<allDate.length;i++){
-                if(allDate[i].value == activeId){
-                    allDate[i].active = !allDate[i].active
+            const updateDates = (date) => {
+                for(let i = 0;i<date.length;i++){
+                    if(date[i].value == activeId){
+                        date[i].active = !date[i].active
+                    }
                 }
+                return date;
             }
 
-                // Trip.find({ _id : { $in : req.body.datesArray }}, function (err,trips) {
-                //     if (err) {
-                //         res.send(err)
-                //     }
-                    Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":allDate} }, function (err) {
-                        if (err) {
-                            res.send(err)
-                        }
-                        res.json({ message: allDate })
-                    });
+            Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":updateDates(allDate)} }, {multi: true} , function (err) {
+                if (err) {
+                    res.send(err)
+                }
+                res.json({ message: allDate })
+            });
     });
 
 
