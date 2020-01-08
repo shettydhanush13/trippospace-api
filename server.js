@@ -337,10 +337,35 @@ router.route('/inactive/:id')
 router.route('/inactive/:tripId')
     //active or inactive a trip
     .patch(function (req, res) {
-
         var query = {
             _id: req.params.tripId
         };
+
+        Trip.findOne({_id:tripId}, function (err,trip) {
+            if (err) {
+                res.send(err)
+            }
+            let allDate =  trip.booking.allDates
+            for(let i=0; i<allDate.length;i++){
+                Trip.findOne({_id:allDate[i].value}, function (err,tripToActive) {
+                    if (err) {
+                        res.send(err)
+                    }
+                    for(letj=0;j<tripToActive.booking.allDates.length;j++){
+                        if(tripToActive.booking.allDates[i].value === tripId){
+                            tripToActive.booking.allDates[i].active = false
+                        }
+                    }
+                    Trip.update(tripToActive._id, { $set: {"booking.allDates":tripToActive.booking.allDates} }, function (err) {
+                        if (err) {
+                            res.send(err)
+                        }
+                        res.json({ message: "trip updated" })
+                    });
+                });
+            }
+            res.json({ message: "trip updated" })
+        });
 
         Trip.update(query, { $set: req.body }, function (err) {
             if (err) {
