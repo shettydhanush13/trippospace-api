@@ -490,6 +490,20 @@ router.route('/login')
         });
     });
 
+router.route('/checkUsername')
+//to check if user exist
+.post(function (req, res) {
+    Organizer.findOne({
+        username: req.body.username
+    }, function (err, user) {
+        if (user !== null) {
+            res.json({ username: true })
+        } else {
+            res.json({ username : false })
+        }
+    })
+});
+
 router.route('/agent-login')
     //to check if user exist
     .post(function (req, res) {
