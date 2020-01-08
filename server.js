@@ -351,30 +351,24 @@ router.route('/inactive/:tripId')
 
 router.route("/inactiveAllDates")
     .post(function(req,res){
-            console.log("requesst body or payload : ",req)
-                                    // res.json({ message: req })
+            let allDate = req.body.allDates
+                Trip.find({ _id : { $in : req.body.datesArray }}, function (err,trips) {
+                    if (err) {
+                        res.send(err)
+                    }
+                    // let newTrip = tripToActive.booking.allDates
+                    // for(letj=0;j<newTrip.length;j++){
+                    //     if(tripToActive.booking.allDates[j].value === tripId){
+                    //         tripToActive.booking.allDates[j].active = false
+                    //     }
+                    // }
 
-            // for(let i=0; i<req.body.allDate.length;i++){
-            //     Trip.findOne({_id:allDate[i].value}, function (err,tripToActive) {
-            //         if (err) {
-            //             res.send(err)
-            //         }
-            //         let newTrip = tripToActive.booking.allDates
-            //         for(letj=0;j<newTrip.length;j++){
-            //             if(tripToActive.booking.allDates[j].value === tripId){
-            //                 tripToActive.booking.allDates[j].active = false
-            //             }
-            //         }
-
-            //         Trip.update(tripToActive._id, { $set: {"booking.allDates":tripToActive.booking.allDates} }, function (err) {
-            //             if (err) {
-            //                 res.send(err)
-            //             }
-            //             res.json({ message: "trip updated" })
-            //         });
-
-            //     });
-            // }
+                    // Trip.update(tripToActive._id, { $set: {"booking.allDates":tripToActive.booking.allDates} }, function (err) {
+                    //     if (err) {
+                    //         res.send(err)
+                    //     }
+                        res.json({ message: trips })
+                    });
     });
 
 
