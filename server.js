@@ -357,7 +357,11 @@ router.route("/inactiveAllDates")
             const updateDates = (date) => {
                 for(let i = 0;i<date.length;i++){
                     if(date[i].value == activeId){
-                        date[i].active = !date[i].active
+                        if(req.body.type === "inactive"){
+                            date[i].active = !date[i].active
+                        }else if(req.body.type === "delete"){
+                            date.splice(i, 1);
+                        }   
                     }
                 }
                 return date;
