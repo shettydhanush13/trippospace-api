@@ -366,8 +366,7 @@ router.route("/inactiveAllDates")
                 }
                 return date;
             }
-
-            Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":updateDates(allDate)} }, {multi: true} , function (err) {
+            Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":req.body.type = "addNewDate" ? allDate : updateDates(allDate)} }, {multi: true} , function (err) {
                 if (err) {
                     res.send(err)
                 }
