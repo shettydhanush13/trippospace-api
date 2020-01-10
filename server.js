@@ -169,11 +169,16 @@ router.route('/trip/:tripid')
             if (err) {
                 res.send(err)
             }
-            Category.update({ trips: { $all : [req.params.tripid]}  },{ $pull: { "trips": req.params.tripid }},{multi:true}, function (error,trip) {
+            Category.update({ trips: { $all : [req.params.tripid]}  },{ $pull: { "trips": req.params.tripid }},{multi:true}, function (error) {
                 if (error) {
                     res.send(error)
                 }
-                res.json({trip})
+                Organizer.update({ trips: { $all : [{id:req.params.tripid,active:false}]}  },{ $pull: { "trips": {id:req.params.tripid,active:false} }}, function (error,trip) {
+                    if (error) {
+                        res.send(error)
+                    }
+                    res.json({trip})
+                });
             });
         });
     })
