@@ -117,11 +117,11 @@ router.route('/trip')
                             id: response._id.toString(),
                             active : true
                         }
-                        Organizer.update({ _id:  req.body.organizerId }, { $push: newTrip }, function (err, organizer) {
+                        Organizer.update({ _id:  req.body.organizerId }, { $push: { "trips": newTrip }}, function (err, organizer) {
                             if (err) {
                                 res.send(err)
                             } else {
-                                res.send(organizer)
+                                res.send(response._id)
                             }
                         });
                     }
