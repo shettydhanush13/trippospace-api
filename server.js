@@ -169,11 +169,11 @@ router.route('/trip/:tripid')
             if (err) {
                 res.send(err)
             }
-            Category.find({ trips: { $elemMatch: req.params.tripid} }, function (er,trip) {
-                if (err) {
-                    res.send(err)
+            Category.update({ trips: { $all : [req.params.tripid]}  },{ $pull: { "trips": req.params.tripid }},{multi:true}, function (error,trip) {
+                if (error) {
+                    res.send(error)
                 }
-                res.send(trip)
+                res.json({trip})
             });
         });
     })
