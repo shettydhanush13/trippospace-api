@@ -349,11 +349,11 @@ router.route('/inactive/:tripId')
             if (err) {
                 res.send(err)
             }
-            Category.update({ trips: { $all : [req.params.tripId]}  }, req.body.isActive ? { $push: { "trips": req.params.tripid }} : { $pull: { "trips": req.params.tripid }},{multi:true}, function (error,trip) {
+            Category.update({ trips: { $all : [req.params.tripId]}  }, req.body.isActive === "true" ? { $push: { "trips": req.params.tripid }} : { $pull: { "trips": req.params.tripid }},{multi:true}, function (error,trip) {
                 if (error) {
                     res.send(error)
                 }
-                Organizer.update({ trips: { $all : [req.params.tripId]}  }, req.body.isActive ? { $push: { "trips": req.params.tripid }} : { $pull: { "trips": req.params.tripid }}, function (error,trip) {
+                Organizer.update({ trips: { $all : [req.params.tripId]}  }, req.body.isActive  === "true" ? { $push: { "trips": req.params.tripid }} : { $pull: { "trips": req.params.tripid }}, function (error,trip) {
                     if (error) {
                         res.send(error)
                     }
