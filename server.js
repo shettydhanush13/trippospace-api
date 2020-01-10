@@ -113,7 +113,17 @@ router.route('/trip')
                     if (err) {
                         res.send(err)
                     } else {
-                        res.send(response._id)
+                        let newTrip = {
+                            id: response._id.toString(),
+                            active : true
+                        }
+                        Organizer.update({ _id:  req.body.organizerId }, { $push: newTrip }, function (err, organizer) {
+                            if (err) {
+                                res.send(err)
+                            } else {
+                                res.send(organizer)
+                            }
+                        });
                     }
                 });
             }
