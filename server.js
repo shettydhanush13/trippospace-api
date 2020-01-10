@@ -113,11 +113,7 @@ router.route('/trip')
                     if (err) {
                         res.send(err)
                     } else {
-                        let newTrip = {
-                            id: response._id.toString(),
-                            active : true
-                        }
-                        Organizer.update({ _id:  req.body.organizerId }, { $push: { "trips": newTrip }}, function (err, organizer) {
+                        Organizer.update({ _id:  req.body.organizerId }, { $push: { "trips": response._id.toString() }}, function (err, organizer) {
                             if (err) {
                                 res.send(err)
                             } else {
@@ -169,17 +165,7 @@ router.route('/trip/:tripid')
             if (err) {
                 res.send(err)
             }
-            Category.update({ trips: { $all : [req.params.tripid]}  },{ $pull: { "trips": req.params.tripid }},{multi:true}, function (error) {
-                if (error) {
-                    res.send(error)
-                }
-                Organizer.update({ trips: { $all : [{id:req.params.tripid,active:false}]}  },{ $pull: { "trips": {id:req.params.tripid,active:false} }}, function (error,trip) {
-                    if (error) {
-                        res.send(error)
-                    }
-                    res.json({trip})
-                });
-            });
+            res.json({message:"trip deleted succesfully"})
         });
     })
 
@@ -363,7 +349,17 @@ router.route('/inactive/:tripId')
             if (err) {
                 res.send(err)
             }
-            res.json({ message: "trip updated" })
+            Category.update({ trips: { $all : [req.params.tripId]}  }, req.body.isActive ? { $push: { "trips": req.params.tripid }} : { $pull: { "trips": req.params.tripid }},{multi:true}, function (error,trip) {
+                if (error) {
+                    res.send(error)
+                }
+                Organizer.update({ trips: { $all : [req.params.tripId]}  }, req.body.isActive ? { $push: { "trips": req.params.tripid }} : { $pull: { "trips": req.params.tripid }}, function (error,trip) {
+                    if (error) {
+                        res.send(error)
+                    }
+                    res.json({trip})
+                });
+            });
         });
     })
 
