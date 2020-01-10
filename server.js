@@ -169,7 +169,12 @@ router.route('/trip/:tripid')
             if (err) {
                 res.send(err)
             }
-            res.json({ message: "trip deleted succesfully" })
+            Category.find({ trips: { $elemMatch: req.params.tripid} }, function (er,trip) {
+                if (err) {
+                    res.send(err)
+                }
+                res.send(trip)
+            });
         });
     })
 
