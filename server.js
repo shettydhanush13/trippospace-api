@@ -109,15 +109,13 @@ router.route('/trip')
             if (err) {
                 res.send(err)
             } else {
-                for (let i = 0; i < req.body.tags.length; i++) {
-                    Category.update({ id: req.body.tags[i] }, { $push: { "trips": response._id.toString() } }, function (err, category) {
-                        if (err) {
-                            res.send(err)
-                        } else {
-                            res.send(response._id)
-                        }
-                    });
-                }
+                Category.update({ id: { $in : req.body.tags} }, { $push: { "trips": response._id.toString() } }, {multi:true}, function (err, category) {
+                    if (err) {
+                        res.send(err)
+                    } else {
+                        res.send(response._id)
+                    }
+                });
             }
         });
     })
