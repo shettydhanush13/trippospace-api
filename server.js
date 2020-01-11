@@ -345,7 +345,7 @@ router.route('/inactive')
         const updateTrips = (trip) => {
             for(let i = 0 ; i < trip.length; i++){
                 if(trip[i].id === req.body.tripId ){
-                    trip[i].active === !trip[i].active
+                    trip[i].active = !trip[i].active
                 }
             }
             return trip
