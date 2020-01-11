@@ -359,7 +359,7 @@ router.route('/inactive')
                 if (error) {
                     res.send(error)
                 }
-                Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip)}}, function (error,trip) {
+                Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip) {
                     if (error) {
                         res.send(error)
                     }
