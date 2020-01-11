@@ -338,22 +338,33 @@ router.route('/inactive/:id')
         });
     })
 
-router.route('/inactive/:tripId')
+router.route('/inactive')
     //active or inactive a trip
-    .patch(function (req, res) {
-        var query = {
-            _id: req.params.tripId
-        };
+    .post(function (req, res) {
 
-        Trip.update(query, { $set: req.body }, function (err) {
+        const updateTrips = (trip) => {
+            for(let i = 0 ; i < trip.length; i++){
+                if(trip[i].id === req.body.tripId ){
+                    trip[i].active === !trip[i].active
+                }
+            }
+            return trip
+        }
+    
+        Trip.update({_id: req.body.tripId}, { $set: req.body.isActive }, function (err) {
             if (err) {
                 res.send(err)
             }
-            Organizer.update({ trips: { $all : [{id:req.params.tripId,active:true}]}  },{ $pull: { "trips": {id:req.params.tripId,active:true} }} , function (error,trip) {
+            Organizer.findOne( {_id: req.body.organizerId} , function (error,trip) {
                 if (error) {
                     res.send(error)
                 }
-                res.json({trip})
+                Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip)}}, function (error,trip) {
+                    if (error) {
+                        res.send(error)
+                    }
+                    res.json({trip})
+                });
             });
         });
     })
