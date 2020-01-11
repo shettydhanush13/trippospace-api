@@ -109,11 +109,11 @@ router.route('/trip')
             if (err) {
                 res.send(err)
             } else {
-                Category.update({ id: { $in : req.body.tags} }, { $push: { "trips": response._id.toString() } }, {multi:true}, function (err, category) {
+                Category.update({ id: { $in : req.body.tags} }, { $push: { "trips": {id:response._id.toString() ,active:true}} }, {multi:true}, function (err, category) {
                     if (err) {
                         res.send(err)
                     } else {
-                        Organizer.update({ _id:  req.body.organizerId }, { $push: { "trips": response._id.toString() }}, function (err, organizer) {
+                        Organizer.update({ _id:  req.body.organizerId }, { $push: { "trips": {id:response._id.toString() ,active:true} }}, function (err, organizer) {
                             if (err) {
                                 res.send(err)
                             } else {
@@ -349,11 +349,11 @@ router.route('/inactive/:tripId')
             if (err) {
                 res.send(err)
             }
-            Category.update({ trips: { $all : [req.params.tripId]}  }, req.body.isActive ? { $push: { "trips": req.params.tripId }} : { $pull: { "trips": req.params.tripId }},{multi:true}, function (error,trip) {
+            Category.update({ "trips.id": { $all : [req.params.tripId]}  },  { $pull: { "trips": {id:req.params.tripId,active:true} }},{ $push: { "trips": {id:req.params.tripId,active:false} }},{multi:true}, function (error,trip) {
                 if (error) {
                     res.send(error)
                 }
-                Organizer.update({ trips: { $all : [req.params.tripId]}  }, req.body.isActive ? { $push: { "trips": req.params.tripId }} : { $pull: { "trips": req.params.tripId }}, function (error,trip) {
+                Organizer.update({ "trips.id": { $all : [req.params.tripId]}  },  { $pull: { "trips": {id:req.params.tripId,active:true} }},{ $push: { "trips": {id:req.params.tripId,active:false} }} , function (error,trip) {
                     if (error) {
                         res.send(error)
                     }
