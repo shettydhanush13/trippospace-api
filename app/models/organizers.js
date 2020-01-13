@@ -10,7 +10,7 @@ var organizersSchema = new schema({
     website: String,
     location: String,
     description: String,
-    trips: Array,
+    trips: Number,
     rating: Number,
     social: {
         facebook: String,

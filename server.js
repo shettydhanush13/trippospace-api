@@ -359,11 +359,21 @@ router.route('/inactive')
                 if (error) {
                     res.send(error)
                 }
-                Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip) {
+                Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip2) {
                     if (error) {
                         res.send(error)
                     }
-                    res.json({trip})
+                    Category.find({ id: { $in : [req.body.tags]} }, function (err, category) {
+                        if (err) {
+                            res.send(err)
+                        } 
+                        Category.find({ id: { $in : [req.body.tags]} },{$set:{ trips : req.body.isActive ? category+1 : category-1}}, {multi:true}, function (err, category2) {
+                            if (err) {
+                                res.send(err)
+                            } 
+                            res.send(category2)
+                        });
+                    });
                 });
             });
         });
