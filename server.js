@@ -342,14 +342,14 @@ router.route('/inactive')
     //active or inactive a trip
     .post(function (req, res) {
 
-        const updateTrips = (trip) => {
-            for(let i = 0 ; i < trip.length; i++){
-                if(trip[i].id === req.body.tripId ){
-                    trip[i].active = !trip[i].active
-                }
-            }
-            return trip
-        }
+        // const updateTrips = (trip) => {
+        //     for(let i = 0 ; i < trip.length; i++){
+        //         if(trip[i].id === req.body.tripId ){
+        //             trip[i].active = !trip[i].active
+        //         }
+        //     }
+        //     return trip
+        // }
     
         // Trip.update({_id: req.body.tripId}, { $set: req.body.isActive }, function (err) {
         //     if (err) {
@@ -367,7 +367,7 @@ router.route('/inactive')
                         if (err) {
                             res.send(err)
                         } 
-                        Category.update({ id: { $in : req.body.tags} },{$set:{ "trips" :  isActive ? category.trips+1 : category.trips-1 }}, {multi:true}, function (err, category2) {
+                        Category.update({ id: { $in : req.body.tags} },{$set:{ "trips" :  req.body.isActive ? category.trips+1 : category.trips-1 }}, {multi:true}, function (err, category2) {
                             if (err) {
                                 res.send(err)
                             } 
