@@ -355,14 +355,14 @@ router.route('/inactive')
             if (err) {
                 res.send(err)
             }
-            Organizer.findOne( {_id: req.body.organizerId} , function (error,trip) {
-                if (error) {
-                    res.send(error)
-                }
-                Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip2) {
-                    if (error) {
-                        res.send(error)
-                    }
+            // Organizer.findOne( {_id: req.body.organizerId} , function (error,trip) {
+            //     if (error) {
+            //         res.send(error)
+            //     }
+            //     Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip2) {
+            //         if (error) {
+            //             res.send(error)
+            //         }
                     Category.find({ id: { $in : req.body.tags} }, function (err, category) {
                         if (err) {
                             res.send(err)
@@ -376,8 +376,8 @@ router.route('/inactive')
                             });
                         } 
                     });
-                });
-            });
+            //     });
+            // });
         });
     });
 
