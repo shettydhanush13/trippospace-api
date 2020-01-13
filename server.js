@@ -368,7 +368,7 @@ router.route('/inactive')
                             res.send(err)
                         } 
                         for(let i = 0 ; i < category.length; i++){
-                            Category.update({ id: category[i].id },{$set:{ "trips" :  req.body.isActive.isActive ? category[i].trips-1 : category[i].trips+1 }}, function (err, category2) {
+                            Category.update({ id: category[i].id },{$set:{ "trips" :  req.body.isActive.isActive ? category[i].trips+1 : category[i].trips-1 }}, function (err, category2) {
                                 if (err) {
                                     res.send(err)
                                 } 
