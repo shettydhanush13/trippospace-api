@@ -351,32 +351,33 @@ router.route('/inactive')
             return trip
         }
     
-        Trip.update({_id: req.body.tripId}, { $set: req.body.isActive }, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            Organizer.findOne( {_id: req.body.organizerId} , function (error,trip) {
-                if (error) {
-                    res.send(error)
-                }
-                Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip2) {
-                    if (error) {
-                        res.send(error)
-                    }
+        // Trip.update({_id: req.body.tripId}, { $set: req.body.isActive }, function (err) {
+        //     if (err) {
+        //         res.send(err)
+        //     }
+            // Organizer.findOne( {_id: req.body.organizerId} , function (error,trip) {
+            //     if (error) {
+            //         res.send(error)
+            //     }
+            //     Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip2) {
+            //         if (error) {
+            //             res.send(error)
+            //         }
                     Category.find({ id: { $all : req.body.tags} }, function (err, category) {
                         if (err) {
                             res.send(err)
                         } 
-                        Category.find({ id: { $all : req.body.tags} },{$set:{ trips : req.body.isActive ? category.tags+1 : category.tags-1}}, {multi:true}, function (err, category2) {
-                            if (err) {
-                                res.send(err)
-                            } 
-                            res.send(category2)
-                        });
-                    });
-                });
-            });
-        });
+                        res.send({category})
+                        // Category.find({ id: { $all : req.body.tags} },{$set:{ trips : req.body.isActive ? category.tags+1 : category.tags-1}}, {multi:true}, function (err, category2) {
+                        //     if (err) {
+                        //         res.send(err)
+                        //     } 
+                        //     res.send(category2)
+                        // });
+                    // });
+            //     });
+            // });
+        // });
     })
 
 router.route("/inactiveAllDates")
