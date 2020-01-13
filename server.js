@@ -355,29 +355,29 @@ router.route('/inactive')
             if (err) {
                 res.send(err)
             }
-            // Organizer.findOne( {_id: req.body.organizerId} , function (error,trip) {
-            //     if (error) {
-            //         res.send(error)
-            //     }
-            //     Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip2) {
-            //         if (error) {
-            //             res.send(error)
-            //         }
-                    Category.find({ id: { $in : req.body.tags} }, function (err, category) {
-                        if (err) {
-                            res.send(err)
-                        } 
-                        for(let i = 0 ; i < category.length; i++){
-                            Category.update({ id: category[i].id },{$set:{ "trips" :  req.body.isActive.isActive ? category[i].trips+1 : category[i].trips-1 }}, function (err, category2) {
-                                if (err) {
-                                    res.send(err)
-                                } 
-                            res.json({"category2":category2})
-                            });
-                        } 
-                    });
-            //     });
-            // });
+            Organizer.findOne( {_id: req.body.organizerId} , function (error,trip) {
+                if (error) {
+                    res.send(error)
+                }
+                Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip2) {
+                    if (error) {
+                        res.send(error)
+                    }
+                    // Category.find({ id: { $in : req.body.tags} }, function (err, category) {
+                    //     if (err) {
+                    //         res.send(err)
+                    //     } 
+                    //     for(let i = 0 ; i < category.length; i++){
+                    //         Category.update({ id: category[i].id },{$set:{ "trips" :  req.body.isActive.isActive ? category[i].trips+1 : category[i].trips-1 }}, function (err, category2) {
+                    //             if (err) {
+                    //                 res.send(err)
+                    //             } 
+                    //         res.json({"category2":category2})
+                    //         });
+                    //     } 
+                    // });
+                });
+            });
         });
     });
 
