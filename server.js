@@ -372,7 +372,7 @@ router.route('/inactive')
                                 if (err) {
                                     res.send(err)
                                 } 
-                            res.json({"category2":category})
+                            res.json({"category2":category2})
                             });
                         } 
                     });
