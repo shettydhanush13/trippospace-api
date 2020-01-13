@@ -355,15 +355,17 @@ router.route('/inactive')
         //     if (err) {
         //         res.send(err)
         //     }
-            Organizer.findOne( {_id: req.body.organizerId} , function (error,trip) {
+            Organizer.findOne( {_id: req.body.organizerId} , function (error,organizer) {
                 if (error) {
                     res.send(error)
                 }
-                Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip2) {
-                    if (error) {
-                        res.send(error)
-                    }
-                    res.json({"trip2":trip2})
+                res.json({"organizer":organizer})
+
+                // Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(trip.trips)}}, function (error,trip2) {
+                //     if (error) {
+                //         res.send(error)
+                //     }
+                //     res.json({"trip2":trip2})
 
                     // Category.find({ id: { $in : req.body.tags} }, function (err, category) {
                     //     if (err) {
@@ -378,7 +380,7 @@ router.route('/inactive')
                     //         });
                     //     } 
                     // });
-                });
+                // });
             });
         // });
     });
