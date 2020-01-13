@@ -350,6 +350,19 @@ router.route('/inactive')
             }
             return trip
         }
+
+        const updateDates = (date) => {
+            for(let i = 0;i<date.length;i++){
+                if(date[i].value == req.body.tripId){
+                    if(req.body.type === "inactive"){
+                        date[i].active = !date[i].active
+                    }else if(req.body.type === "delete"){
+                        date.splice(i, 1);
+                    }   
+                }
+            }
+            return date;
+        }
     
         Trip.update({_id: req.body.tripId}, { $set: req.body.isActive }, function (err) {
             if (err) {
@@ -372,7 +385,12 @@ router.route('/inactive')
                                 if (err) {
                                     res.send(err)
                                 } 
-                                res.json({"category2":category2})
+                                Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":req.body.type === "addNewDate" ? req.body.allDates : updateDates(req.body.allDates)} }, {multi: true} , function (err) {
+                                    if (err) {
+                                        res.send(err)
+                                    }
+                                    res.json({ message: "all dates updated" })
+                                });
                             });
                         } 
                     });
@@ -398,7 +416,8 @@ router.route("/inactiveAllDates")
                 }
                 return date;
             }
-            Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":req.body.type == "addNewDate" ? allDate : updateDates(allDate)} }, {multi: true} , function (err) {
+
+            Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":req.body.type === "addNewDate" ? allDate : updateDates(allDate)} }, {multi: true} , function (err) {
                 if (err) {
                     res.send(err)
                 }
