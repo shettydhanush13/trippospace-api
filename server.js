@@ -363,11 +363,11 @@ router.route('/inactive')
                     if (error) {
                         res.send(error)
                     }
-                    Category.find({ id: { $in : [req.body.tags]} }, function (err, category) {
+                    Category.find({ id: { $all : req.body.tags} }, function (err, category) {
                         if (err) {
                             res.send(err)
                         } 
-                        Category.find({ id: { $in : [req.body.tags]} },{$set:{ trips : req.body.isActive ? category+1 : category-1}}, {multi:true}, function (err, category2) {
+                        Category.find({ id: { $all : req.body.tags} },{$set:{ trips : req.body.isActive ? category.tags+1 : category.tags-1}}, {multi:true}, function (err, category2) {
                             if (err) {
                                 res.send(err)
                             } 
