@@ -367,12 +367,12 @@ router.route('/inactive')
                         if (err) {
                             res.send(err)
                         } 
-                        // Category.update({ id: { $in : req.body.tags} },{$set:{ "trips" :  category.tags+1 }}, {multi:true}, function (err, category2) {
-                        //     if (err) {
-                        //         res.send(err)
-                        //     } 
-                            res.json({"new":parseInt(category.tags)+1})
-                        // });
+                        Category.update({ id: { $in : req.body.tags} },{$set:{ "trips" :  isActive ? category.trips+1 : category.trips-1 }}, {multi:true}, function (err, category2) {
+                            if (err) {
+                                res.send(err)
+                            } 
+                            res.json({category2})
+                        });
                     });
         //         });
         //     });
