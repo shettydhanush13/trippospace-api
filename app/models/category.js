@@ -6,7 +6,7 @@ var categorySchema = new schema({
     title: String,
     image: Array,
     videos: Array,
-    trips: Array,
+    trips: Number,
     followers: Array,
     isFollowed: Boolean
 });
