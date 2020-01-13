@@ -351,10 +351,10 @@ router.route('/inactive')
         //     return trip
         // }
     
-        Trip.update({_id: req.body.tripId}, { $set: req.body.isActive }, function (err) {
-            if (err) {
-                res.send(err)
-            }
+        // Trip.update({_id: req.body.tripId}, { $set: req.body.isActive }, function (err) {
+        //     if (err) {
+        //         res.send(err)
+        //     }
             // Organizer.findOne( {_id: req.body.organizerId} , function (error,trip) {
             //     if (error) {
             //         res.send(error)
@@ -378,7 +378,8 @@ router.route('/inactive')
             //     });
             // });
         });
-    });
+    // });
+});
 
 router.route("/inactiveAllDates")
     .post(function(req,res){
