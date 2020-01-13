@@ -371,7 +371,7 @@ router.route('/inactive')
                         //     if (err) {
                         //         res.send(err)
                         //     } 
-                            res.json({"prev":category.tags,"new":category.tags+1})
+                            res.json({"new":parseInt(category.tags)+1})
                         // });
                     });
         //         });
