@@ -371,7 +371,7 @@ router.route('/inactive')
                         //     if (err) {
                         //         res.send(err)
                         //     } 
-                            res.json({"category2":category.trips+1})
+                            res.json({"category2":category})
                         // });
                     });
         //         });
