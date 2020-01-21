@@ -630,7 +630,7 @@ router.route('/changePassword/:id')
         var query = {
             _id: req.params.id
         };
-        Users.find(query, function (err, user) {
+        Users.findOne(query, function (err, user) {
             console.log("user : ", user)
             console.log("req.body : ", req.body)
             if (user.password !== req.body.currentPassword) {
