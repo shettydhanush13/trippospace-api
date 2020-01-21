@@ -502,11 +502,12 @@ router.route('/register')
         users.cover_pic = req.body.cover_pic;
         users.stats = req.body.stats;
         users.trips = req.body.trips;
-
+        console.log("username : ",req.body.username)
         Users.findOne({
             username: req.body.username
         }, function (err, user) {
             if (user !== null) {
+                console.log("user : ", user)
                 res.json({ "message": "username exists" })
             } else {
                 users.save(function (err, trip) {
