@@ -503,21 +503,12 @@ router.route('/register')
         users.stats = req.body.stats;
         users.trips = req.body.trips;
         console.log("username : ",req.body.username)
-        Users.findOne({
-            username: req.body.username
-        }, function (err, user) {
-            if (user !== null) {
-                console.log("user : ", user)
-                res.json({ "message": "username exists" })
-            } else {
-                users.save(function (err, trip) {
-                    if (err) {
-                        res.send(err)
-                    }
-                    res.json({ "success": "user added succesfully : " + trip._id })
-                });
+        users.save(function (err, trip) {
+            if (err) {
+                res.send(err)
             }
-        });
+            res.json({ "success": "user added succesfully : " + trip._id })
+        }); 
     });
 
 router.route('/user/:userId')
@@ -566,10 +557,24 @@ router.route('/login')
         });
     });
 
-router.route('/checkUsername')
+router.route('/checkOrganizerid')
 //to check if user exist
 .post(function (req, res) {
     Organizer.findOne({
+        username: req.body.username
+    }, function (err, user) {
+        if (user !== null) {
+            res.json({ username: true })
+        } else {
+            res.json({ username : false })
+        }
+    })
+});
+
+router.route('/checkUsername')
+//to check if user exist
+.post(function (req, res) {
+    Users.findOne({
         username: req.body.username
     }, function (err, user) {
         if (user !== null) {
