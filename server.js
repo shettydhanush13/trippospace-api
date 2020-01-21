@@ -577,6 +577,8 @@ router.route('/checkUsername')
     Users.findOne({
         username: req.body.username
     }, function (err, user) {
+        console.log("query :", req.body.username)
+        console.log("user :", user)
         if (user !== null) {
             res.json({ username: true })
         } else {
