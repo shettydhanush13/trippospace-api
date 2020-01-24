@@ -490,7 +490,7 @@ router.route('/customer/:tripId')
 //get Reviews for organizer
 router.route('/reviews')
     .post(function (req, res) {
-    Reviews.find({_id : { $all : req.body.reviewId }}, function (err, review) {
+    Reviews.find({_id : { $in : req.body.reviewId }}, function (err, review) {
         if (err) {
             res.send(err)
         }
