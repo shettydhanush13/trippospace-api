@@ -8,6 +8,7 @@ var Customer = require('./app/models/customers');
 var Users = require("./app/models/users");
 var Places = require("./app/models/places");
 var Videos = require("./app/models/videos");
+var Reviews = require("./app/models/reviews")
 var Category = require("./app/models/category")
 var cors = require('cors');
 var AWS = require('aws-sdk');
