@@ -487,6 +487,18 @@ router.route('/customer/:tripId')
         });
     });
 
+//get Reviews for organizer
+route.router.route('/reviews')
+    .post(function (req, res) {
+    Reviews.find({_id : { $all : [req.body.reviewId] }}, function (err, review) {
+        if (err) {
+            res.send(err)
+        }
+        console.log("review : ", review)
+        res.send(review)
+    });
+});
+
 router.route('/register')
 
     //to register a new user
