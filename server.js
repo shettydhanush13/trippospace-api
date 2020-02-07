@@ -503,7 +503,7 @@ router.route('/reviews')
 //get completed trips data
 router.route('/completedTripsData/:id')
     .get(function (req, res) {
-    CompletedTripsData.find({}, function (err, data) {
+    CompletedTripsData.find({"organizerName" : "String"}, function (err, data) {
         if (err) {
             res.send(err)
         }
