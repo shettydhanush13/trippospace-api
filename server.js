@@ -9,6 +9,7 @@ var Users = require("./app/models/users");
 var Places = require("./app/models/places");
 var Videos = require("./app/models/videos");
 var Reviews = require("./app/models/reviews")
+var CompletedTripsData = require("./app/models/completedTrips")
 var Category = require("./app/models/category")
 var cors = require('cors');
 var AWS = require('aws-sdk');
@@ -496,6 +497,17 @@ router.route('/reviews')
         }
         console.log("review : ", review)
         res.send(review)
+    });
+});
+
+//get completed trips data
+router.route('/completedTripsData/:id')
+    .get(function (req, res) {
+    CompletedTripsData.find({organizerId :  req.params.id }, function (err, data) {
+        if (err) {
+            res.send(err)
+        }
+        res.send(data)
     });
 });
 

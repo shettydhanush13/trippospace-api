@@ -9,4 +9,4 @@ var completedTripsSchema = new schema({
     trips:Object
 });
 
-module.exports = mongoose.model('reviews', completedTripsSchema)
+module.exports = mongoose.model('completedTrips', completedTripsSchema)
