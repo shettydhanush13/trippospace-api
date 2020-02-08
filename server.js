@@ -16,6 +16,9 @@ var AWS = require('aws-sdk');
 const fs = require('fs');
 const fileType = require('file-type');
 const multiparty = require('multiparty');
+const Nexmo = require('nexmo');
+
+
 
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
@@ -619,6 +622,16 @@ router.route('/agent-login')
             username: req.body.username
         }, function (err, user) {
             if (user !== null) {
+                const nexmo = new Nexmo({
+                    apiKey: 'b21324c1',
+                    apiSecret: 'IlE5PM4MZYZLsTOO',
+                  });
+                
+                  const from = 'Nexmo';
+                const to = '918971780778';
+                const text = 'Hello from Nexmo';
+                
+                nexmo.message.sendSms(from, to, text)
                 if (req.body.password === user.password) {
                     user.password = null
                     res.json({ user })
