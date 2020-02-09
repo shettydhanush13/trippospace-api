@@ -17,6 +17,7 @@ const fs = require('fs');
 const fileType = require('file-type');
 const multiparty = require('multiparty');
 const Nexmo = require('nexmo');
+var nodemailer = require('nodemailer');
 
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "kJN10hJ92Fe0zFhOYK70EJRbLAb8xrcDKOphRMvL" });
 
@@ -650,6 +651,29 @@ router.route('/phone-auth')
         const text = `your verification code is ${code}`;
 
         nexmo.message.sendSms(from, to, text);
+
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'shettydhanush13@gmail.com',
+              pass: '5$Recieved'
+            }
+          });
+          
+          var mailOptions = {
+            from: 'shettydhanush13@gmail.com',
+            to: 'trippospace@gmail.com',
+            subject: 'Sending Email using Node.js',
+            text: 'That was easy!'
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log("email error : ",error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
 
         res.json({ "code": code })
     });
