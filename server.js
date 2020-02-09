@@ -665,7 +665,7 @@ router.route('/phone-auth')
           });
           
           var mailOptions = {
-            from: 'shettydhanush13@gmail.com',
+            from: 'donotreply@trippospace.com',
             to: 'trippospace@gmail.com',
             subject: 'Sending Email using Node.js',
             text: 'That was easy!'
