@@ -656,7 +656,7 @@ router.route('/phone-auth')
 
         const msg = {
             to: 'shettydhanush13@gmail.com',
-            from: 'test@example.com',
+            from: 'donotreply@trippospace.com',
             subject: 'Sending with Twilio SendGrid is Fun',
             text: 'and easy to do anywhere, even with Node.js',
             html: '<strong>and easy to do anywhere, even with Node.js</strong>',
