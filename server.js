@@ -650,7 +650,7 @@ router.route('/phone-auth')
         const to = req.body.phone;
         const text = `your verification code is ${code}`;
 
-        nexmo.message.sendSms(from, to, text);
+        // nexmo.message.sendSms(from, to, text);
 
         var transporter = nodemailer.createTransport({
             // service: 'Godaddy',
