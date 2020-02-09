@@ -637,23 +637,24 @@ router.route('/agent-login')
 router.route('/phone-auth')
     //otp verification
     .post(function (req, res) {
+        console.log("phone : ",req.body.phone)
         
     const nexmo = new Nexmo({
         apiKey: 'b21324c1',
         apiSecret: 'IlE5PM4MZYZLsTOO',
     });
 
-    const code = Math.floor(100000 + Math.random() * 900000).toString()
+    // const code = Math.floor(100000 + Math.random() * 900000).toString()
     
     const from = 'TRIPPOSPACE';
     const to = req.body.phone;
-    const text = `your verification code is ${code}`;
+    const text = `your verification code is 4567`;
 
     console.log("var : ",(from, to, text))
     
     nexmo.message.sendSms(from, to, text)
 
-    res.send(code)
+    // res.send(code)
 });
 
 router.route('/changePassword-organizer/:id')
