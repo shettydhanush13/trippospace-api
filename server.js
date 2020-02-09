@@ -653,33 +653,18 @@ router.route('/phone-auth')
         // nexmo.message.sendSms(from, to, text);
 
         var transporter = nodemailer.createTransport({
-            // service: 'Godaddy',
-            // host: "smtpout.secureserver.net",  
-            // secure: true,
-            // port: 465,
-        
-            // auth: {
-            //   user: 'donotreply@trippospace.com',
-            //   pass: '5$Recieved'
-            // }
-
-            host: "smtpout.secureserver.net",  
-            secure: true,
-            secureConnection: false, // TLS requires secureConnection to be false
-            tls: {
-                ciphers:'SSLv3'
-            },
-            requireTLS:true,
-            port: 465,
-            debug: true,
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
             auth: {
-                user: 'donotreply@trippospace.com',
+                user: 'shettydhanush13@gmail.com',
                 pass: '5$Recieved'
-              }
+            }
           });
           
           var mailOptions = {
-            from: 'donotreply@trippospace.com',
+            from: 'shettydhanush13@gmail.com',
             to: 'trippospace@gmail.com',
             subject: 'Sending Email using Node.js',
             text: 'That was easy!'
