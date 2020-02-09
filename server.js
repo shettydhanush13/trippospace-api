@@ -658,14 +658,14 @@ router.route('/phone-auth')
             secure: false,
             requireTLS: true,
             auth: {
-                user: 'shettydhanush13@gmail.com',
-                pass: '5$Recieved'
+                user: 'trippospace@gmail.com',
+                pass: 'triPPosPace@123'
             }
           });
           
           var mailOptions = {
-            from: 'shettydhanush13@gmail.com',
-            to: 'trippospace@gmail.com',
+            from: 'trippospace@gmail.com',
+            to: 'shettydhanush13@gmail.com',
             subject: 'Sending Email using Node.js',
             text: 'That was easy!'
           };
