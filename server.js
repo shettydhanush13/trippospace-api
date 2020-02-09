@@ -616,7 +616,7 @@ router.route('/reset-password')
 //to check if user exist
     .post(function (req, res) {
         Organizer.findOne({
-            email: req.body.mail
+            "contact.mail" : req.body.mail
         }, function (err, user) {
             if (user !== null) {
                 res.json({ message : "Reset link sent." })
