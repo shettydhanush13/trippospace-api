@@ -670,6 +670,8 @@ router.route('/phone-auth')
             subject: 'Sending Email using Node.js',
             text: 'That was easy!'
           };
+
+          console.log("mailOptions : ",mailOptions);
           
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {
