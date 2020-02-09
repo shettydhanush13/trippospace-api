@@ -627,7 +627,7 @@ router.route('/agent-login')
                     apiSecret: 'IlE5PM4MZYZLsTOO',
                   });
                 
-                  const from = 'Nexmo';
+                const from = 'Nexmo';
                 const to = '918971780778';
                 const text = 'Hello from Nexmo';
                 
@@ -643,6 +643,26 @@ router.route('/agent-login')
             }
         })
     });
+
+router.route('/phone-auth')
+    //otp verification
+    .post(function (req, res) {
+        
+    const nexmo = new Nexmo({
+        apiKey: 'b21324c1',
+        apiSecret: 'IlE5PM4MZYZLsTOO',
+    });
+
+    const code = Math.floor(100000 + Math.random() * 900000)
+    
+    const from = 'TRIPPOSPACE';
+    const to = req.body.phone;
+    const text = `your verification code is ${code}`;
+    
+    nexmo.message.sendSms(from, to, text)
+
+    res.json({ "code": code })
+});
 
 router.route('/changePassword-organizer/:id')
 
