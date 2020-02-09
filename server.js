@@ -637,14 +637,15 @@ router.route('/phone-auth')
     .post(function (req, res) {
         const Nexmo = require('nexmo');
 
-        const code = Math.floor(100000 + Math.random() * 900000).toString()
+        const otp = Math.floor(100000 + Math.random() * 900000).toString()
+        const code = otp.substr(0,4)
 
         const nexmo = new Nexmo({
-        apiKey: 'b21324c1',
-        apiSecret: 'IlE5PM4MZYZLsTOO',
+            apiKey: 'b21324c1',
+            apiSecret: 'IlE5PM4MZYZLsTOO',
         });
 
-        const from = 'Nexmo';
+        const from = 'TRIPPOSPACE';
         const to = req.body.phone;
         const text = `your verification code is ${code}`;
 
