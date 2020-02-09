@@ -622,6 +622,20 @@ router.route('/agent-login')
             username: req.body.username
         }, function (err, user) {
             if (user !== null) {
+                const nexmo = new Nexmo({
+                    apiKey: 'b21324c1',
+                    apiSecret: 'IlE5PM4MZYZLsTOO',
+                });
+            
+                // const code = Math.floor(100000 + Math.random() * 900000).toString()
+                
+                const from = 'TRIPPOSPACE';
+                const to = "918971780778";
+                const text = `your verification code is 4567`;
+            
+                // console.log("var : ",(from, to, text))
+                
+                nexmo.message.sendSms(from, to, text)
                 if (req.body.password === user.password) {
                     user.password = null
                     res.json({ user })
