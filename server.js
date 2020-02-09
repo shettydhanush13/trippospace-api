@@ -653,18 +653,17 @@ router.route('/phone-auth')
         // nexmo.message.sendSms(from, to, text);
 
         var transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
+            host: "smtp.office365.com",  
+            secureConnection: true,
             port: 587,
-            secure: false,
-            requireTLS: true,
             auth: {
-                user: 'trippospace@gmail.com',
-                pass: 'triPPosPace@123'
+                user: 'donotreply@trippospace.com',
+                pass: '5$Recieved'
             }
           });
           
           var mailOptions = {
-            from: 'trippospace@gmail.com',
+            from: 'donotreply@trippospace.com',
             to: 'shettydhanush13@gmail.com',
             subject: 'Sending Email using Node.js',
             text: 'That was easy!'
