@@ -653,9 +653,11 @@ router.route('/phone-auth')
         nexmo.message.sendSms(from, to, text);
 
         var transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'trippospace.com',
+            port: 465,
+            secure: true, // true for 465, false for other ports
             auth: {
-              user: 'shettydhanush13@gmail.com',
+              user: 'donotreply@trippospace.com',
               pass: '5$Recieved'
             }
           });
