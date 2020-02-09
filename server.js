@@ -19,7 +19,7 @@ const multiparty = require('multiparty');
 const Nexmo = require('nexmo');
 var nodemailer = require('nodemailer');
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey("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");
+sgMail.setApiKey("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");
 
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
@@ -656,7 +656,7 @@ router.route('/phone-auth')
 
         const msg = {
             to: 'shettydhanush13@gmail.com',
-            from: 'trippospace@gmail.com',
+            from: 'test@example.com',
             subject: 'Sending with Twilio SendGrid is Fun',
             text: 'and easy to do anywhere, even with Node.js',
             html: '<strong>and easy to do anywhere, even with Node.js</strong>',
