@@ -668,9 +668,9 @@ router.route('/welcome-mail')
             text: 'grow your business with trippospace',
             html: '<strong>Welcome to trippospace community, our team will contact to soon.</strong>',
           };
-          
+
           sgMail.send(msg);
-        res.send({ "email sent" })
+        res.send({ "message":"email sent" })
     });
 
 
