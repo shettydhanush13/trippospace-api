@@ -601,19 +601,19 @@ router.route('/checkOrganizerid')
 
 router.route('/checkUsername')
 //to check if user exist
-.post(function (req, res) {
-    Users.findOne({
-        username: req.body.username
-    }, function (err, user) {
-        console.log("query :", req.body.username)
-        console.log("user :", user)
-        if (user !== null) {
-            res.json({ username: true })
-        } else {
-            res.json({ username : false })
-        }
-    })
-});
+    .post(function (req, res) {
+        Users.findOne({
+            username: req.body.username
+        }, function (err, user) {
+            console.log("query :", req.body.username)
+            console.log("user :", user)
+            if (user !== null) {
+                res.json({ username: true })
+            } else {
+                res.json({ username : false })
+            }
+        })
+    });
 
 // router.route('/agent-login')
 //     //to check if user exist
