@@ -18,6 +18,8 @@ const fileType = require('file-type');
 const multiparty = require('multiparty');
 const Nexmo = require('nexmo');
 var nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey("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");
 
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
@@ -652,32 +654,14 @@ router.route('/phone-auth')
 
         // nexmo.message.sendSms(from, to, text);
 
-        var transporter = nodemailer.createTransport({
-            host: "smtp.office365.com",  
-            secureConnection: true,
-            port: 587,
-            auth: {
-                user: 'donotreply@trippospace.com',
-                pass: '5$Recieved'
-            }
-          });
-          
-          var mailOptions = {
-            from: 'donotreply@trippospace.com',
+        const msg = {
             to: 'shettydhanush13@gmail.com',
-            subject: 'Sending Email using Node.js',
-            text: 'That was easy!'
+            from: 'trippospace@gmail.com',
+            subject: 'Sending with Twilio SendGrid is Fun',
+            text: 'and easy to do anywhere, even with Node.js',
+            html: '<strong>and easy to do anywhere, even with Node.js</strong>',
           };
-
-          console.log("mailOptions : ",mailOptions);
-          
-          transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-              console.log("email error : ",error);
-            } else {
-              console.log('Email sent: ' + info.response);
-            }
-          });
+          sgMail.send(msg);
 
         res.json({ "code": code })
     });
