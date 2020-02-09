@@ -643,15 +643,17 @@ router.route('/phone-auth')
         apiSecret: 'IlE5PM4MZYZLsTOO',
     });
 
-    const code = Math.floor(100000 + Math.random() * 900000)
+    const code = Math.floor(100000 + Math.random() * 900000).toString()
     
     const from = 'TRIPPOSPACE';
     const to = req.body.phone;
     const text = `your verification code is ${code}`;
+
+    console.log("var : ",(from, to, text))
     
     nexmo.message.sendSms(from, to, text)
 
-    res.json({ "code": code })
+    res.send(code)
 });
 
 router.route('/changePassword-organizer/:id')
