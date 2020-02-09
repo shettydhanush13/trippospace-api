@@ -622,16 +622,16 @@ router.route('/agent-login')
             username: req.body.username
         }, function (err, user) {
             if (user !== null) {
-                const nexmo = new Nexmo({
-                    apiKey: 'b21324c1',
-                    apiSecret: 'IlE5PM4MZYZLsTOO',
-                  });
+                // const nexmo = new Nexmo({
+                //     apiKey: 'b21324c1',
+                //     apiSecret: 'IlE5PM4MZYZLsTOO',
+                //   });
                   
-                  const from = 'Nexmo';
-                  const to = '918971780778';
-                  const text = 'Hello from Nexmo';
+                //   const from = 'Nexmo';
+                //   const to = '918971780778';
+                //   const text = 'Hello from Nexmo';
                   
-                  nexmo.message.sendSms(from, to, text);
+                //   nexmo.message.sendSms(from, to, text);
 
                 if (req.body.password === user.password) {
                     user.password = null
