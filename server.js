@@ -653,15 +653,29 @@ router.route('/phone-auth')
         nexmo.message.sendSms(from, to, text);
 
         var transporter = nodemailer.createTransport({
-            service: 'Godaddy',
+            // service: 'Godaddy',
+            // host: "smtpout.secureserver.net",  
+            // secure: true,
+            // port: 465,
+        
+            // auth: {
+            //   user: 'donotreply@trippospace.com',
+            //   pass: '5$Recieved'
+            // }
+
             host: "smtpout.secureserver.net",  
             secure: true,
+            secureConnection: false, // TLS requires secureConnection to be false
+            tls: {
+                ciphers:'SSLv3'
+            },
+            requireTLS:true,
             port: 465,
-        
+            debug: true,
             auth: {
-              user: 'donotreply@trippospace.com',
-              pass: '5$Recieved'
-            }
+                user: 'donotreply@trippospace.com',
+                pass: '5$Recieved'
+              }
           });
           
           var mailOptions = {
