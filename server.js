@@ -619,6 +619,23 @@ router.route('/reset-password')
             "contact.mail" : req.body.mail
         }, function (err, user) {
             if (user !== null) {
+                const sgMail = require('@sendgrid/mail');
+                sgMail.setApiKey("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");
+
+                let code = user._id+user.password
+
+                var b = new Buffer(code);
+                var resetCode = b.toString('base64');
+                
+                const msg = {
+                    to: req.body.mail,
+                    from: 'password-reset@trippospace.com',
+                    subject: 'LINK TO RESET YOUR PASSWORD',
+                    text: 'grow your business with trippospace',
+                    html: `<strong><a href="http://reset-password.trippospace.com/${resetCode}">CLICK HERE TO RESET PASSWORD</a></strong>`,
+                  };
+        
+                  sgMail.send(msg);
                 res.json({ message : "Reset link sent." })
             } else {
                 res.json({ error: "Email not regestered. use regestered email. " })
