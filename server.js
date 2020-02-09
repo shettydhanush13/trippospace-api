@@ -40,6 +40,19 @@ router.use(function (req, res, next) {
     next();
 });
 
+//to test if the api is working
+router.get('/', function (req, res) {
+    res.json({ message: "welcome to trippospace" });
+    s3.listBuckets(function (err, data) {
+        if (err) {
+            console.log("Error", err);
+        } else {
+            console.log("Success", data.Buckets);
+        }
+    });
+});
+
+
 // abstracts function to upload a file returning a promise
 const uploadFile = (buffer, name, type) => {
     const params = {
@@ -53,7 +66,6 @@ const uploadFile = (buffer, name, type) => {
 };
 
 router.route('/upload')
-    //2
     //to upload an image to s3
     .post(function (request, response) {
         const form = new multiparty.Form();
@@ -73,21 +85,10 @@ router.route('/upload')
         });
     })
 
-//1
-//to test if the api is working
-router.get('/', function (req, res) {
-    res.json({ message: "welcome to trippospace" });
-    s3.listBuckets(function (err, data) {
-        if (err) {
-            console.log("Error", err);
-        } else {
-            console.log("Success", data.Buckets);
-        }
-    });
-});
+
+// ORGANIZER APP API
 
 router.route('/trip')
-    //2
     //to post a new trip
     .post(function (req, res) {
         var trip = new Trip();
@@ -130,7 +131,6 @@ router.route('/trip')
         });
     })
 
-    //3
     //to get details of all the trips
     .get(function (req, res) {
         var query = {
@@ -145,8 +145,7 @@ router.route('/trip')
     });
 
 router.route('/trip/:tripid')
-    //4
-    //to get details of a trip by tipId
+    //to get details of a trip by tripId
     .get(function (req, res) {
         var query = {
             _id: req.params.tripid
@@ -159,8 +158,7 @@ router.route('/trip/:tripid')
         });
     })
 
-    //5
-    //to delete a trip by tipId
+    //to delete a trip by tripId
     .delete(function (req, res) {
         var query = {
             _id: req.params.tripid
@@ -172,7 +170,8 @@ router.route('/trip/:tripid')
             res.json({message:"trip deleted succesfully"})
         });
     })
-
+    
+    //to edit a trip by tripId
     .patch(function (req, res) {
         var query = {
             _id: req.params.tripid
@@ -186,9 +185,8 @@ router.route('/trip/:tripid')
     });
 
 router.route('/tripCategory/:category')
-    //4
-    //to get details of a trip by tipId
 
+    //to get details of a trip by tipId
     .get(function (req, res) {
         Trip.find({ tags: { $all: [req.params.category] } }, function (err, trip) {
             if (err) {
@@ -216,7 +214,7 @@ router.route('/tripCategory/:category')
     })
 
 router.route('/from/:place')
-    //6
+
     //to get details of a trip depatrting from a particular city
     .get(function (req, res) {
         var query = {
@@ -231,7 +229,7 @@ router.route('/from/:place')
     })
 
 router.route('/organizer')
-    //8
+
     //to add a new organizer
     .post(function (req, res) {
         var organizer = new Organizer();
@@ -610,6 +608,20 @@ router.route('/checkUsername')
                 res.json({ username: true })
             } else {
                 res.json({ username : false })
+            }
+        })
+    });
+
+router.route('/reset-password')
+//to check if user exist
+    .post(function (req, res) {
+        Organizer.findOne({
+            email: req.body.mail
+        }, function (err, user) {
+            if (user !== null) {
+                res.json({ message : "Reset link sent." })
+            } else {
+                res.json({ error: "Email not regestered. use regestered email. " })
             }
         })
     });
