@@ -653,9 +653,11 @@ router.route('/phone-auth')
         nexmo.message.sendSms(from, to, text);
 
         var transporter = nodemailer.createTransport({
-            host: 'trippospace.com',
+            service: 'Godaddy',
+            host: "smtpout.secureserver.net",  
+            secure: true,
             port: 465,
-            secure: true, // true for 465, false for other ports
+        
             auth: {
               user: 'donotreply@trippospace.com',
               pass: '5$Recieved'
