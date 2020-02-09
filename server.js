@@ -18,8 +18,6 @@ const fileType = require('file-type');
 const multiparty = require('multiparty');
 const Nexmo = require('nexmo');
 
-
-
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -615,24 +613,41 @@ router.route('/checkUsername')
         })
     });
 
-// router.route('/agent-login')
-//     //to check if user exist
-//     .post(function (req, res) {
-//         Organizer.findOne({
-//             username: req.body.username
-//         }, function (err, user) {
-//             if (user !== null) {
-//                 if (req.body.password === user.password) {
-//                     user.password = null
-//                     res.json({ user })
-//                 } else {
-//                     res.json({ "message": "incorrect password" })
-//                 }
-//             } else {
-//                 res.json({ "message": "username does not exist" })
-//             }
-//         })
-//     });
+router.route('/agent-login')
+    //to check if user exist
+    .post(function (req, res) {
+        Organizer.findOne({
+            username: req.body.username
+        }, function (err, user) {
+            if (user !== null) {
+                if (req.body.password === user.password) {
+                    user.password = null
+                    res.json({ user })
+                } else {
+                    res.json({ "message": "incorrect password" })
+                }
+            } else {
+                res.json({ "message": "username does not exist" })
+            }
+        })
+    });
+
+router.route('/phone-auth')
+    //to check if user exist
+    .post(function (req, res) {
+        const Nexmo = require('nexmo');
+
+        const nexmo = new Nexmo({
+        apiKey: 'b21324c1',
+        apiSecret: 'IlE5PM4MZYZLsTOO',
+        });
+
+        const from = 'Nexmo';
+        const to = '918971780778';
+        const text = 'Hello from Nexmo';
+
+        nexmo.message.sendSms(from, to, text);
+    });
 
 
 router.route('/changePassword-organizer/:id')
