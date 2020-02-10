@@ -105,7 +105,7 @@ router.route('/trip')
         trip.itinerary = req.body.itinerary;
         trip.pickup = req.body.pickup;
         trip.inclusions = req.body.inclusions;
-        trip.exclutions = req.body.exclutions;
+        trip.exclusions = req.body.exclusions;
         trip.credits = req.body.credits;
         trip.videos = req.body.videos;
         trip.organizerId = req.body.organizerId;
