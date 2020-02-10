@@ -114,19 +114,20 @@ router.route('/trip')
             if (err) {
                 res.send(err)
             } else {
-                Category.update({ id: { $in : req.body.tags} }, { $push: { "trips": {id:response._id.toString() ,active:true}} }, {multi:true}, function (err, category) {
-                    if (err) {
-                        res.send(err)
-                    } else {
-                        Organizer.update({ _id:  req.body.organizerId }, { $push: { "trips": {id:response._id.toString() ,active:true} }}, function (err, organizer) {
-                            if (err) {
-                                res.send(err)
-                            } else {
-                                res.send(response._id)
-                            }
-                        });
-                    }
-                });
+                // Category.update({ id: { $in : req.body.tags} }, { $push: { "trips": {id:response._id.toString() ,active:true}} }, {multi:true}, function (err, category) {
+                //     if (err) {
+                //         res.send(err)
+                //     } else {
+                //         Organizer.update({ _id:  req.body.organizerId }, { $push: { "trips": {id:response._id.toString() ,active:true} }}, function (err, organizer) {
+                //             if (err) {
+                //                 res.send(err)
+                //             } else {
+                //                 res.send(response._id)
+                //             }
+                //         });
+                //     }
+                // });
+                res.send(response)
             }
         });
     })
