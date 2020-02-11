@@ -615,11 +615,20 @@ router.route('/checkUsername')
     });
 
 router.route('/reset-password')
-//to check if user exist
+//to reset forgotten password
     .post(function (req, res) {
-        Organizer.findOne({
-            "contact.mail" : req.body.mail
-        }, function (err, user) {
+        if(req.body.platform === "user"){
+            DB = Users
+            query = {
+                email : req.body.mail
+            }
+        }else{
+            DB = Organizer
+            query = {
+                "contact.mail" : req.body.mail
+            }
+        }
+        DB.findOne(query, function (err, user) {
             if (user !== null) {
                 const sgMail = require('@sendgrid/mail');
                 sgMail.setApiKey("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");
