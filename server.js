@@ -11,6 +11,7 @@ var Videos = require("./app/models/videos");
 var Reviews = require("./app/models/reviews")
 var CompletedTripsData = require("./app/models/completedTrips")
 var Category = require("./app/models/category")
+var Template = require("./app/email")
 var cors = require('cors');
 var AWS = require('aws-sdk');
 const fs = require('fs');
@@ -42,7 +43,7 @@ router.use(function (req, res, next) {
 
 //to test if the api is working
 router.get('/', function (req, res) {
-    res.json({ message: "welcome to trippospace" });
+    res.json({ message: Template.template.password });
     s3.listBuckets(function (err, data) {
         if (err) {
             console.log("Error", err);
