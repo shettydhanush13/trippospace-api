@@ -43,7 +43,7 @@ router.use(function (req, res, next) {
 
 //to test if the api is working
 router.get('/', function (req, res) {
-    res.json({ message: Template.template.password });
+    res.json({ message: JSON.stringify(Template) });
     s3.listBuckets(function (err, data) {
         if (err) {
             console.log("Error", err);
