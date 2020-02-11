@@ -1,5 +1,4 @@
-
-let template = {
+exports.data = {
     "password" : `<body class="iOSGmailAppfix" style="margin:0; padding:0; background-color:#F2F2F2;">
     <table id="EmailWrapper" cellpadding="0" cellspacing="0" border="0" align="center"
     style="background-color: #f2f2f2; border:none; font-size: 0; width:100%">
