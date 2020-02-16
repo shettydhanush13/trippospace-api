@@ -981,7 +981,7 @@ router.route('/upcomingtrips/:tripsArray')
     //to get details of multiple trips by ids
     .get(function (req, res) {
         // UpcomingTrips.find({ "_id": { $in: JSON.parse(req.params.tripsArray) } }, function (err, trips) {
-        UpcomingTrips.find({ "tripTitle":  "KEDARKANTHA TREK" }, function (err, trips) {
+            Trip.find({ "title":  "KEDARKANTHA TREK" }, function (err, trips) {
             if (err) {
                 res.send(err)
             } else {
