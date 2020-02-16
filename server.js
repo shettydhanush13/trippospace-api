@@ -11,7 +11,6 @@ var Reviews = require("./app/models/reviews")
 var CompletedTripsData = require("./app/models/completedTrips")
 var UpcomingTrips = require("./app/models/upcomingTrips")
 var Category = require("./app/models/category")
-var Template = require("./app/email")
 var cors = require('cors');
 var AWS = require('aws-sdk');
 const fs = require('fs');
