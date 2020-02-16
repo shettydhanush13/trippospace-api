@@ -7,7 +7,6 @@ var Organizer = require('./app/models/organizers');
 var Customer = require('./app/models/customers');
 var Users = require("./app/models/users");
 var Places = require("./app/models/places");
-var Videos = require("./app/models/videos");
 var Reviews = require("./app/models/reviews")
 var CompletedTripsData = require("./app/models/completedTrips")
 var UpcomingTrips = require("./app/models/upcomingTrips")
@@ -965,16 +964,6 @@ router.route('/placesSearch')
         });
     });
 
-router.route('/videos/:type')
-    .get(function (req, res) {
-        Videos.find({ tags: { $all: [req.params.type] } }, function (err, video) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(video)
-        });
-    });
-
 router.route('/trips/:tripsArray')
     //4
     //to get details of multiple trips by ids
@@ -997,18 +986,8 @@ router.route('/upcomingtrips/:tripsArray')
             if (err) {
                 res.send(err)
             } else {
-                res.send(trips)
+                res.send("trips")
             }
-        });
-    });
-
-router.route('/videos')
-    .get(function (req, res) {
-        Videos.find({}, function (err, video) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(video)
         });
     });
 
