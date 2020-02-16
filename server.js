@@ -10,6 +10,7 @@ var Places = require("./app/models/places");
 var Videos = require("./app/models/videos");
 var Reviews = require("./app/models/reviews")
 var CompletedTripsData = require("./app/models/completedTrips")
+var UpcomingTrips = require("./app/models/upcomingTrips")
 var Category = require("./app/models/category")
 var Template = require("./app/email")
 var cors = require('cors');
@@ -979,6 +980,19 @@ router.route('/trips/:tripsArray')
     //to get details of multiple trips by ids
     .get(function (req, res) {
         Trip.find({ "_id": { $in: JSON.parse(req.params.tripsArray) } }, function (err, trips) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(trips)
+            }
+        });
+    });
+
+router.route('/upcomingtrips/:tripsArray')
+    //4
+    //to get details of multiple trips by ids
+    .get(function (req, res) {
+        UpcomingTrips.find({ "_id": { $in: JSON.parse(req.params.tripsArray) } }, function (err, trips) {
             if (err) {
                 res.send(err)
             } else {
