@@ -529,7 +529,7 @@ router.route('/register')
         users.cover_pic = req.body.cover_pic;
         users.stats = req.body.stats;
         users.trips = req.body.trips;
-        console.log("username : ",req.body.username)
+        users.social = req.body.social
         users.save(function (err, trip) {
             if (err) {
                 res.send(err)
@@ -613,6 +613,20 @@ router.route('/checkUsername')
             }
         })
     });
+
+    router.route('/checkEmail')
+    //to check if user exist
+        .post(function (req, res) {
+            Users.findOne({
+                email: req.body.email
+            }, function (err, user) {
+                if (user !== null) {
+                    res.json({ email: true })
+                } else {
+                    res.json({ email : false })
+                }
+            })
+        });
 
 router.route('/reset-password')
 //to reset forgotten password
