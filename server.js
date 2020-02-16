@@ -985,7 +985,7 @@ router.route('/upcomingtrips/:tripsArray')
             if (err) {
                 res.send(err)
             } else {
-                res.send("trips")
+                res.send(trips)
             }
         });
     });
