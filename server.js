@@ -341,7 +341,7 @@ router.route('/updateCategory')
                 res.send(err)
             }
             for(let i = 0; i < categories.length; i++){
-                Category.update({id:category[i].id},{$set : {trips : categories[i].trips+action }}, function (err, status){
+                Category.update({id:categories[i].id},{$set : {trips : categories[i].trips+action }}, function (err, status){
                     if (err) {
                         res.send(err)
                     }
