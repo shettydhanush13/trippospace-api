@@ -117,15 +117,8 @@ router.route('/trip')
                 // Category.update({ id: { $in : req.body.tags} }, { $push: { "trips": {id:response._id.toString() ,active:true}} }, {multi:true}, function (err, category) {
                 //     if (err) {
                 //         res.send(err)
-                //     } else {
-                //         Organizer.update({ _id:  req.body.organizerId }, { $push: { "trips": {id:response._id.toString() ,active:true} }}, function (err, organizer) {
-                //             if (err) {
-                //                 res.send(err)
-                //             } else {
-                //                 res.send(response._id)
-                //             }
-                //         });
-                //     }
+                //     } 
+                //     res.send(response._id)
                 // });
                 res.send(response)
             }
@@ -345,14 +338,14 @@ router.route('/inactive')
     //active or inactive a trip
     .post(function (req, res) {
 
-        const updateTrips = (trip) => {
-            for(let i = 0 ; i < trip.length; i++){
-                if(trip[i].id === req.body.tripId ){
-                    trip[i].active = !trip[i].active
-                }
-            }
-            return trip
-        }
+        // const updateTrips = (trip) => {
+        //     for(let i = 0 ; i < trip.length; i++){
+        //         if(trip[i].id === req.body.tripId ){
+        //             trip[i].active = !trip[i].active
+        //         }
+        //     }
+        //     return trip
+        // }
 
         const updateDates = (date) => {
             for(let i = 0;i<date.length;i++){
@@ -371,33 +364,23 @@ router.route('/inactive')
             if (err) {
                 res.send(err)
             }
-            Organizer.findOne( {_id: req.body.organizerId} , function (error,organizer) {
-                if (error) {
-                    res.send(error)
-                }
-                Organizer.update( {_id: req.body.organizerId} ,{$set : {"trips": updateTrips(organizer.trips)}}, function (error,organizer2) {
-                    if (error) {
-                        res.send(error)
-                    }
-                    Category.find({ id: { $in : req.body.tags} }, function (err, category) {
+            Category.find({ id: { $in : req.body.tags} }, function (err, category) {
+                if (err) {
+                    res.send(err)
+                } 
+                for(let i = 0 ; i < category.length; i++){
+                    Category.update({ id: category[i].id },{$set:{ "trips" :  req.body.isActive.isActive ? category[i].trips+1 : category[i].trips-1 }}, function (err, category2) {
                         if (err) {
                             res.send(err)
                         } 
-                        for(let i = 0 ; i < category.length; i++){
-                            Category.update({ id: category[i].id },{$set:{ "trips" :  req.body.isActive.isActive ? category[i].trips+1 : category[i].trips-1 }}, function (err, category2) {
-                                if (err) {
-                                    res.send(err)
-                                } 
-                                Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":req.body.type === "addNewDate" ? req.body.allDates : updateDates(req.body.allDates)} }, {multi: true} , function (err) {
-                                    if (err) {
-                                        res.send(err)
-                                    }
-                                    res.json({ message: "all dates updated" })
-                                });
-                            });
-                        } 
+                        Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":req.body.type === "addNewDate" ? req.body.allDates : updateDates(req.body.allDates)} }, {multi: true} , function (err) {
+                            if (err) {
+                                res.send(err)
+                            }
+                            res.json({ message: "all dates updated" })
+                        });
                     });
-                });
+                } 
             });
         });
     });
