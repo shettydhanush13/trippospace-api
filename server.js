@@ -114,12 +114,6 @@ router.route('/trip')
             if (err) {
                 res.send(err)
             } else {
-                // Category.update({ id: { $in : req.body.tags} }, { $push: { "trips": {id:response._id.toString() ,active:true}} }, {multi:true}, function (err, category) {
-                //     if (err) {
-                //         res.send(err)
-                //     } 
-                //     res.send(response._id)
-                // });
                 res.send(response)
             }
         });
@@ -334,19 +328,32 @@ router.route('/inactive/:id')
         });
     })
 
+router.route('/updateCategory')
+    //get inactive trips for an organizer
+    .post(function (req, res) {
+        let query = {
+            id: { $in : req.body.tags}
+        }
+        let action = req.body.action
+
+        Category.find(query, function (err, trip) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(trip)
+        });
+    })
+
+// Category.update({ id: { $in : req.body.tags} }, { $push: { "trips": {id:response._id.toString() ,active:true}} }, {multi:true}, function (err, category) {
+                //     if (err) {
+                //         res.send(err)
+                //     } 
+                //     res.send(response._id)
+                // });
+
 router.route('/inactive')
     //active or inactive a trip
     .post(function (req, res) {
-
-        // const updateTrips = (trip) => {
-        //     for(let i = 0 ; i < trip.length; i++){
-        //         if(trip[i].id === req.body.tripId ){
-        //             trip[i].active = !trip[i].active
-        //         }
-        //     }
-        //     return trip
-        // }
-
         const updateDates = (date) => {
             for(let i = 0;i<date.length;i++){
                 if(date[i].value == req.body.tripId){
@@ -359,30 +366,19 @@ router.route('/inactive')
             }
             return date;
         }
-    
         Trip.update({_id: req.body.tripId}, { $set: req.body.isActive }, function (err) {
             if (err) {
                 res.send(err)
             }
-            Category.find({ id: { $in : req.body.tags} }, function (err, category) {
+           
+            Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":req.body.type === "addNewDate" ? req.body.allDates : updateDates(req.body.allDates)} }, {multi: true} , function (err) {
                 if (err) {
                     res.send(err)
-                } 
-                for(let i = 0 ; i < category.length; i++){
-                    Category.update({ id: category[i].id },{$set:{ "trips" :  req.body.isActive.isActive ? category[i].trips+1 : category[i].trips-1 }}, function (err, category2) {
-                        if (err) {
-                            res.send(err)
-                        } 
-                        Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":req.body.type === "addNewDate" ? req.body.allDates : updateDates(req.body.allDates)} }, {multi: true} , function (err) {
-                            if (err) {
-                                res.send(err)
-                            }
-                            res.json({ message: "all dates updated" })
-                        });
-                    });
-                } 
+                }
+                res.json({ message: "all dates updated" })
             });
         });
+                
     });
 
 router.route("/inactiveAllDates")
