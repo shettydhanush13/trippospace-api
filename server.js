@@ -336,7 +336,7 @@ router.route('/updateCategory')
         }
         let action = req.body.action
 
-        Category.find(query, function (err, trip) {
+        Category.update(query, { $set : {"trips": 1} },{multi: true}, function (err, trip) {
             if (err) {
                 res.send(err)
             }
