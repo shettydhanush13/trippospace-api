@@ -974,6 +974,28 @@ router.route('/upcomingtrips/:tripsArray')
         });
     });
 
+router.route('/upcomingtrip')
+    //to post a new trip
+    .post(function (req, res) {
+        var upcomingtrips = new UpcomingTrips();
+        upcomingtrips.tripTitle = req.body.tripTitle;
+        upcomingtrips.thumb = req.body.thumb;
+        upcomingtrips.tripId = req.body.tripId
+        upcomingtrips.travelers = req.body.travelers
+        upcomingtrips.credits = req.body.credits
+        upcomingtrips.date = req.body.date
+        upcomingtrips.days = req.body.days
+        upcomingtrips.userId = req.body.userId
+      
+        upcomingtrips.save(function (err, response) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(response)
+            }
+        });
+    })
+
 router.route('/home/:userId')
     .get(function (req, res) {
         Category.find({}, function (err, category) {
