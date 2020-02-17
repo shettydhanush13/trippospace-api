@@ -336,20 +336,23 @@ router.route('/updateCategory')
         }
         let action = req.body.action
 
-        Category.update(query, { $set : {"trips": 1} },{multi: true}, function (err, trip) {
+        Category.find(query, function (err, categories) {
             if (err) {
                 res.send(err)
             }
-            res.send(trip)
+            for(let i = 0; i < categories.length; i++){
+                Category.update({id:category[i].id},{$set : {trips : categories[i].trips+action }}, function (err, status){
+                    if (err) {
+                        res.send(err)
+                    }
+                    if(i === categories.length-1 ){
+                        res.send("categories updated")
+                    }
+                });
+            }
         });
     })
 
-// Category.update({ id: { $in : req.body.tags} }, { $push: { "trips": {id:response._id.toString() ,active:true}} }, {multi:true}, function (err, category) {
-                //     if (err) {
-                //         res.send(err)
-                //     } 
-                //     res.send(response._id)
-                // });
 
 router.route('/inactive')
     //active or inactive a trip
