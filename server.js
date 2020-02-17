@@ -357,6 +357,7 @@ router.route('/updateCategory')
 router.route('/inactive')
     //active or inactive a trip
     .post(function (req, res) {
+
         const updateDates = (date) => {
             for(let i = 0;i<date.length;i++){
                 if(date[i].value == req.body.tripId){
@@ -369,6 +370,7 @@ router.route('/inactive')
             }
             return date;
         }
+        
         Trip.update({_id: req.body.tripId}, { $set: req.body.isActive }, function (err) {
             if (err) {
                 res.send(err)
