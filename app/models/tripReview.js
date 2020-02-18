@@ -11,7 +11,6 @@ var tripreviewsSchema = new schema({
     days: Number,
     organizerName: String,
     organizerId: String,
-    organizerReview: Object,
     tripReview: Object
 });
 

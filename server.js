@@ -514,7 +514,6 @@ router.route('/trip-review')
     tripreviews.days = req.body.days,
     tripreviews.organizerName = req.body.organizerName,
     tripreviews.organizerId = req.body.organizerId,
-    tripreviews.organizerReview = req.body.organizerReview,
     tripreviews.tripReview = req.body.tripReview
     tripreviews.save(function (err, response) {
         if (err) {
