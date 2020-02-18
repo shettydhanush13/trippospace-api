@@ -492,7 +492,8 @@ router.route('/organizer-review')
     reviews.trip = req.body.title,
     reviews.tripDate = req.body.tripDate,
     reviews.rating = req.body.rating,
-    reviews.review = req.body.review
+    reviews.review = req.body.review,
+    reviews.organizer = req.body.organizerId
     reviews.save(function (err, response) {
         if (err) {
             res.send(err)
