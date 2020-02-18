@@ -524,6 +524,16 @@ router.route('/trip-review')
     });
 });
 
+router.route('/trip-review/:id')
+    .get(function (req, res) {
+    Tripreviews.findOne({ _id : req.params.id }, function (err, review) {
+        if (err) {
+            res.send(err)
+        }
+        res.send(review)
+    });
+});
+
 //get completed trips data
 router.route('/completedTripsData/:id')
     .get(function (req, res) {
