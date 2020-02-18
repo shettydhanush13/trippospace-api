@@ -11,6 +11,7 @@ var Reviews = require("./app/models/reviews")
 var CompletedTripsData = require("./app/models/completedTrips")
 var UpcomingTrips = require("./app/models/upcomingTrips")
 var Category = require("./app/models/category")
+var Tripreviews = require("./app/models/tripReview")
 var cors = require('cors');
 var AWS = require('aws-sdk');
 const fs = require('fs');
@@ -495,6 +496,27 @@ router.route('/organizer-review')
     reviews.review = req.body.review,
     reviews.organizer = req.body.organizerId
     reviews.save(function (err, response) {
+        if (err) {
+            res.send(err)
+        }
+        res.send({ "id": response })
+    });
+});
+
+router.route('/trip-review')
+.post(function (req, res) {
+    var tripreviews = new Tripreviews();
+    tripreviews.userId = req.body.userId,
+    tripreviews.tripId = req.body.tripId,
+    tripreviews.tripTitle = req.body.tripTitle,
+    tripreviews.thumb = req.body.thumb,
+    tripreviews.date = req.body.date,
+    tripreviews.days = req.body.days,
+    tripreviews.organizerName = req.body.organizerName,
+    tripreviews.organizerId = req.body.organizerId,
+    tripreviews.organizerReview = req.body.organizerReview,
+    tripreviews.tripReview = req.body.tripReview
+    tripreviews.save(function (err, response) {
         if (err) {
             res.send(err)
         }
