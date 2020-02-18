@@ -2,11 +2,11 @@
 var mongoose = require("mongoose")
 var schema = mongoose.Schema
 
-var completedTripsSchema = new schema({
+var organizerstatsSchema = new schema({
     organizerName:String,
     organizerId:String,
     stats:Object,
     trips:Object
 });
 
-module.exports = mongoose.model('completedtrips', completedTripsSchema)
+module.exports = mongoose.model('organizerstats', organizerstatsSchema)

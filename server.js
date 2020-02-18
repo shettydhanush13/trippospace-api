@@ -8,7 +8,7 @@ var Customer = require('./app/models/customers');
 var Users = require("./app/models/users");
 var Places = require("./app/models/places");
 var Reviews = require("./app/models/reviews")
-var CompletedTripsData = require("./app/models/completedTrips")
+var Organizerstats = require("./app/models/organizerstats")
 var UpcomingTrips = require("./app/models/upcomingTrips")
 var Category = require("./app/models/category")
 var Tripreviews = require("./app/models/tripReview")
@@ -536,7 +536,7 @@ router.route('/trip-review/:id')
 //get completed trips data
 router.route('/completedTripsData/:id')
     .get(function (req, res) {
-    CompletedTripsData.findOne({"organizerId" : req.params.id.toString()}, function (err, data) {
+     Organizerstats.findOne({"organizerId" : req.params.id.toString()}, function (err, data) {
         if (err) {
             res.send(err)
         }
