@@ -474,14 +474,30 @@ router.route('/customer/:tripId')
     });
 
 //get Reviews for organizer
-router.route('/reviews')
+router.route('/getReviews')
     .post(function (req, res) {
     Reviews.find({_id : { $in : req.body.reviewId }}, function (err, review) {
         if (err) {
             res.send(err)
         }
-        console.log("review : ", review)
         res.send(review)
+    });
+});
+
+router.route('/organizer-review')
+.post(function (req, res) {
+    var reviews = new Reviews();
+    reviews.name = req.body.name
+    reviews.id = req.body.id,
+    reviews.trip = req.body.title,
+    reviews.tripDate = req.body.tripDate,
+    reviews.rating = req.body.rating,
+    reviews.review = req.body.review
+    reviews.save(function (err, res) {
+        if (err) {
+            res.send(err)
+        }
+        res.send({ "id": res })
     });
 });
 

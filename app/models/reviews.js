@@ -7,8 +7,6 @@ var reviewsSchema = new schema({
     id:String,
     trip:String,
     tripDate:String,
-    date:String,
-    title:String,
     rating:Number,
     review: String
 });
