@@ -12,6 +12,7 @@ var Organizerstats = require("./app/models/organizerstats")
 var UpcomingTrips = require("./app/models/upcomingTrips")
 var Category = require("./app/models/category")
 var Tripreviews = require("./app/models/tripReview")
+var Pendingreview = require("./app/models/pendingReview")
 var cors = require('cors');
 var AWS = require('aws-sdk');
 const fs = require('fs');
@@ -471,6 +472,19 @@ router.route('/customer/:tripId')
                 res.send(err)
             }
             res.json({ message: "customer list updated" })
+        });
+    });
+
+router.route('/complete-trip')
+    .post(function (req, res) {
+        var pendingreview = new Pendingreview();
+        pendingreview.tripDetails = req.body.tripDetails,
+        pendingreview.user = req.body.user
+        pendingreview.save(function (err, response) {
+            if (err) {
+                res.send(err)
+            }
+            res.send({ "id": response })
         });
     });
 
