@@ -484,7 +484,13 @@ router.route('/complete-trip')
             if (err) {
                 res.send(err)
             }
-            res.send({ "id": response })
+            UpcomingTrips.deleteOne({ tripId: req.body.tripDetails._id, userId: req.body.user }, function (err, trip) {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.send(trip)
+                }
+            });
         });
     });
 
