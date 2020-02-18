@@ -543,16 +543,6 @@ router.route('/trip-review')
     });
 });
 
-router.route('/trip-review/:id')
-    .get(function (req, res) {
-    Tripreviews.findOne({ _id : req.params.id }, function (err, review) {
-        if (err) {
-            res.send(err)
-        }
-        res.send(review)
-    });
-});
-
 //get completed trips data
 router.route('/completedTripsData/:id')
     .get(function (req, res) {
@@ -1027,12 +1017,37 @@ router.route('/trips/:tripsArray')
         });
     });
 
-router.route('/upcomingtrips/:tripsArray')
+router.route('/upcomingTrips/:id')
     //4
     //to get details of multiple trips by ids
     .get(function (req, res) {
-        UpcomingTrips.find({ "_id": { $in: JSON.parse(req.params.tripsArray) } }, function (err, trips) {
-            // UpcomingTrips.find({ "tripTitle":  "KEDARKANTHA TREK" }, function (err, trips) {
+        UpcomingTrips.find({ userId : req.params.id }, function (err, trips) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(trips)
+            }
+        });
+    });
+
+router.route('/completedTrips/:id')
+    //4
+    //to get details of multiple trips by ids
+    .get(function (req, res) {
+        Tripreviews.find({ userId : req.params.id }, function (err, trips) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(trips)
+            }
+        });
+    });
+
+router.route('/pendingTrips/:id')
+    //4
+    //to get details of multiple trips by ids
+    .get(function (req, res) {
+        Pendingreview.find({ user : req.params.id }, function (err, trips) {
             if (err) {
                 res.send(err)
             } else {
