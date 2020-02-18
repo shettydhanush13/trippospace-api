@@ -579,7 +579,6 @@ router.route('/register')
         users.profile_pic = req.body.profile_pic;
         users.cover_pic = req.body.cover_pic;
         users.stats = req.body.stats;
-        users.trips = req.body.trips;
         users.social = req.body.social
         users.save(function (err, trip) {
             if (err) {

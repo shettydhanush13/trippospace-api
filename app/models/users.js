@@ -11,7 +11,6 @@ var usersSchema = new schema({
     profile_pic: String,
     cover_pic: String,
     stats: Object,
-    trips: Object,
     social:Object
 });
 
