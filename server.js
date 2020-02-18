@@ -489,7 +489,7 @@ router.route('/organizer-review')
     var reviews = new Reviews();
     reviews.name = req.body.name
     reviews.id = req.body.id,
-    reviews.trip = req.body.title,
+    reviews.trip = req.body.trip,
     reviews.tripDate = req.body.tripDate,
     reviews.rating = req.body.rating,
     reviews.review = req.body.review,
