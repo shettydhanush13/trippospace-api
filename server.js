@@ -497,7 +497,7 @@ router.route('/organizer-review')
         if (err) {
             res.send(err)
         }
-        res.send({ "id": res })
+        res.send({ "id": response })
     });
 });
 
