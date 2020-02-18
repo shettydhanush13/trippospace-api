@@ -476,7 +476,7 @@ router.route('/customer/:tripId')
 //get Reviews for organizer
 router.route('/getReviews/:id')
     .get(function (req, res) {
-    Reviews.find({ organizerId : req.params.id }, function (err, review) {
+    Reviews.find({ organizer : req.params.id }, function (err, review) {
         if (err) {
             res.send(err)
         }
