@@ -549,17 +549,6 @@ router.route('/trip-review')
     });
 });
 
-//get completed trips data
-router.route('/completedTripsData/:id')
-    .get(function (req, res) {
-     Organizerstats.findOne({"organizerId" : req.params.id.toString()}, function (err, data) {
-        if (err) {
-            res.send(err)
-        }
-        res.send(data)
-    });
-});
-
 router.route('/register')
 
     //to register a new user
@@ -1058,6 +1047,16 @@ router.route('/stats/:id')
                 res.send(err)
             } else {
                 res.send(data)
+            }
+        });
+    })
+
+    .patch(function (req, res) {
+        Organizerstats.update({ organizerId : req.params.id }, {stats:req.body.stats}, function (err, response) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(response)
             }
         });
     });
