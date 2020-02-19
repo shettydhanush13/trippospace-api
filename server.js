@@ -484,7 +484,7 @@ router.route('/complete-trip')
             if (err) {
                 res.send(err)
             }
-            UpcomingTrips.deleteOne({ _id: req.body._id, userId: req.body.user }, function (err, trip) {
+            UpcomingTrips.deleteOne({ _id: req.body._id }, function (err, trip) {
                 if (err) {
                     res.send(err)
                 } else {
@@ -539,7 +539,13 @@ router.route('/trip-review')
         if (err) {
             res.send(err)
         }
-        res.send({ "id": response })
+        Pendingreview.deleteOne({ _id: req.body.pendingId }, function (err, trip) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(trip)
+            }
+        });
     });
 });
 
