@@ -1049,6 +1049,19 @@ router.route('/completedTrips/:id')
         });
     });
 
+router.route('/stats/:id')
+    //4
+    //to get details of multiple trips by ids
+    .get(function (req, res) {
+        Organizerstats.find({ organizerId : req.params.id }, function (err, data) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(data)
+            }
+        });
+    });
+
 router.route('/pendingTrips/:id')
     //4
     //to get details of multiple trips by ids
