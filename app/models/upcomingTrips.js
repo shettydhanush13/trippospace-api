@@ -9,7 +9,9 @@ var upcomingTripsSchema = new schema({
     credits:Number,
     date:String,
     days:Number,
-    userId:String
+    userId:String,
+    travelers = Number,
+    price = Number
 });
 
 module.exports = mongoose.model('upcomingtrips', upcomingTripsSchema)

@@ -1074,6 +1074,8 @@ router.route('/upcomingtrip')
         upcomingtrips.date = req.body.date
         upcomingtrips.days = req.body.days
         upcomingtrips.userId = req.body.userId
+        upcomingtrips.travelers = req.body.travelers,
+        upcomingtrips.price = req.body.price
       
         upcomingtrips.save(function (err, response) {
             if (err) {
