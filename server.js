@@ -1052,7 +1052,7 @@ router.route('/stats/:id')
     })
 
     .patch(function (req, res) {
-        Organizerstats.update({ organizerId : req.params.id }, {stats:req.body.stats}, function (err, response) {
+        Organizerstats.update({ organizerId : req.params.id }, {$set : {stats:req.body.stats}}, function (err, response) {
             if (err) {
                 res.send(err)
             } else {
