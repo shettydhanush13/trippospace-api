@@ -1052,7 +1052,7 @@ router.route('/stats')
     //4
     //to get details of multiple trips by ids
     .get(function (req, res) {
-        Organizerstats.find({},{ trips:0 },function (err, data) {
+        Organizerstats.find({},{ trips:0, organizerName:0, organizerId:0,_id:0 },function (err, data) {
             if (err) {
                 res.send(err)
             } else {
