@@ -899,8 +899,6 @@ router.route('/changePassword-organizer/:id')
         _id: req.params.id
     };
     Organizer.findOne(query, function (err, user) {
-        console.log("user : ", user)
-        console.log("req.body : ", req.body)
         if (user.password !== req.body.currentPassword) {
             res.json({ error: "current password is incorrect" })
         } else {
@@ -925,8 +923,7 @@ router.route('/changePassword/:id')
             _id: req.params.id
         };
         Users.findOne(query, function (err, user) {
-            console.log("user : ", user)
-            console.log("req.body : ", req.body)
+
             if (user.password !== req.body.currentPassword) {
                 res.json({ error: "current password is incorrect" })
             } else {
@@ -1043,6 +1040,19 @@ router.route('/stats/:id')
     //to get details of multiple trips by ids
     .get(function (req, res) {
         Organizerstats.findOne({ organizerId : req.params.id }, function (err, data) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(data)
+            }
+        });
+    })
+
+router.route('/stats')
+    //4
+    //to get details of multiple trips by ids
+    .get({},{ stats: 1 },function (req, res) {
+        Organizerstats.find(function (err, data) {
             if (err) {
                 res.send(err)
             } else {
