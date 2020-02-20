@@ -1048,6 +1048,16 @@ router.route('/stats/:id')
         });
     })
 
+    .patch(function (req, res) {
+        Organizerstats.update({ organizerId : req.params.id }, {$set : req.body}, function (err, data) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(data)
+            }
+        });
+    })
+
 router.route('/stats')
     //4
     //to get details of multiple trips by ids
