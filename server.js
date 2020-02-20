@@ -1051,24 +1051,14 @@ router.route('/stats/:id')
 router.route('/stats')
     //4
     //to get details of multiple trips by ids
-    .get({},{ stats: 1 },function (req, res) {
-        Organizerstats.find(function (err, data) {
+    .get(function (req, res) {
+        Organizerstats.find({},{ stats: 1 },function (err, data) {
             if (err) {
                 res.send(err)
             } else {
                 res.send(data)
             }
-        });
-    })
-
-    .patch(function (req, res) {
-        Organizerstats.update({ organizerId : req.params.id }, {$set : req.body}, function (err, response) {
-            if (err) {
-                res.send(err)
-            } else {
-                res.send(response)
-            }
-        });
+        })
     });
 
 router.route('/pendingTrips/:id')
