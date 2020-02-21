@@ -1059,7 +1059,7 @@ router.route('/check-upcoming-trip')
         if(trip === null ){
             res.send(false)
         }
-        res.send(trip)
+        res.send(req.query)
     });
 });
 
