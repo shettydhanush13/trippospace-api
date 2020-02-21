@@ -1065,7 +1065,7 @@ router.route('/check-upcoming-trip')
 
 router.route('/upcoming-trip/:id')
     .patch(function (req, res) {
-        UpcomingTrips.updateOne({ tripId:req.params.id },{$set : req.body }, function (err, trip) {
+        UpcomingTrips.update({ _id :req.params.id },{$set : req.body }, function (err, trip) {
         if (err) {
             res.send(err)
         }
