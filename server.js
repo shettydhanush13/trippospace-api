@@ -1073,6 +1073,16 @@ router.route('/upcoming-trip/:id')
     });
 });
 
+router.route('/upcoming-trip/:id')
+    .get(function (req, res) {
+        UpcomingTrips.findOne({ _id :req.params.id }, function (err, trip) {
+        if (err) {
+            res.send(err)
+        }
+        res.send(trip)
+    });
+});
+
 router.route('/completedTrips/:id')
     //4
     //to get details of multiple trips by ids
