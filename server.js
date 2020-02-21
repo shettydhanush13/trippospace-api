@@ -523,6 +523,20 @@ router.route('/organizer-review')
     });
 });
 
+router.route('/trip-review/:id')
+
+    .patch(function (req, res) {
+        var query = {
+            _id: req.params.id
+        };
+        Tripreviews.update(query, { $set: req.body }, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ success: "review updated" })
+        });
+    });
+
 router.route('/trip-review')
 .post(function (req, res) {
     var tripreviews = new Tripreviews();
