@@ -1050,6 +1050,19 @@ router.route('/upcomingTrips/:id')
         });
     });
 
+router.route('/check-upcoming-trip')
+    .get(function (req, res) {
+        UpcomingTrips.find({ userId : req.query.u, tripId:req.query.t }, function (err, trip) {
+        if (err) {
+            res.send(err)
+        }
+        if(trip === null ){
+            res.send(false)
+        }
+        res.send(trip)
+    });
+});
+
 router.route('/completedTrips/:id')
     //4
     //to get details of multiple trips by ids
