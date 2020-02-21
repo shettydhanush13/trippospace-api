@@ -1073,9 +1073,9 @@ router.route('/upcoming-trip/:id')
     });
 });
 
-router.route('/upcoming-trip/:id')
+router.route('/completed-trip/:id')
     .get(function (req, res) {
-        UpcomingTrips.findOne({ _id :req.params.id }, function (err, trip) {
+        Tripreviews.findOne({ _id :req.params.id }, function (err, trip) {
         if (err) {
             res.send(err)
         }
