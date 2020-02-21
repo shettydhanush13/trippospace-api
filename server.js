@@ -1051,8 +1051,8 @@ router.route('/upcomingTrips/:id')
     });
 
 router.route('/check-upcoming-trip')
-    .get(function (req, res) {
-        UpcomingTrips.find({ tripId:req.query.t }, function (err, trip) {
+    .post(function (req, res) {
+        UpcomingTrips.find({ userId : req.body.u, tripId:req.body.t }, function (err, trip) {
         if (err) {
             res.send(err)
         }
