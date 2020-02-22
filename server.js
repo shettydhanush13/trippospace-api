@@ -1038,6 +1038,19 @@ router.route('/trips/:tripsArray')
         });
     });
 
+router.route('/reviews/:array')
+    //4
+    //to get details of multiple trips by ids
+    .get(function (req, res) {
+        Tripreviews.find({ "_id": { $in: JSON.parse(req.params.array) } }, function (err, reviews) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(reviews)
+            }
+        });
+    });
+
 router.route('/upcomingTrips/:id')
     //4
     //to get details of multiple trips by ids
