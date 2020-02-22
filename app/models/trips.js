@@ -10,7 +10,7 @@ var tripsSchema = new schema({
         detailed: String
     },
     images: Array,
-    reviews: Array
+    reviews: Array,
     tags: Array,
     isFav: Boolean,
     isActive: Boolean,
