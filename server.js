@@ -558,7 +558,7 @@ router.route('/trip-review')
     tripreviews.name = req.body.name,
     tripreviews.id = req.body.id
     tripreviews.rating = req.body.rating
-    tripreviews.review = req.body.name,
+    tripreviews.review = req.body.review,
     tripreviews.images = req.body.images,
     tripreviews.save(function (err, response) {
         if (err) {
