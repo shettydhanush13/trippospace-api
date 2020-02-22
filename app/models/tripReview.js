@@ -3,15 +3,11 @@ var mongoose = require("mongoose")
 var schema = mongoose.Schema
 
 var tripreviewsSchema = new schema({
-    userId: String,
-    tripId : String,
-    tripTitle: String,
-    thumb: String,
-    date: String,
-    days: Number,
-    organizerName: String,
-    organizerId: String,
-    tripReview: Object
+    name:String,
+    id:String,
+    rating:Number,
+    review: String,
+    images:Array
 });
 
 module.exports = mongoose.model('tripreviews', tripreviewsSchema)

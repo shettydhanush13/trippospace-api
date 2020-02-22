@@ -555,15 +555,11 @@ router.route('/trip-review/:id')
 router.route('/trip-review')
 .post(function (req, res) {
     var tripreviews = new Tripreviews();
-    tripreviews.userId = req.body.userId,
-    tripreviews.tripId = req.body.tripId,
-    tripreviews.tripTitle = req.body.tripTitle,
-    tripreviews.thumb = req.body.thumb,
-    tripreviews.date = req.body.date,
-    tripreviews.days = req.body.days,
-    tripreviews.organizerName = req.body.organizerName,
-    tripreviews.organizerId = req.body.organizerId,
-    tripreviews.tripReview = req.body.tripReview
+    tripreviews.name = req.body.name,
+    tripreviews.id = req.body.id
+    tripreviews.rating = req.body.rating
+    tripreviews.review = req.body.name,
+    tripreviews.images = req.body.images,
     tripreviews.save(function (err, response) {
         if (err) {
             res.send(err)
