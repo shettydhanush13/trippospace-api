@@ -101,6 +101,8 @@ router.route('/trip')
         trip.isActive = req.body.isActive;
         trip.description = req.body.description;
         trip.tags = req.body.tags;
+        trip.images = req.body.images;
+        trip.reviews = req.body.reviews;
         trip.place = req.body.place;
         trip.organizer = req.body.organizer;
         trip.booking = req.body.booking;
