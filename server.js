@@ -490,7 +490,7 @@ router.route('/complete-trip')
                 if (err) {
                     res.send(err)
                 } else {
-                    res.send(trip)
+                    res.send(response._id)
                 }
             });
         });
@@ -540,7 +540,6 @@ router.route('/organizer-review/:id')
     });
 
 router.route('/trip-review/:id')
-
     .patch(function (req, res) {
         var query = {
             _id: req.params.id
@@ -573,7 +572,7 @@ router.route('/trip-review')
             if (err) {
                 res.send(err)
             } else {
-                res.send(trip)
+                res.send(response._id)
             }
         });
     });
