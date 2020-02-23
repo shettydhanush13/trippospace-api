@@ -562,6 +562,8 @@ router.route('/trip-review')
     tripreviews.tripDate = req.body.tripDate,
     tripreviews.review = req.body.review,
     tripreviews.images = req.body.images,
+    tripreviews.organizerName = req.body.organizerName,
+    tripreviews.tripTitle = req.body.tripTitle,
     tripreviews.save(function (err, response) {
         if (err) {
             res.send(err)
