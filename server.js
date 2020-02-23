@@ -556,8 +556,9 @@ router.route('/trip-review')
 .post(function (req, res) {
     var tripreviews = new Tripreviews();
     tripreviews.name = req.body.name,
-    tripreviews.id = req.body.id
-    tripreviews.rating = req.body.rating
+    tripreviews.id = req.body.id,
+    tripreviews.rating = req.body.rating,
+    tripreviews.tripDate = req.body.tripDate,
     tripreviews.review = req.body.review,
     tripreviews.images = req.body.images,
     tripreviews.save(function (err, response) {
