@@ -1098,7 +1098,7 @@ router.route('/completedTrips/:id')
     //4
     //to get details of multiple trips by ids
     .get(function (req, res) {
-        Tripreviews.find({ userId : req.params.id }, function (err, trips) {
+        Tripreviews.find({ id : req.params.id }, function (err, trips) {
             if (err) {
                 res.send(err)
             } else {
