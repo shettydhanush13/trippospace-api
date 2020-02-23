@@ -557,6 +557,7 @@ router.route('/trip-review')
     var tripreviews = new Tripreviews();
     tripreviews.name = req.body.name,
     tripreviews.id = req.body.id,
+    tripreviews.thumb = req.body.thumb,
     tripreviews.rating = req.body.rating,
     tripreviews.tripDate = req.body.tripDate,
     tripreviews.review = req.body.review,
