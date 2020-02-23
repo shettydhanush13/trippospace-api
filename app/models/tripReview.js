@@ -11,7 +11,9 @@ var tripreviewsSchema = new schema({
     review: String,
     images:Array,
     organizerName: String,
-    tripTitle: String
+    tripTitle: String,
+    days:Number,
+    date:String
 });
 
 module.exports = mongoose.model('tripreviews', tripreviewsSchema)
