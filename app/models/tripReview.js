@@ -11,6 +11,7 @@ var tripreviewsSchema = new schema({
     review: String,
     images:Array,
     organizerName: String,
+    organizerId: String,
     tripTitle: String,
     days:Number,
     date:String

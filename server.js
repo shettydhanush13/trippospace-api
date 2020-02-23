@@ -563,6 +563,7 @@ router.route('/trip-review')
     tripreviews.review = req.body.review,
     tripreviews.images = req.body.images,
     tripreviews.organizerName = req.body.organizerName,
+    tripreviews.organizerId = req.body.organizerId,
     tripreviews.tripTitle = req.body.tripTitle,
     tripreviews.days = req.body.days
     tripreviews.date = req.body.date
