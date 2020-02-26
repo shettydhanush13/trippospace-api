@@ -5,10 +5,7 @@ var tripsSchema = new schema({
     title: String,
     destination: String,
     thumb: String,
-    description: {
-        short: String,
-        detailed: String
-    },
+    description: String,
     images: Array,
     reviews: Array,
     tags: Array,
@@ -24,8 +21,7 @@ var tripsSchema = new schema({
         date: String,
         allDates: Array,
         departureCity: String,
-        priceBefore: Number,
-        priceAfter: Number
+        price: Number,
     },
     itinerary: Array,
     pickup: Array,
