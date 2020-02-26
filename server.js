@@ -851,7 +851,7 @@ router.route('/phone-auth')
         .create({
             body: `your verification code is ${code}`,
             from: '+15017122661',
-            to: '+918971780778'
+            to: '918971780778'
         })
         .then(message => console.log(message.sid));
 
