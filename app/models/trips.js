@@ -31,8 +31,9 @@ var tripsSchema = new schema({
     pickup: Array,
     inclusions: Array,
     exclusions: Array,
-    videos: Array,
-    credits: Number
+    credits: Number,
+    terms: String,
+    cancellactionPolicy:String
 });
 
 module.exports = mongoose.model('trip', tripsSchema)

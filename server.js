@@ -111,9 +111,10 @@ router.route('/trip')
         trip.inclusions = req.body.inclusions;
         trip.exclusions = req.body.exclusions;
         trip.credits = req.body.credits;
-        trip.videos = req.body.videos;
         trip.organizerId = req.body.organizerId;
         trip.organizerName = req.body.organizerName;
+        trip.terms = req.body.terms;
+        trip.cancellactionPolicy = req.body.cancellactionPolicy
         trip.save(function (err, response) {
             if (err) {
                 res.send(err)
@@ -840,8 +841,6 @@ router.route('/phone-auth')
         // const text = `your verification code is ${code}`;
 
         // nexmo.message.sendSms(from, to, text);
-
-
 
         const accountSid = 'AC1220e63355a01554295600675b52dad7';
         const authToken = '755518f7a6b6a99131fd4bb1c5d9d940';
