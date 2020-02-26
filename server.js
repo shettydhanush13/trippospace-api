@@ -855,7 +855,7 @@ router.route('/phone-auth')
         })
         .then(message => console.log(message.sid));
 
-        res.json({ "code": code,"m": message.sid })
+        res.json({ "code": code})
     });
 
 router.route('/welcome-mail')
