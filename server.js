@@ -853,7 +853,7 @@ router.route('/phone-auth')
             from: '+15017122661',
             to: '918971780778'
         })
-        .then(message => console.log(message.sid));
+        .then(message => console.log("message.sid : ",message.sid));
 
         res.json({ "code": code})
     });
