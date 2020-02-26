@@ -844,18 +844,18 @@ router.route('/phone-auth')
 
 
         const accountSid = 'AC1220e63355a01554295600675b52dad7';
-        const authToken = 'your_auth_token';
+        const authToken = '755518f7a6b6a99131fd4bb1c5d9d940';
         const client = require('twilio')(accountSid, authToken);
 
         client.messages
         .create({
             body: `your verification code is ${code}`,
             from: '+15017122661',
-            to: '+15558675310'
+            to: '+918971780778'
         })
         .then(message => console.log(message.sid));
 
-        res.json({ "code": code })
+        res.json({ "code": code,"m": message.sid })
     });
 
 router.route('/welcome-mail')
