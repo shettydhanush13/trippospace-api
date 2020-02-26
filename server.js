@@ -825,21 +825,35 @@ router.route('/agent-login')
 router.route('/phone-auth')
     //to check if user exist
     .post(function (req, res) {
-        const Nexmo = require('nexmo');
+        // const Nexmo = require('nexmo');
 
         const otp = Math.floor(100000 + Math.random() * 900000).toString()
         const code = otp.substr(0,4)
 
-        const nexmo = new Nexmo({
-            apiKey: 'b21324c1',
-            apiSecret: 'IlE5PM4MZYZLsTOO',
-        });
+        // const nexmo = new Nexmo({
+        //     apiKey: 'b21324c1',
+        //     apiSecret: 'IlE5PM4MZYZLsTOO',
+        // });
 
-        const from = 'TRIPPOSPACE';
-        const to = req.body.phone;
-        const text = `your verification code is ${code}`;
+        // const from = 'TRIPPOSPACE';
+        // const to = req.body.phone;
+        // const text = `your verification code is ${code}`;
 
-        nexmo.message.sendSms(from, to, text);
+        // nexmo.message.sendSms(from, to, text);
+
+
+
+        const accountSid = 'AC1220e63355a01554295600675b52dad7';
+        const authToken = 'your_auth_token';
+        const client = require('twilio')(accountSid, authToken);
+
+        client.messages
+        .create({
+            body: `your verification code is ${code}`,
+            from: '+15017122661',
+            to: '+15558675310'
+        })
+        .then(message => console.log(message.sid));
 
         res.json({ "code": code })
     });
