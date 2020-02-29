@@ -182,7 +182,7 @@ router.route('/tripCategory/:category')
 
     //to get details of a trip by tipId
     .get(function (req, res) {
-        Trip.find({ tags: { $all: [req.params.category] } }, function (err, trip) {
+        Trip.find({ tags: { $all: [req.params.category] }, isActive:true }, function (err, trip) {
             if (err) {
                 res.send(err)
             }
@@ -1029,7 +1029,7 @@ router.route('/changePassword/:id')
 
 router.route('/places/:name')
     .get(function (req, res) {
-        Trip.find({ place: { $all: [req.params.name] } }, function (err, trip) {
+        Trip.find({ place: { $all: [req.params.name] }, isActive:true }, function (err, trip) {
             if (err) {
                 res.send(err)
             } else {
