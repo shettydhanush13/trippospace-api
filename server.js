@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Trip = require('./app/models/trips');
+var Cart = require("./app/models/cart")
 var Organizer = require('./app/models/organizers');
 var Customer = require('./app/models/customers');
 var Users = require("./app/models/users");
@@ -319,6 +320,46 @@ router.route('/bookmark/:id')
                 res.send(err)
             }
             res.send(trip)
+        });
+    })
+
+router.route('/cart')
+    //to post a new trip
+    .post(function (req, res) {
+        var cart = new Cart();
+        cart.productId = req.body.productId,
+        cart.title = req.body.title,
+        cart.price = req.body.price
+        cart.thumb = req.body.thumb
+        cart.color = req.body.color
+        cart.size = req.body.size
+        cart.userId = req.body.userId
+        cart.save(function (err, response) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(response._id)
+            }
+        });
+    })
+
+router.route('/cart/:id')
+    .get(function (req, res) {
+        Cart.find({ userId: req.params.id }, function (err, item) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(item)
+        });
+    })
+
+router.route('/cart/:id')
+    .delete(function (req, res) {
+        Cart.deleteOne({ _id: req.params.id }, function (err, response) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(response)
         });
     })
 
