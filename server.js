@@ -140,6 +140,23 @@ router.route('/trip')
         });
     });
 
+router.route('/shop-notification')
+    .post(function (req, res) {
+
+    const accountSid = 'AC1220e63355a01554295600675b52dad7'; 
+    const authToken = '755518f7a6b6a99131fd4bb1c5d9d940'; 
+    const client = require('twilio')(accountSid, authToken); 
+    
+    client.messages 
+        .create({ 
+            body: `Title : ${req.body.title} | Size : ${req.body.size} | Quantity : ${req.body.quantity}  | Product link : ${req.body.link} | Customer number : ${req.body.customer.number} | Customer email : ${req.body.customer.email} | Customer address : ${req.body.customer.address}`, 
+            from: 'whatsapp:+14155238886',       
+            to: 'whatsapp:+918971780778' 
+        }) 
+        .then(message => console.log("message.sid",message.sid)) 
+        .done();
+    })
+
 router.route('/trip/:tripid')
     //to get details of a trip by tripId
     .get(function (req, res) {
@@ -150,19 +167,6 @@ router.route('/trip/:tripid')
             if (err) {
                 res.send(err)
             }
-
-            const accountSid = 'AC1220e63355a01554295600675b52dad7'; 
-            const authToken = '755518f7a6b6a99131fd4bb1c5d9d940'; 
-            const client = require('twilio')(accountSid, authToken); 
-            
-            client.messages 
-                .create({ 
-                    body: 'Your Yummy Cupcakes Company order of 1 dozen frosted cupcakes has shipped and should be delivered on July 10, 2019. Details: http://www.yummycupcakes.com/', 
-                    from: 'whatsapp:+14155238886',       
-                    to: 'whatsapp:+918971780778' 
-                }) 
-                .then(message => console.log("message.sid",message.sid)) 
-                .done();
             res.send(trip)
         });
     })
