@@ -149,7 +149,15 @@ router.route('/shop-notification')
     
     client.messages 
         .create({ 
-            body: `Title : ${req.body.title} | Size : ${req.body.size} | Quantity : ${req.body.quantity}  | Product link : ${req.body.link} | Customer number : ${req.body.customer.number} | Customer email : ${req.body.customer.email} | Customer address : ${req.body.customer.address}`, 
+            body: `
+                Title : ${req.body.title} |
+                Size : ${req.body.size} |
+                Quantity : ${req.body.quantity}  | 
+                Product link : ${req.body.link} | 
+                Customer number : ${req.body.customer.phone} | 
+                Customer email : ${req.body.customer.email} | 
+                Customer address : ${req.body.customer.address}
+            `, 
             from: 'whatsapp:+14155238886',       
             to: 'whatsapp:+918971780778' 
         }) 
