@@ -152,6 +152,7 @@ router.route('/shop-notification')
             body: `
                 Title : ${req.body.title} |
                 Size : ${req.body.size} |
+                color : ${req.body.color} |
                 Quantity : ${req.body.quantity}  | 
                 Product link : ${req.body.link} | 
                 Customer number : ${req.body.customer.phone} | 
