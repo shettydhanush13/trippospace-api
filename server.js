@@ -155,6 +155,7 @@ router.route('/shop-notification')
             Customer email : ${req.body.customer.email} |
             Customer address : ${req.body.customer.address}
             `, 
+            MediaUrl: req.body.image,
             from: 'whatsapp:+14155238886',       
             to: 'whatsapp:+918971780778' 
         }) 
