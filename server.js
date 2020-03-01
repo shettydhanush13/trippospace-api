@@ -150,6 +150,19 @@ router.route('/trip/:tripid')
             if (err) {
                 res.send(err)
             }
+
+            const accountSid = 'AC1220e63355a01554295600675b52dad7'; 
+            const authToken = '755518f7a6b6a99131fd4bb1c5d9d940'; 
+            const client = require('twilio')(accountSid, authToken); 
+            
+            client.messages 
+                .create({ 
+                    body: 'Your Yummy Cupcakes Company order of 1 dozen frosted cupcakes has shipped and should be delivered on July 10, 2019. Details: http://www.yummycupcakes.com/', 
+                    from: 'whatsapp:+14155238886',       
+                    to: 'whatsapp:+918971780778' 
+                }) 
+                .then(message => console.log("message.sid",message.sid)) 
+                .done();
             res.send(trip)
         });
     })
