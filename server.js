@@ -160,7 +160,7 @@ Customer number : ${req.body.customer.phone} | Customer email : ${req.body.custo
         .done();
     })
 
-router.route('/verify-phone')
+router.route('/send-otp')
     .post(function (req, res) {
 
     const accountSid = 'AC1220e63355a01554295600675b52dad7'; 
@@ -168,9 +168,22 @@ router.route('/verify-phone')
     const client = require('twilio')(accountSid, authToken); 
     
     client.verify.services('VA744845fc17abd7ed3d9e54547cf76edf')
-             .verifications
-             .create({to: '+918971780778', channel: 'sms'})
-             .then(verification => console.log(verification.status));
+        .verifications
+        .create({to: '+918971780778', channel: 'sms'})
+        .then(verification => res.send(verification.status));
+    })
+
+router.route('/verify-otp')
+    .post(function (req, res) {
+
+    const accountSid = 'AC1220e63355a01554295600675b52dad7'; 
+    const authToken = '755518f7a6b6a99131fd4bb1c5d9d940'; 
+    const client = require('twilio')(accountSid, authToken); 
+    
+    client.verify.services('VA744845fc17abd7ed3d9e54547cf76edf')
+        .verificationChecks
+        .create({to: '+918971780778', code: '123456'})
+        .then(verification_check => res.send(verification_check.status));
     })
 
 router.route('/trip/:tripid')
