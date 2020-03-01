@@ -382,6 +382,7 @@ router.route('/cart')
         cart.color = req.body.color
         cart.size = req.body.size
         cart.userId = req.body.userId
+        cart.quantity = 1
         cart.save(function (err, response) {
             if (err) {
                 res.send(err)

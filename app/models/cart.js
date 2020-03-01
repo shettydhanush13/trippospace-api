@@ -8,7 +8,8 @@ var cartSchema = new schema( {
     thumb:String,
     color: String,
     size:String,
-    userId:String
+    userId:String,
+    quantity:Number
 });
 
 module.exports = mongoose.model('cart', cartSchema)
