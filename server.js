@@ -169,7 +169,7 @@ router.route('/send-otp')
     
     client.verify.services('VA744845fc17abd7ed3d9e54547cf76edf')
         .verifications
-        .create({to: '+918971780778', channel: 'sms'})
+        .create({to: req.body.phone, channel: 'sms'})
         .then(verification => res.send(verification.status));
     })
 
@@ -182,7 +182,7 @@ router.route('/verify-otp')
     
     client.verify.services('VA744845fc17abd7ed3d9e54547cf76edf')
         .verificationChecks
-        .create({to: '+918971780778', code: req.body.code})
+        .create({to: req.body.phone, code: req.body.code})
         .then(verification_check => res.send(verification_check.status));
     })
 
