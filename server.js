@@ -150,11 +150,11 @@ router.route('/shop-notification')
     client.messages 
         .create({ 
             body: `
-                Title : ${req.body.title} |
+                Product name : ${req.body.title} |
                 Size : ${req.body.size} |
-                color : ${req.body.color} |
+                Color : ${req.body.color} |
                 Quantity : ${req.body.quantity}  | 
-                Product link : ${req.body.link} | 
+                Link : ${req.body.link} | 
                 Customer number : ${req.body.customer.phone} | 
                 Customer email : ${req.body.customer.email} | 
                 Customer address : ${req.body.customer.address}
