@@ -29,7 +29,9 @@ var tripsSchema = new schema({
     exclusions: Array,
     credits: Number,
     terms: String,
-    cancellactionPolicy:String
+    cancellactionPolicy:String,
+    thingsToCarry: Array,
+    notes:Array
 });
 
 module.exports = mongoose.model('trip', tripsSchema)
