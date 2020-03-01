@@ -29,7 +29,7 @@ var tripsSchema = new schema({
     exclusions: Array,
     credits: Number,
     terms: String,
-    cancellactionPolicy:String,
+    cancellationPolicy:String,
     thingsToCarry: Array,
     notes:Array
 });

@@ -115,7 +115,7 @@ router.route('/trip')
         trip.organizerId = req.body.organizerId;
         trip.organizerName = req.body.organizerName;
         trip.terms = req.body.terms;
-        trip.cancellactionPolicy = req.body.cancellactionPolicy
+        trip.cancellationPolicy = req.body.cancellationPolicy
         trip.thingsToCarry = req.body.thingsToCarry
         trip.notes = req.body.notes
         trip.save(function (err, response) {
