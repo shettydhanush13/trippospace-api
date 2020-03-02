@@ -819,7 +819,7 @@ router.route('/reset-password')
                 const sgMail = require('@sendgrid/mail');
                 sgMail.setApiKey("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");
 
-                let code = user._id+user.password
+                let code = req.body.platform+user._id+user.password
 
                 var b = new Buffer(code);
                 var resetCode = b.toString('base64');
@@ -901,9 +901,9 @@ router.route('/reset-password')
                   };
         
                   sgMail.send(msg);
-                res.json({ message : "Reset link sent." })
+                res.json({ message : "Reset link sent" })
             } else {
-                res.json({ error: "Email not regestered. use regestered email. " })
+                res.json({ error: "Use regestered email" })
             }
         })
     });
