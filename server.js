@@ -772,19 +772,33 @@ router.route('/checkUsername')
         })
     });
 
-    router.route('/checkEmail')
-    //to check if user exist
-        .post(function (req, res) {
-            Users.findOne({
-                email: req.body.email
-            }, function (err, user) {
-                if (user !== null) {
-                    res.json({ email: true })
-                } else {
-                    res.json({ email : false })
-                }
-            })
-        });
+router.route('/checkEmail')
+//to check if user exist
+    .post(function (req, res) {
+        Users.findOne({
+            email: req.body.email
+        }, function (err, user) {
+            if (user !== null) {
+                res.json({ email: true })
+            } else {
+                res.json({ email : false })
+            }
+        })
+    });
+
+router.route('/checkPhone')
+//to check if user exist
+    .post(function (req, res) {
+        Users.findOne({
+            phone: req.body.phone
+        }, function (err, user) {
+            if (user !== null) {
+                res.json({ phone: true })
+            } else {
+                res.json({ phone : false })
+            }
+        })
+    });
 
 router.route('/reset-password')
 //to reset forgotten password
