@@ -162,6 +162,26 @@ Customer number : ${req.body.customer.phone} | Customer email : ${req.body.custo
         .done();
     })
 
+router.route('/booking-notification')
+    .post(function (req, res) {
+
+    const accountSid = 'AC1220e63355a01554295600675b52dad7'; 
+    const authToken = '755518f7a6b6a99131fd4bb1c5d9d940'; 
+    const client = require('twilio')(accountSid, authToken); 
+    
+    client.messages 
+        .create({ 
+            mediaUrl: [req.body.thumb],
+            body: `Trip title : ${req.body.title} | Travelers : ${req.body.travelers} | Date : ${req.body.date} |  Days : ${req.body.days} | Amount paid : ${req.body.price} | Trip link : ${req.body.link}
+            
+Customer number : ${req.body.customer.phone} | Customer email : ${req.body.customer.email} | Customer name : ${req.body.customer.name}`, 
+            from: 'whatsapp:+14155238886',       
+            to: 'whatsapp:+918971780778' 
+        }) 
+        .then(message => console.log("message.sid",message.sid)) 
+        .done();
+    })   
+
 router.route('/send-otp')
     .post(function (req, res) {
 
