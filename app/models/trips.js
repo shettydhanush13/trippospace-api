@@ -23,6 +23,8 @@ var tripsSchema = new schema({
         departureCity: String,
         price: Number,
     },
+    partialPay:Number,
+    tripTypes:Array,
     itinerary: Array,
     pickup: Array,
     inclusions: Array,
