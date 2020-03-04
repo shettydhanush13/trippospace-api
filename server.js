@@ -249,7 +249,7 @@ router.route('/trip/:tripid')
     });
 
 
-router.route('/trip/:tripsArray')
+router.route('/multi-trip/:tripsArray')
     .patch(function (req, res) {
         Trip.update({ "_id": { $in: JSON.parse(req.params.tripsArray) } }, { $set: req.body }, { multi:true } , function (err) {
             if (err) {
