@@ -248,6 +248,17 @@ router.route('/trip/:tripid')
         });
     });
 
+
+router.route('/trip/:tripsArray')
+    .patch(function (req, res) {
+        Trip.update({ "_id": { $in: JSON.parse(req.params.tripsArray) } }, { $set: req.body }, { multi:true } , function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "trip data updated" })
+        });
+    });
+
 router.route('/tripCategory/:category')
 
     //to get details of a trip by tipId
