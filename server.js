@@ -107,6 +107,7 @@ router.route('/trip')
         trip.place = req.body.place;
         trip.organizer = req.body.organizer;
         trip.booking = req.body.booking;
+        trip.date = req.body.date;
         trip.partialPay = req.body.partialPay;
         trip.tripTypes = req.body.tripTypes;
         trip.itinerary = req.body.itinerary;
