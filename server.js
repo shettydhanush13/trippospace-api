@@ -153,9 +153,10 @@ router.route('/shop-notification')
     client.messages 
         .create({ 
             mediaUrl: [req.body.image],
-            body: `Product name : ${req.body.title} | Size : ${req.body.size} | Color : ${req.body.color} | Quantity : ${req.body.quantity} |
+            body : "hello",
+//             body: `Product name : ${req.body.title} | Size : ${req.body.size} | Color : ${req.body.color} | Quantity : ${req.body.quantity} |
             
-Customer number : ${req.body.customer.phone} | Customer email : ${req.body.customer.email} | Customer address : ${req.body.customer.address}`, 
+// Customer number : ${req.body.customer.phone} | Customer email : ${req.body.customer.email} | Customer address : ${req.body.customer.address}`, 
             from: 'whatsapp:+14155238886',       
             to: 'whatsapp:+918971780778' 
         }) 
@@ -168,7 +169,7 @@ router.route('/booking-notification')
 
     const accountSid = 'AC1220e63355a01554295600675b52dad7'; 
     const authToken = '755518f7a6b6a99131fd4bb1c5d9d940'; 
-    const client = require('twilio')(accountSid, authToken); 
+    const client = require('twilio')(accountSid, authToken);
     
     client.messages 
         .create({ 
