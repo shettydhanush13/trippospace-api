@@ -152,7 +152,7 @@ router.route('/shop-notification')
     
     client.messages 
         .create({ 
-            mediaUrl: [req.body.image],
+            // mediaUrl: [req.body.image],
             body : "hello",
 //             body: `Product name : ${req.body.title} | Size : ${req.body.size} | Color : ${req.body.color} | Quantity : ${req.body.quantity} |
             
