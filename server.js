@@ -329,17 +329,21 @@ router.route('/gift/:code')
             if (err) {
                 res.send(err)
             }else{
-                if(card.redeemed){
-                    res.json({error:"CODE ALREADY REDEEMED"})
+                if(card === null){
+                    res.json({error:"INVALID CODE"})
                 }else{
-                    Gift.updateOne({code:req.params.code},{$set : {redeemed:true}},function (err, status) {
-                        if (err) {
-                            res.send(err)
-                        }else{
-                            res.json({value: card.value})
-                        }
-                    })
-                }
+                    if(card.redeemed){
+                        res.json({error:"CODE ALREADY REDEEMED"})
+                    }else{
+                        Gift.updateOne({code:req.params.code},{$set : {redeemed:true}},function (err, status) {
+                            if (err) {
+                                res.send(err)
+                            }else{
+                                res.json({value: card.value})
+                            }
+                        })
+                    }
+                } 
             }
         });
     });
