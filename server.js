@@ -8,6 +8,7 @@ var Organizer = require('./app/models/organizers');
 var Customer = require('./app/models/customers');
 var Users = require("./app/models/users");
 var Places = require("./app/models/places");
+var Gift = require("./app/models/gift")
 var Reviews = require("./app/models/reviews")
 var Organizerstats = require("./app/models/organizerstats")
 var UpcomingTrips = require("./app/models/upcomingTrips")
@@ -19,8 +20,6 @@ var AWS = require('aws-sdk');
 const fs = require('fs');
 const fileType = require('file-type');
 const multiparty = require('multiparty');
-const Nexmo = require('nexmo');
-var nodemailer = require('nodemailer');
 
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
@@ -305,6 +304,45 @@ router.route('/from/:place')
             res.send(trip)
         });
     })
+
+
+router.route('/gift')
+
+    //to add a new gift card
+    .post(function (req, res) {
+        var gift = new Gift();
+        gift.code = req.body.code,
+        gift.value = req.body.value,
+        gift.redeemed = false
+        gift.save(function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "gift card created succesfully" })
+        });
+    });
+
+router.route('/gift/:code')
+    //to add a new gift card
+    .get(function (req, res) {
+        Gift.findOne({code:req.params.code},function (err, card) {
+            if (err) {
+                res.send(err)
+            }else{
+                if(card.redeemed){
+                    res.json({error:"CODE ALREADY REDEEMED"})
+                }else{
+                    Gift.updateOne({code:req.params.code},{$set : {redeemed:true}},function (err, status) {
+                        if (err) {
+                            res.send(err)
+                        }else{
+                            res.json({value: card.value})
+                        }
+                    })
+                }
+            }
+        });
+    });
 
 router.route('/organizer')
 
