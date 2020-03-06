@@ -173,10 +173,11 @@ router.route('/booking-notification')
     
     client.messages 
         .create({ 
-            mediaUrl: [req.body.thumb],
-            body: `Trip title : ${req.body.title} | Travelers : ${req.body.travelers} | Date : ${req.body.date} |  Days : ${req.body.days} | Amount paid : ${req.body.price} | Trip link : ${req.body.link}
+//             mediaUrl: [req.body.thumb],
+//             body: `Trip title : ${req.body.title} | Travelers : ${req.body.travelers} | Date : ${req.body.date} |  Days : ${req.body.days} | Amount paid : ${req.body.price} | Trip link : ${req.body.link}
             
-Customer number : ${req.body.customer.phone} | Customer email : ${req.body.customer.email} | Customer name : ${req.body.customer.name}`, 
+// Customer number : ${req.body.customer.phone} | Customer email : ${req.body.customer.email} | Customer name : ${req.body.customer.name}`, 
+            body: "new booking"
             from: 'whatsapp:+14155238886',       
             to: 'whatsapp:+918971780778' 
         }) 
