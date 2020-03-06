@@ -151,8 +151,10 @@ router.route('/shop-notification')
     
     client.messages 
         .create({ 
-            // mediaUrl: [req.body.image],
-            body : `Your {{1}} order of {{2}} has shipped and should be delivered on {{3}}. Details: {{4}}`,
+            mediaUrl: [req.body.image],
+            body : `Your {{1}} order of {{2}} has shipped and should be delivered on {{3}}. Details: Product name : ${req.body.title} | Size : ${req.body.size} | Color : ${req.body.color} | Quantity : ${req.body.quantity} |
+            
+            Customer number : ${req.body.customer.phone} | Customer email : ${req.body.customer.email} | Customer address : ${req.body.customer.address}`,
 //             body: `Product name : ${req.body.title} | Size : ${req.body.size} | Color : ${req.body.color} | Quantity : ${req.body.quantity} |
             
 // Customer number : ${req.body.customer.phone} | Customer email : ${req.body.customer.email} | Customer address : ${req.body.customer.address}`, 
