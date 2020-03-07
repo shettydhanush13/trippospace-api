@@ -156,7 +156,7 @@ router.route('/shop-notification')
             from: 'whatsapp:+14155238886',       
             to: 'whatsapp:+918971780778' 
         }) 
-        .then(message => console.log("message.sid",message.sid)) 
+        .then(message => res.send(message.sid)) 
         .done();
     })
 
@@ -170,11 +170,11 @@ router.route('/booking-notification')
     client.messages 
         .create({ 
             mediaUrl: [req.body.image],
-            body : `Your order for ${req.body.quantity} * product :  ${req.body.title} has been placed. Details: Total : Rs. ${req.body.price} | Paid : Rs ${req.body.paid} | ${req.body.customer.phone} | ${req.body.customer.email}`,
+            body : `Your order for ${req.body.quantity} * product :  ${req.body.title} has been placed. Details: Total : Rs. ${req.body.price} | Paid : Rs ${req.body.paid} | ${req.body.customer.phone} | ${req.body.customer.email} | ${req.body.customer.link} | organizer : ${req.body.organizer}`,
             from: 'whatsapp:+14155238886',       
             to: 'whatsapp:+918971780778' 
         }) 
-        .then(message => console.log("message.sid",message.sid)) 
+        .then(message => res.send(message.sid)) 
         .done();
     })   
 
