@@ -170,7 +170,7 @@ router.route('/booking-notification')
     client.messages 
         .create({ 
             mediaUrl: [req.body.image],
-            body : `Your order for ${req.body.quantity} * product :  ${req.body.title} has been placed. Details: Rs. ${req.body.price} | ${req.body.date} | ${req.body.customer.phone} | ${req.body.customer.email} | ${req.body.customer.address}`,
+            body : `Your order for ${req.body.quantity} * product :  ${req.body.title} has been placed. Details: Total : Rs. ${req.body.price} | Paid : Rs ${req.body.paid} | ${req.body.customer.phone} | ${req.body.customer.email}`,
             from: 'whatsapp:+14155238886',       
             to: 'whatsapp:+918971780778' 
         }) 
