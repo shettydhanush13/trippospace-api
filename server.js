@@ -765,7 +765,6 @@ router.route('/register')
         users.email = req.body.email;
         users.phone = req.body.phone;
         users.profile_pic = req.body.profile_pic;
-        users.cover_pic = req.body.cover_pic;
         users.stats = req.body.stats;
         users.social = req.body.social
         users.save(function (err, trip) {

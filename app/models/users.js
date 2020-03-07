@@ -9,7 +9,6 @@ var usersSchema = new schema({
     email: String,
     phone: String,
     profile_pic: String,
-    cover_pic: String,
     stats: Object,
     social:Object
 });
