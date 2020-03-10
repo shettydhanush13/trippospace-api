@@ -13,6 +13,7 @@ var Reviews = require("./app/models/reviews")
 var Organizerstats = require("./app/models/organizerstats")
 var UpcomingTrips = require("./app/models/upcomingTrips")
 var Category = require("./app/models/category")
+var Shop = require("./app/models/shop")
 var Tripreviews = require("./app/models/tripReview")
 var Pendingreview = require("./app/models/pendingReview")
 var cors = require('cors');
@@ -141,6 +142,18 @@ router.route('/trip')
                 res.send(err)
             }
             res.send(trip)
+        });
+    });
+
+router.route('/shop')
+    //to get details of all the shop items
+    .get(function (req, res) {
+        var query = {};
+        Shop.find(query, function (err, items) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(items)
         });
     });
 
