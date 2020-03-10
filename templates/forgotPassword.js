@@ -114,7 +114,7 @@ module.exports = {
                     sgMail.setApiKey("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");
                     const msg = {
                         to: "shettydhanush13@gmail.com",
-                        from: 'password-reset@trippospace.com',
+                        from: 'important@trippospace.com',
                         subject: `NEW BOOKING FOR  - ${req.body.title}`,
                         text: 'grow your business with trippospace',
                         html: `<body class="iOSGmailAppfix" style="margin:0; padding:0; background-color:#F2F2F2;">
