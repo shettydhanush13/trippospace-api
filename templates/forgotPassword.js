@@ -128,25 +128,27 @@ module.exports = {
                                   <td style="padding-bottom:10px;">
                                     <table cellpadding="0" cellspacing="0" style="font-family: 'Gotham SSm A', 'Montserrat', 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:0px; text-align: center; width:100%; background:#fff; table-layout: fixed;"
                                     border="0" align="center">
-                                      <tr>
+                                    <tr>
                                         <td style="font-size:20px; font-weight: 600; text-transform: uppercase; color: #252528; padding:20px 25px;">TRIPPOSPACE COMMUNITY</td>
-                                      </tr>
+                                    </tr>
                                     <tr>
                                         <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.title}</td>
                                     </tr>
                                     <tr>
                                         <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.date}</td>
-                                        </tr><tr>
-                                          <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.quantity} Travelers</td>
-                                          </tr><tr>
-                                           <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">CUSTOMER DETAILS : </td>
-                                           </tr><tr>
-                                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.name}</td>
-                                            </tr><tr>
-                                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.phone | req.body.customer.mail}</td>
-                                            </tr>
-                                      <tr>
-                                      </tr>                                     
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.quantity} Travelers</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">CUSTOMER DETAILS : </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.phone | req.body.customer.mail}</td>
+                                    </tr>                                    
                                     </table>
                                    </td>
                                 </tr>
@@ -157,27 +159,27 @@ module.exports = {
                     
                         <table cellpadding="0" cellspacing="0" border="0" align="center" style="font-size:0; width:300px;">
                           <tr>
-                            <td style="width:20%;">
+                            <td style="width:25%;">
                                 <a href="https://www.facebook.com/trippospace/"
                                 target="_blank">
                                 <img src="https://cdn-s3.touchofmodern.com/email/social-icon-facebook.png" width="22"
                                 height="22" alt="Facebook"/>
                                 </a>
                             </td>
-                            <td style="width:20%;">
+                            <td style="width:25%;">
                                 <a href="https://www.instagram.com/trippospace/"
                                 target="_blank">
                                 <img src="https://cdn-s3.touchofmodern.com/email/social-icon-instagram.png" width="22"
                                 height="22" alt="Instagram"/>
                                 </a>
                             </td>
-                            <td style="width:20%;">
+                            <td style="width:25%;">
                                 <a href="https://www.youtube.com/channel/UCNHrjKwSe-JSe2o9EKyZZmQ?view_as=subscriber" target="_blank">
                                 <img src="https://cdn-s3.touchofmodern.com/doorbuster/yt.png" width="22" height="22"
                                 alt="Youtube"/>
                                 </a>
                             </td>
-                            <td style="width:20%;">
+                            <td style="width:25%;">
                                 <a href="https://twitter.com/trippospace"
                                 target="_blank">
                                 <img src="https://cdn-s3.touchofmodern.com/email/social-icon-twitter.png" width="22"
@@ -186,8 +188,7 @@ module.exports = {
                             </td>
                           </tr>
                         </table>     
-                      </body>`
-                      };
+                      </body>`};
             
                       sgMail.send(msg);
                       resolve({ message : "Reset link sent" })
