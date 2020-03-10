@@ -170,39 +170,15 @@ router.route('/shop/:id')
     });
 
 router.route('/shop-notification')
-    .post(function (req, res) {
-
-    const accountSid = 'AC1220e63355a01554295600675b52dad7'; 
-    const authToken = '755518f7a6b6a99131fd4bb1c5d9d940'; 
-    const client = require('twilio')(accountSid, authToken); 
-    
-    client.messages 
-        .create({ 
-            // mediaUrl: [req.body.image],
-            body : `Your order for ${req.body.quantity} product :  ${req.body.title} has been placed. Details: ${req.body.size} | ${req.body.color} | ${req.body.customer.phone} | ${req.body.customer.email} | ${req.body.customer.address}`,
-            from: 'whatsapp:+14155238886',       
-            to: 'whatsapp:+918971780778' 
-        }) 
-        .then(message => res.send(message.sid)) 
-        .done();
-    })
+.post(function (req, res) {
+    // Templates.ShopNotification(req)
+    // .then(message => console.log(message)) 
+})
 
 router.route('/booking-notification')
     .post(function (req, res) {
-
-    const accountSid = 'AC1220e63355a01554295600675b52dad7'; 
-    const authToken = '755518f7a6b6a99131fd4bb1c5d9d940'; 
-    const client = require('twilio')(accountSid, authToken);
-    
-    client.messages 
-        .create({ 
-            // mediaUrl: [req.body.image],
-            body : `Your order for ${req.body.quantity} product :  ${req.body.title} has been placed. Details: ${req.body.organizer}`,
-            from: 'whatsapp:+14155238886',       
-            to: 'whatsapp:+918971780778' 
-        }) 
-        .then(message => res.send(message.sid)) 
-        .done();
+        Templates.BookNotification(req)
+        .then(message => console.log(message)) 
     })   
 
 router.route('/send-otp')

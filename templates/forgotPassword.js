@@ -116,7 +116,7 @@ module.exports = {
                     const msg = {
                         to: req.body.mail,
                         from: 'booking@trippospace.com',
-                        subject: 'NEW BOOKING FORYOUR TRIP',
+                        subject: `NEW BOOKING FOR  - ${req.body.title}`,
                         text: 'grow your business with trippospace',
                         html: `<body class="iOSGmailAppfix" style="margin:0; padding:0; background-color:#F2F2F2;">
                         <table id="EmailWrapper" cellpadding="0" cellspacing="0" border="0" align="center"
@@ -133,12 +133,10 @@ module.exports = {
                                         <td style="font-size:20px; font-weight: 600; text-transform: uppercase; color: #252528; padding:20px 25px;">TRIPPOSPACE COMMUNITY</td>
                                       </tr>
                                       <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Click on the below link to reset your password.</td>
+                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.title}</td>
                                       </tr>
                                       <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Click on the below link to reset your password.</td>
-                                      </tr>
-                                     
+                                      </tr>                                     
                                     </table>
                                    </td>
                                 </tr>
