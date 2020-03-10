@@ -1,4 +1,4 @@
-export function forgotPassword(req,Users,Organizer) {
+module.export = function forgotPassword(req,Users,Organizer) {
     return new Promise((resolve, reject) => {
         if(req.body.platform === "user"){
             DB = Users
