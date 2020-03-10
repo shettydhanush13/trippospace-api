@@ -151,7 +151,7 @@ router.route('/shop-notification')
     
     client.messages 
         .create({ 
-            mediaUrl: [req.body.image],
+            // mediaUrl: [req.body.image],
             body : `Your order for ${req.body.quantity} product :  ${req.body.title} has been placed. Details: ${req.body.size} | ${req.body.color} | ${req.body.customer.phone} | ${req.body.customer.email} | ${req.body.customer.address}`,
             from: 'whatsapp:+14155238886',       
             to: 'whatsapp:+918971780778' 
