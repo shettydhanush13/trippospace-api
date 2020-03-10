@@ -877,8 +877,8 @@ router.route('/reset-password')
 //to reset forgotten password
     .post(function (req, res) {
         Templates.ForgotPassword(req,Users,Organizer)
-        .then(res=>{
-            res.json(res.data)
+        .then(response=>{
+            res.json(response.data)
         })
     });
 
