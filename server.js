@@ -157,6 +157,18 @@ router.route('/shop')
         });
     });
 
+router.route('/shop/:id')
+    //to get details of all the shop items
+    .get(function (req, res) {
+        var query = {_id:req.params.id};
+        Shop.findOne(query, function (err, item) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(item)
+        });
+    });
+
 router.route('/shop-notification')
     .post(function (req, res) {
 
