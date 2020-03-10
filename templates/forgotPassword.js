@@ -115,7 +115,7 @@ module.exports = {
                     console.log("body : ",req.body)
                     const msg = {
                         to: "shettydhanush13@gmail.com",
-                        from: 'booking@trippospace.com',
+                        from: 'notification@trippospace.com',
                         subject: `NEW BOOKING FOR  - ${req.body.title}`,
                         text: 'grow your business with trippospace',
                         html: `<body class="iOSGmailAppfix" style="margin:0; padding:0; background-color:#F2F2F2;">
