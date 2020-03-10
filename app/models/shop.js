@@ -6,7 +6,7 @@ var shopSchema = new schema({
     price:Number,
     sizes :Array,
     description:Array,
-    product:1,
+    product:Number,
     colors:Array
 });
 
