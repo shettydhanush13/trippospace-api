@@ -20,7 +20,7 @@ var AWS = require('aws-sdk');
 const fs = require('fs');
 const fileType = require('file-type');
 const multiparty = require('multiparty');
-var templates = require('./templates/forgotPassword');
+var Templates = require('./templates/forgotPassword');
 
 
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
@@ -876,7 +876,7 @@ router.route('/checkPhone')
 router.route('/reset-password')
 //to reset forgotten password
     .post(function (req, res) {
-        templates.forgotPassword(req,Users,Organizer)
+        Templates.forgotPassword(req,Users,Organizer)
         .then(res=>{
             res.json(res.data)
         })
