@@ -114,7 +114,7 @@ module.exports = {
                     sgMail.setApiKey("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");
                     const msg = {
                         to: "shettydhanush13@gmail.com",
-                        from: 'important@trippospace.com',
+                        from: 'Important-Trippospace@trippospace.com',
                         subject: `NEW BOOKING FOR  - ${req.body.title}`,
                         text: 'grow your business with trippospace',
                         html: `<body class="iOSGmailAppfix" style="margin:0; padding:0; background-color:#F2F2F2;">
@@ -131,9 +131,20 @@ module.exports = {
                                       <tr>
                                         <td style="font-size:20px; font-weight: 600; text-transform: uppercase; color: #252528; padding:20px 25px;">TRIPPOSPACE COMMUNITY</td>
                                       </tr>
-                                      <tr>
+                                    <tr>
                                         <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.title}</td>
-                                      </tr>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.date}</td>
+                                        </tr><tr>
+                                          <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.quantity} Travelers</td>
+                                          </tr><tr>
+                                           <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">CUSTOMER DETAILS : </td>
+                                           </tr><tr>
+                                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.name}</td>
+                                            </tr><tr>
+                                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.phone | req.body.customer.mail}</td>
+                                            </tr>
                                       <tr>
                                       </tr>                                     
                                     </table>
