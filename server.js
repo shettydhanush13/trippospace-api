@@ -169,11 +169,11 @@ router.route('/shop/:id')
         });
     });
 
-router.route('/shop-notification')
-.post(function (req, res) {
-    // Templates.ShopNotification(req)
-    // .then(message => console.log(message)) 
-})
+// router.route('/shop-notification')
+// .post(function (req, res) {
+//     Templates.ShopNotification(req)
+//     .then(message => console.log(message)) 
+// })
 
 router.route('/booking-notification')
     .post(function (req, res) {
