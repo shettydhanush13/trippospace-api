@@ -148,7 +148,7 @@ router.route('/trip')
 router.route('/shop')
     //to get details of all the shop items
     .get(function (req, res) {
-        Shop.find({}, function (err, items) {
+        Shop.find({price:399}, function (err, items) {
             if (err) {
                 res.send(err)
             }
