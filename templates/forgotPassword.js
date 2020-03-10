@@ -110,6 +110,12 @@ module.exports = {
     BookNotification : function(req) {
         return new Promise((resolve, reject) => {
             
+
+            function formatDate(date) {
+                var monthindex = parseInt(date.substr(5, 2))
+                var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+                return (parseInt(date.substr(8, 2)) + " " + month[monthindex - 1])+ " " + date.substr(0,4)
+            }
                     const sgMail = require('@sendgrid/mail');
                     sgMail.setApiKey("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");
                     const msg = {
@@ -135,19 +141,16 @@ module.exports = {
                                         <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.title}</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.date}</td>
+                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${formatDate(req.body.date)}</td>
                                     </tr>
                                     <tr>
                                         <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.quantity} Travelers</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">CUSTOMER DETAILS : </td>
+                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">CUSTOMER DETAILS</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.name}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.phone | req.body.customer.mail}</td>
+                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.phone} | ${req.body.customer.email}</td>
                                     </tr>                                    
                                     </table>
                                    </td>
