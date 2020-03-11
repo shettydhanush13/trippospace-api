@@ -639,6 +639,20 @@ router.route('/customer')
         });
     });
 
+router.route('/referal')
+    //to add a new organizer
+    .post(function (req, res) {
+        Customer.findOne({referalCode:req.body.code}, function (err, customer) {
+           if(customer === null){
+                res.send("invalid referal code")
+           }else{
+            Customer.updateOne({referalCode:req.body.code}, {$set : {"stats.credits" : customer.stats.credits+200}}, function (err, customer) {
+                res.send("referal successful")
+            });
+           }
+        });
+    })
+
 router.route('/customer/:tripId')
 
     .get(function (req, res) {
