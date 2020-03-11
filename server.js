@@ -642,11 +642,11 @@ router.route('/customer')
 router.route('/referal')
     //to add a new organizer
     .post(function (req, res) {
-        Customer.findOne({referalCode:req.body.code}, function (err, customer) {
-           if(customer === null){
+        Users.findOne({referalCode:req.body.code}, function (err, user) {
+           if(user === null){
                 res.send("invalid referal code")
            }else{
-            Customer.updateOne({referalCode:req.body.code}, {$set : {"stats.credits" : customer.stats.credits+200}}, function (err, customer) {
+            Users.updateOne({referalCode:req.body.code}, {$set : {"stats.credits" : user.stats.credits+200}}, function (err, res) {
                 res.send("referal successful")
             });
            }
