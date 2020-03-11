@@ -646,7 +646,7 @@ router.route('/referal')
            if(user === null){
                 res.send("invalid referal code")
            }else{
-            Users.updateOne({referalCode:req.body.code}, {$set : {"stats.credits" : user.stats.credits+200}}, function (err, res) {
+            Users.updateOne({referalCode:req.body.code}, {$set : {"stats.credits" : user.stats.credits+200}}, function (err, response) {
                 res.send("referal successful")
             });
            }
