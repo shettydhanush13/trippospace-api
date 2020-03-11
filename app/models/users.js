@@ -10,7 +10,8 @@ var usersSchema = new schema({
     phone: String,
     profile_pic: String,
     stats: Object,
-    social:Object
+    social:Object,
+    referalCode:String
 });
 
 module.exports = mongoose.model('users', usersSchema)
