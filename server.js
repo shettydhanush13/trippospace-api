@@ -1307,54 +1307,9 @@ router.route('/home/:userId')
         Category.find({}, function (err, category) {
             if (err) {
                 res.send(err)
-            } else {
-                for (let i = 0; i < category.length; i++) {
-                    if (category[i].followers.includes(req.params.userId)) {
-                        category[i].isFollowed = true
-                        category[i].followers = []
-                    } else {
-                        category[i].isFollowed = false
-                        category[i].followers = []
-                    }
-                }
-                category1 = category.filter(function (item) {
-                    return item.isFollowed;
-                });
-
-                category2 = category.filter(function (item) {
-                    return !item.isFollowed;
-                });
-
-                res.send(category1.concat(category2))
-            }
+            } 
+            res.send(category)
         });
-    });
-
-router.route('/followStyle')
-    .post(function (req, res) {
-        var category = new Category();
-
-        category.user = req.body.userId;
-        category.categoryId = req.body.categoryId;
-
-        if (req.body.followed === "true") {
-            Category.update({ _id: req.body.categoryId }, { $pull: { "followers": req.body.userId } }, function (err, category) {
-                if (err) {
-                    res.send(err)
-                } else {
-                    res.send("category unfollowed")
-                }
-            });
-        } else {
-            Category.update({ _id: req.body.categoryId }, { $push: { "followers": req.body.userId } }, function (err, category) {
-                if (err) {
-                    res.send(err)
-                } else {
-                    res.send("category followed")
-                }
-            });
-        }
-
     });
 
 app.listen(port);
