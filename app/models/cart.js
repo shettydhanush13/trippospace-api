@@ -6,7 +6,7 @@ var cartSchema = new schema( {
     title:String,
     price:Number,
     thumb:String,
-    color: String,
+    color: Object,
     size:String,
     userId:String,
     quantity:Number
