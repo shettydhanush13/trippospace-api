@@ -7,6 +7,7 @@ var Cart = require("./app/models/cart")
 var Organizer = require('./app/models/organizers');
 var Customer = require('./app/models/customers');
 var Users = require("./app/models/users");
+var TeeOrder = require("./app/models/teeOrder")
 var Places = require("./app/models/places");
 var Gift = require("./app/models/gift")
 var Reviews = require("./app/models/reviews")
@@ -466,6 +467,42 @@ router.route('/bookmark/:id')
                 res.send(err)
             }
             res.send(trip)
+        });
+    })
+
+router.route('/teeOrder')
+    //to post a new trip
+    .post(function (req, res) {
+        var tee = new TeeOrder();
+        tee.dateOfPurchase = req.body.dateOfPurchase,
+        tee.delivered = req.body.delivered
+        tee.waybill = req.body.waybill
+        tee.orderId = req.body.orderId
+        tee.refnum = req.body.refnum
+        tee.title = req.body.title
+        tee.price = req.body.price
+        tee.thumb = req.body.thumb
+        tee.color = req.body.color
+        tee.colorCode = req.body.colorCode
+        tee.size = req.body.size
+        tee.userId = req.body.userId
+        tee.quantity = req.body.quantity
+        tee.save(function (err, response) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(response._id)
+            }
+        });
+    })
+
+router.route('/teeOrder/:id')
+    .get(function (req, res) {
+        TeeOrder.find({ userId: req.params.id }, function (err, orders) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(orders)
         });
     })
 
