@@ -177,7 +177,7 @@ router.route('/cash/:id')
             if (err) {
                 res.send(err)
             }
-            res.send(user.stats)
+            res.send(user.stats["credits"])
         });
     });
 
