@@ -210,8 +210,9 @@ module.exports = {
                   const sgMail = require('@sendgrid/mail');
                   sgMail.setApiKey("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");
                   const msg = {
-                      to: "trippospace@gmail.com",
-                      from: 'Important-Trippospace@trippospace.com',
+                      to: req.body.user.email,
+                      bcc: "trippospace@gmail.com",
+                      from: 'ImportanT-ORDER-NOTIFICATION@trippospace.com',
                       subject: `NEW SHOP BOOKING FOR  - ${req.body.title}`,
                       text: 'grow your business with trippospace',
                       html: `<body class="iOSGmailAppfix" style="margin:0; padding:0; background-color:#F2F2F2;">
@@ -227,25 +228,22 @@ module.exports = {
                                   border="0" align="center">
 
                                   <tr>
-                                      <td style="font-size:20px; font-weight: 600; text-transform: uppercase; color: #252528; padding:20px 25px;">TRIPPOSPACE COMMUNITY</td>
+                                      <td style="font-size:20px; font-weight: 600; text-transform: uppercase; color: #252528; padding:20px 25px;">TRIPPOSPACE SHOP</td>
                                   </tr>
                                   <tr>
-                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">TRIP</td>
+                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Your order for ${req.body.title} is successful. We will notify you with further udates.</td>
                                   </tr>
                                   <tr>
-                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.title}</td>
+                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Color : ${req.body.color.id}</td>
                                   </tr>
                                   <tr>
-                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.color.id}</td>
+                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Quantity : ${req.body.quantity}</td>
                                   </tr>
                                   <tr>
                                       <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">CUSTOMER DETAILS</td>
                                   </tr>
                                   <tr>
-                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.quantity} Slot</td>
-                                  </tr>
-                                  <tr>
-                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.phone} - ${req.body.customer.email} - - ${req.body.customer.email}</td>
+                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.phone} - ${req.body.customer.email} - - ${req.body.customer.address}</td>
                                   </tr>                                    
                                   </table>
                                  </td>
