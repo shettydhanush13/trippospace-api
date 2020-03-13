@@ -733,7 +733,11 @@ router.route('/complete-trip')
                 if (err) {
                     res.send(err)
                 } else {
-                    res.send(response._id)
+                    Users.findOne({_id:req.body.user}), function (err, user) {
+                        Users.updateOne({_id:req.body.user}),{$set:{"user.stats.credits" : user.stats.credits+req.body.tripDetails.credits }},function (err, user) {
+                            res.send(response._id)
+                        }
+                    }
                 }
             });
         });
