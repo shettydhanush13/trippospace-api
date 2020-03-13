@@ -212,7 +212,7 @@ module.exports = {
                   const msg = {
                       to: req.body.customer.email,
                       bcc: "trippospace@gmail.com",
-                      from: 'ImportanT-ORDER-NOTIFICATION@trippospace.com',
+                      from: 'ORDER-NOTIFICATION-IMPORTANT@trippospace.com',
                       subject: `BOOKING CONFIRMATION FOR  - ${req.body.title}`,
                       text: 'grow your business with trippospace',
                       html: `<body class="iOSGmailAppfix" style="margin:0; padding:0; background-color:#F2F2F2;">
