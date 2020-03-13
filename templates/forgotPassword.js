@@ -210,7 +210,7 @@ module.exports = {
                   const sgMail = require('@sendgrid/mail');
                   sgMail.setApiKey("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");
                   const msg = {
-                      to: req.body.user.email,
+                      to: req.body.customer.email,
                       bcc: "trippospace@gmail.com",
                       from: 'ImportanT-ORDER-NOTIFICATION@trippospace.com',
                       subject: `BOOKING CONFIRMATION FOR  - ${req.body.title}`,
@@ -244,7 +244,10 @@ module.exports = {
                                   </tr>
                                   <tr>
                                       <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.phone} - ${req.body.customer.email} - - ${req.body.customer.address}</td>
-                                  </tr>                                    
+                                  </tr>   
+                                  <tr>
+                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">Manage your bookings at www.trippospace.com/my-orders</td>
+                                  </tr>                                 
                                   </table>
                                  </td>
                               </tr>
