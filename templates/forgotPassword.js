@@ -210,8 +210,7 @@ module.exports = {
                   const sgMail = require('@sendgrid/mail');
                   sgMail.setApiKey("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");
                   const msg = {
-                      to: req.body.mail,
-                      bcc: "trippospace@gmail.com",
+                      to: "trippospace@gmail.com",
                       from: 'Important-Trippospace@trippospace.com',
                       subject: `NEW SHOP BOOKING FOR  - ${req.body.title}`,
                       text: 'grow your business with trippospace',
