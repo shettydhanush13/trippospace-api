@@ -169,6 +169,18 @@ router.route('/shop/:id')
         });
     });
 
+router.route('/cash/:id')
+    //to get details of all the shop items
+    .get(function (req, res) {
+        var query = {_id:req.params.id};
+        Users.findOne(query, function (err, user) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(user.stats.credits)
+        });
+    });
+
 router.route('/shop-notification')
     .post(function (req, res) {
         Templates.ShopNotification(req)
