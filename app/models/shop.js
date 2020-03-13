@@ -10,4 +10,4 @@ var shopSchema = new schema({
     colors:Array
 });
 
-module.exports = mongoose.model('shop', shopSchema)
+module.exports = mongoose.model('shopping', shopSchema)

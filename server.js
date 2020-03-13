@@ -14,7 +14,7 @@ var Reviews = require("./app/models/reviews")
 var Organizerstats = require("./app/models/organizerstats")
 var UpcomingTrips = require("./app/models/upcomingTrips")
 var Category = require("./app/models/category")
-var Shop = require("./app/models/shop")
+var Shopping = require("./app/models/shop")
 var Tripreviews = require("./app/models/tripReview")
 var Pendingreview = require("./app/models/pendingReview")
 var cors = require('cors');
@@ -146,10 +146,10 @@ router.route('/trip')
         });
     });
 
-router.route('/shop')
+router.route('/shopping')
     //to get details of all the shop items
     .get(function (req, res) {
-        Shop.find({},function (err, items) {
+        Shopping.find({},function (err, items) {
             if (err) {
                 res.send(err)
             }
@@ -157,7 +157,7 @@ router.route('/shop')
         });
     });
 
-router.route('/shop/:id')
+router.route('/shopping/:id')
     //to get details of all the shop items
     .get(function (req, res) {
         var query = {_id:req.params.id};
