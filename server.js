@@ -734,6 +734,7 @@ router.route('/complete-trip')
                     res.send(err)
                 } else {
                     Users.findOne({_id:req.body.user}), function (err, user) {
+                        console.log("user : ",req.body.user,user.stats.credits,req.body.tripDetails.credits)
                         Users.updateOne({_id:req.body.user}),{$set:{"user.stats.credits" : user.stats.credits+req.body.tripDetails.credits }},function (err, user) {
                             res.send(response._id)
                         }
