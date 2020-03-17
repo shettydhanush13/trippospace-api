@@ -1220,9 +1220,9 @@ router.route('/placesSearch')
                 for (let i = 0; i < places.length; i++) {
                     arr.push({type:"trip", place:places[i].place})
                 }
-                var temp = arr.reduce((r, e) => (r.push(...e), r), [])
-                var uniqueArray = [...new Set(temp)];
-                res.send(uniqueArray)
+                // var temp = arr.reduce((r, e) => (r.push(...e), r), [])
+                // var uniqueArray = [...new Set(temp)];
+                res.send(arr)
             }
         });
     });
