@@ -1191,6 +1191,16 @@ router.route('/placesByMonth/:month')
         });
     });
 
+router.route('/explore/:place')
+    .get(function (req, res) {
+        Places.find({ title: req.params.place }, function (err, place) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(place)
+        });
+    });
+
 router.route('/places')
     .post(function (req, res) {
         var places = new Places();
