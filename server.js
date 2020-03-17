@@ -1173,7 +1173,7 @@ router.route('/places/:name')
 
 router.route('/places')
     .get(function (req, res) {
-        Places.find({}, { title: 1 }, function (err, place) {
+        Places.find({}, function (err, place) {
             if (err) {
                 res.send(err)
             }
