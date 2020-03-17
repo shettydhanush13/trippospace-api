@@ -1218,11 +1218,18 @@ router.route('/placesSearch')
             } else {
                 let arr = [];
                 for (let i = 0; i < places.length; i++) {
-                    arr.push({"a":places[i].place})
+                    arr.push(places[i].place)
                 }
-                // var temp = arr.reduce((r, e) => (r.push(...e), r), [])
-                // var uniqueArray = [...new Set(temp)];
-                res.send({type:"trip",places:arr})
+                var temp = arr.reduce((r, e) => (r.push(...e), r), [])
+                var uniqueArray = [...new Set(temp)];
+                Places.find({}, { title: 1 }, function (err, place) {
+                    let arr2 = [];
+                    for (let i = 0; i < place.length; i++) {
+                        arr.push(place[i].title)
+                    }
+                    res.send({explore:arr2,places:uniqueArray})
+                })
+                
             }
         });
     });
