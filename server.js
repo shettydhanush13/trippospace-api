@@ -1218,11 +1218,28 @@ router.route('/placesSearch')
             } else {
                 let arr = [];
                 for (let i = 0; i < places.length; i++) {
-                    arr.push({type:"trip", place:places[i].place})
+                    arr.push(places[i].place)
+                }
+                var temp = arr.reduce((r, e) => (r.push(...e), r), [])
+                var uniqueArray = [...new Set(temp)];
+                res.send({type:"trip",places:uniqueArray})
+            }
+        });
+    });
+
+router.route('/placesExploreSearch')
+    .get(function (req, res) {
+        Places.find({}, { title: 1 }, function (err, places) {
+            if (err) {
+                res.send(err)
+            } else {
+                let arr = [];
+                for (let i = 0; i < places.length; i++) {
+                    arr.push(places[i].place)
                 }
                 // var temp = arr.reduce((r, e) => (r.push(...e), r), [])
                 // var uniqueArray = [...new Set(temp)];
-                res.send(arr)
+                res.send({type:"explore",places:placesExploreSearch})
             }
         });
     });
