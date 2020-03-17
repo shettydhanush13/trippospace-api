@@ -1220,9 +1220,9 @@ router.route('/placesSearch')
                 for (let i = 0; i < places.length; i++) {
                     arr.push({"a":places[i].place})
                 }
-                var temp = arr.reduce((r, e) => (r.push(...e), r), [])
-                var uniqueArray = [...new Set(temp)];
-                res.send({type:"trip",places:uniqueArray})
+                // var temp = arr.reduce((r, e) => (r.push(...e), r), [])
+                // var uniqueArray = [...new Set(temp)];
+                res.send({type:"trip",places:arr})
             }
         });
     });
