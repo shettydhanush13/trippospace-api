@@ -1235,7 +1235,7 @@ router.route('/placesExploreSearch')
             } else {
                 let arr = [];
                 for (let i = 0; i < places.length; i++) {
-                    arr.push(places[i])
+                    arr.push(places[i].title)
                 }
                 // var temp = arr.reduce((r, e) => (r.push(...e), r), [])
                 // var uniqueArray = [...new Set(temp)];
