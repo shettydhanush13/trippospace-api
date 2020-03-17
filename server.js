@@ -1181,6 +1181,25 @@ router.route('/places')
         });
     });
 
+router.route('/places')
+    .post(function (req, res) {
+        var places = new Places();
+        places.title = req.body.title,
+        places.alternateName = req.body.alternateName
+        places.months = req.body.months
+        places.thumb = req.body.thumb
+        places.desc = req.body.desc
+        places.article = req.body.article
+      
+        places.save(function (err, response) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(response)
+            }
+        })
+    });
+
 router.route('/placesSearch')
     .get(function (req, res) {
         Trip.find({}, { place: 1 }, function (err, places) {
