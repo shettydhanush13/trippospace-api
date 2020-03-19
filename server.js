@@ -189,6 +189,14 @@ router.route('/shop-notification')
         })
     })
 
+router.route('/passport-notification')
+    .post(function (req, res) {
+        Templates.passportNotification(req)
+        .then(response=>{
+            res.json(response)
+        })
+    })
+
 router.route('/booking-notification')
     .post(function (req, res) {
         Templates.BookNotification(req)
