@@ -191,7 +191,7 @@ router.route('/shop-notification')
 
 router.route('/passport-notification')
     .post(function (req, res) {
-        Templates.passportNotification(req)
+        Templates.PassportNotification(req)
         .then(response=>{
             res.json(response)
         })
