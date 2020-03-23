@@ -1266,11 +1266,12 @@ router.route('/trips/:tripsArray')
     });
 
     
-router.route('/mutiplePlaces/:place')
+router.route('/mutiplePlaces')
 //4
 //to get details of multiple trips by ids
-.get(function (req, res) {
-    Places.find({ "title": { $in: JSON.parse(req.params.place) } }, function (err, places) {
+.post(function (req, res) {
+    console.log("places",req.body.places)
+    Places.find({ "title": { $in: req.body.places } }, function (err, place) {
         if (err) {
             res.send(err)
         } else {
