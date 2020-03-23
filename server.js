@@ -1265,6 +1265,20 @@ router.route('/trips/:tripsArray')
         });
     });
 
+    
+router.route('/mutiplePlaces/:place')
+//4
+//to get details of multiple trips by ids
+.get(function (req, res) {
+    Places.find({ "title": { $in: JSON.parse(req.params.place) } }, function (err, places) {
+        if (err) {
+            res.send(err)
+        } else {
+            res.send(place)
+        }
+    });
+});
+
 router.route('/reviews/:array')
     //4
     //to get details of multiple trips by ids
