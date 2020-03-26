@@ -23,13 +23,16 @@ const fs = require('fs');
 const fileType = require('file-type');
 const multiparty = require('multiparty');
 var Templates = require('./templates/forgotPassword');
-
+const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
 
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(cors());
+
+const accessTokenSecret = 'shettydhanush13@hwt.com';
 
 s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
@@ -890,9 +893,10 @@ router.route('/login')
             username: req.body.username
         }, function (err, user) {
             if (user !== null) {
+                const accessToken = jwt.sign({ username: user.username,  password: user.password }, accessTokenSecret);
                 if (req.body.password === user.password) {
                     user.password = null
-                    res.json({ user })
+                    res.json({ user:user, token:accessToken })
                 } else {
                     res.json({ "message": "incorrect password" })
                 }
