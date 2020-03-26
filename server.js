@@ -24,7 +24,6 @@ const fileType = require('file-type');
 const multiparty = require('multiparty');
 var Templates = require('./templates/forgotPassword');
 const jwt = require('jsonwebtoken');
-const bodyParser = require('body-parser');
 
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
