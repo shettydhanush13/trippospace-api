@@ -17,6 +17,7 @@ var Category = require("./app/models/category")
 var Shopping = require("./app/models/shop")
 var Tripreviews = require("./app/models/tripReview")
 var Pendingreview = require("./app/models/pendingReview")
+var Mytrips = require("./app/models/myTrips")
 var cors = require('cors');
 var AWS = require('aws-sdk');
 const fs = require('fs');
@@ -147,6 +148,63 @@ router.route('/trip')
             res.send(trip)
         });
     });
+
+router.route('/my-trips')
+    //to post a new trip
+    .post(function (req, res) {
+        var myTrip = new Mytrips();
+        myTrip.name = req.body.name
+        myTrip.title = req.body.title
+        myTrip.views = req.body.views
+        myTrip.latitude = req.body.latitude
+        myTrip.longitude = req.body.longitude
+        myTrip.images = req.body.images
+        myTrip.blog = req.body.blog
+        myTrip.userId = req.body.userId
+        myTrip.save(function (err, response) {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(response)
+            }
+        });
+    })
+
+router.route('/my-trips/:user')
+    //to get details of all the shop items
+    .get(function (req, res) {
+        Mytrips.find({userId:req.params.user},function (err, trips) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(trips)
+        });
+    });
+
+router.route('/my-trips/:id')
+    .patch(function (req, res) {
+        var query = {
+            _id: req.params.id
+        };
+        Mytrips.updateOne(query, { $set: req.body }, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({ message: "views updated" })
+        });
+    })
+
+    .delete(function (req, res) {
+        var query = {
+            _id: req.params.id
+        };
+        Mytrips.deleteOne(query, function (err) {
+            if (err) {
+                res.send(err)
+            }
+            res.json({message:"trip deleted succesfully"})
+        });
+    })
 
 router.route('/shopping')
     //to get details of all the shop items
