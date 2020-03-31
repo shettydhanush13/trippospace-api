@@ -161,6 +161,7 @@ router.route('/my-trips')
         myTrip.images = req.body.images
         myTrip.blog = req.body.blog
         myTrip.userId = req.body.userId
+        myTrip.userName = req.body.userName
         myTrip.save(function (err, response) {
             if (err) {
                 res.send(err)

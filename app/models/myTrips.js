@@ -9,7 +9,8 @@ var myTripsSchema = new schema({
     longitude: Number,
     images: Array,
     blog : String,
-    userId: String
+    userId: String,
+    userName :String
 });
 
 module.exports = mongoose.model('myTrips', myTripsSchema)
