@@ -1307,7 +1307,7 @@ router.route('/placesSearch')
                     for (let i = 0; i < place.length; i++) {
                         arr2.push(place[i].title)
                     }
-                    Users.find({}, { first_name: 1, last_name:1, _id:1 }, function (err, user) {
+                    Users.find({}, { first_name: 1, last_name:1, _id:1, username:1, profile_pic:1}, function (err, user) {
                         let arr3 = [];
                         for (let i = 0; i < user.length; i++) {
                             arr3.push(user[i])
