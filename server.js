@@ -1307,9 +1307,14 @@ router.route('/placesSearch')
                     for (let i = 0; i < place.length; i++) {
                         arr2.push(place[i].title)
                     }
-                    res.send({explore:arr2,places:uniqueArray})
+                    Users.find({}, { first_name: 1, last_name:1, _id:1 }, function (err, user) {
+                        let arr3 = [];
+                        for (let i = 0; i < user.length; i++) {
+                            arr3.push(user[i])
+                        }
+                        res.send({explore:arr2,places:uniqueArray,users:arr3})
+                    })
                 })
-                
             }
         });
     });
