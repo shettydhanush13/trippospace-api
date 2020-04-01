@@ -171,6 +171,15 @@ router.route('/my-trips')
         });
     })
 
+    .get(function (req, res) {
+        Mytrips.find({},function (err, trips) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(trips)
+        });
+    });
+
 router.route('/my-trips/:user')
     //to get details of all the shop items
     .get(function (req, res) {
