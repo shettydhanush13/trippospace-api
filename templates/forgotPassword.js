@@ -116,6 +116,15 @@ module.exports = {
             return (parseInt(date.substr(8, 2)) + " " + month[monthindex - 1])+ " " + date.substr(0,4)
         }
 
+        const formatPrice = (x) => {
+          x=x.toString();
+          var lastThree = x.substring(x.length-3);
+          var otherNumbers = x.substring(0,x.length-3);
+          if(otherNumbers != '')
+              lastThree = ',' + lastThree;
+          return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+        }
+
         const sgMail = require('@sendgrid/mail');
         sgMail.setApiKey("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");
         const msg = {
@@ -137,46 +146,44 @@ module.exports = {
                         border="0" align="center">
 
                         <tr>
-                            <td style="font-size:20px; font-weight: 600; text-transform: uppercase; color: #252528; padding:20px 25px;">TRIPPOSPACE COMMUNITY</td>
+                            <td style="font-size:20px; font-weight: 600; text-transform: uppercase; color: #252528; padding:20px 25px;text-decoration:underline;">TRIPPOSPACE COMMUNITY</td>
                         </tr>
-                        <hr/>
                         <tr>
                           <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">YOUR BOOKING FOR ${req.body.title.toUpperCase()} IS CONFIRMED</td>
                         </tr>
                         <tr>
                             <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">we will notify you with further updates.</td>
                         </tr>
-                        <hr/>
                         <tr>
                             <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px; text-decoration:underline;">TRIP DETAILS</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TRIP TITLE : ${req.body.title.toUpperCase()}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Trip title : ${req.body.title.toLowerCase()}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">DEPARTURE DATE : ${formatDate(req.body.date).toUpperCase()}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Departure date : ${formatDate(req.body.date).toLowerCase()}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TRAVELERS : ${req.body.quantity}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Travelers : ${req.body.quantity}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TOTAL AMOUNT : Rs. ${req.body.price}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Total amount : Rs.${formatPrice(req.body.price)}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">AMOUNT PAID : Rs. ${req.body.paid}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Amout paid : Rs.${formatPrice(req.body.paid)}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">PAYMENT PENDING : Rs. ${req.body.price - req.body.paid }</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Payment pending : Rs.${formatPrice(req.body.price - req.body.paid)}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;text-decoration:underline;">CUSTOMER DETAILS</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;text-decoration:underline;">TRAVELER DETAILS</td>
                         </tr>
                         
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">PHONE : ${req.body.customer.phone}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Phone : ${req.body.customer.phone}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">MAIL : ${req.body.customer.email}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Mail : ${req.body.customer.email}</td>
                         </tr>
                         <tr>
                           <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">MANAGE YOUR BOOKINGS AT www.trippospace.com/user/me</td>
@@ -190,7 +197,7 @@ module.exports = {
             </table>
         
             <table cellpadding="0" cellspacing="0" border="0" align="center" style="font-size:0; width:300px;">
-              <tr style="width:100%;display:flex;justify-content:center">
+              <tr style="width:100%;display:flex;justify-content:space-evenly">
                 <td>
                     <a href="https://www.facebook.com/trippospace/"
                     target="_blank">
