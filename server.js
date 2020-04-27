@@ -18,6 +18,7 @@ var Shopping = require("./app/models/shop")
 var Tripreviews = require("./app/models/tripReview")
 var Pendingreview = require("./app/models/pendingReview")
 var Mytrips = require("./app/models/myTrips")
+var Videos =  require("./app/models/videos")
 var cors = require('cors');
 var AWS = require('aws-sdk');
 const fs = require('fs');
@@ -1267,6 +1268,16 @@ router.route('/placesByMonth/:month')
                 res.send(err)
             }
             res.send(place)
+        });
+    });
+
+router.route('/trendingPlacesByMonth/:month')
+    .get(function (req, res) {
+        Places.find({ months: { $all: [req.params.month] } }, function (err, place) {
+            if (err) {
+                res.send(err)
+            }
+            res.send(place.slice(0, 6))
         });
     });
 
