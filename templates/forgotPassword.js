@@ -139,14 +139,16 @@ module.exports = {
                         <tr>
                             <td style="font-size:20px; font-weight: 600; text-transform: uppercase; color: #252528; padding:20px 25px;">TRIPPOSPACE COMMUNITY</td>
                         </tr>
+                        <hr/>
                         <tr>
-                          <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">YOUR BOOKING FOR ${req.body.title.toUpperCase()} IS SUCCESSFUL</td>
+                          <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">YOUR BOOKING FOR ${req.body.title.toUpperCase()} IS CONFIRMED</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">We will notify you with further updates.</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">we will notify you with further updates.</td>
                         </tr>
+                        <hr/>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">TRIP DETAILS</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px; text-decoration:underline;">TRIP DETAILS</td>
                         </tr>
                         <tr>
                             <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TRIP TITLE : ${req.body.title.toUpperCase()}</td>
@@ -158,16 +160,16 @@ module.exports = {
                             <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TRAVELERS : ${req.body.quantity}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TOTAL AMOUNT : ${req.body.quantity}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TOTAL AMOUNT : Rs. ${req.body.price}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">AMOUNT PAID : ${req.body.quantity}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">AMOUNT PAID : Rs. ${req.body.paid}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">PAYMENT PENDING : ${req.body.quantity}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">PAYMENT PENDING : Rs. ${req.body.price - req.body.paid }</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">CUSTOMER DETAILS</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;text-decoration:underline;">CUSTOMER DETAILS</td>
                         </tr>
                         
                         <tr>
@@ -188,35 +190,35 @@ module.exports = {
             </table>
         
             <table cellpadding="0" cellspacing="0" border="0" align="center" style="font-size:0; width:300px;">
-              <tr>
-                <td style="width:20%;">
+              <tr style="width:100%;display:flex;justify-content:center">
+                <td>
                     <a href="https://www.facebook.com/trippospace/"
                     target="_blank">
                     <img src="https://img.icons8.com/android/96/000000/facebook.png" width="22"
                     height="22" alt="Facebook"/>
                     </a>
                 </td>
-                <td style="width:20%;">
+                <td>
                     <a href="https://www.instagram.com/trippospace/"
                     target="_blank">
                     <img src="https://img.icons8.com/android/96/000000/instagram.png" width="22"
                     height="22" alt="Instagram"/>
                     </a>
                 </td>
-                <td style="width:20%;">
+                <td>
                     <a href="https://www.youtube.com/channel/UCNHrjKwSe-JSe2o9EKyZZmQ?view_as=subscriber" target="_blank">
                     <img src="https://img.icons8.com/android/96/000000/start.png" width="22" height="22"
                     alt="Youtube"/>
                     </a>
                 </td>
-                <td style="width:20%;">
+                <td>
                     <a href="https://twitter.com/trippospace"
                     target="_blank">
                     <img src="https://img.icons8.com/android/96/000000/twitter.png" width="22"
                     height="22" alt="Twitter"/>
                     </a>
                 </td>
-                <td style="width:20%;">
+                <td>
                     <a href="tel:+918971780778"
                     target="_blank">
                     <img src="https://img.icons8.com/android/96/000000/outgoing-call.png" width="22"
