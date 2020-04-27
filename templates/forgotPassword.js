@@ -109,108 +109,125 @@ module.exports = {
 
     BookNotification : function(req) {
         return new Promise((resolve, reject) => {
-            
+    
+        const formatDate = (date) => {
+            const monthindex = parseInt(date.substr(5, 2))
+            const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+            return (parseInt(date.substr(8, 2)) + " " + month[monthindex - 1])+ " " + date.substr(0,4)
+        }
 
-            function formatDate(date) {
-                var monthindex = parseInt(date.substr(5, 2))
-                var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-                return (parseInt(date.substr(8, 2)) + " " + month[monthindex - 1])+ " " + date.substr(0,4)
-            }
-                    const sgMail = require('@sendgrid/mail');
-                    sgMail.setApiKey("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");
-                    const msg = {
-                        to: req.body.mail,
-                        bcc: "trippospace@gmail.com",
-                        from: 'Important-Trippospace@trippospace.com',
-                        subject: `NEW BOOKING FOR  - ${req.body.title}`,
-                        text: 'grow your business with trippospace',
-                        html: `<body class="iOSGmailAppfix" style="margin:0; padding:0; background-color:#F2F2F2;">
-                        <table id="EmailWrapper" cellpadding="0" cellspacing="0" border="0" align="center"
-                        style="background-color: #f2f2f2; border:none; font-size: 0; width:100%">
-                          <tr>
-                            <td class="topCell" style="text-align: center;">
-                              <table cellpadding="0" cellspacing="0" style="font-family: 'Gotham SSm A', 'Montserrat', 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:0px; text-align: center; width:inherit; max-width: 640px; display: inline-table;"
-                              border="0" align="center" width="640">
-                                <tr>
-                                  <td style="padding-bottom:10px;">
-                                    <table cellpadding="0" cellspacing="0" style="font-family: 'Gotham SSm A', 'Montserrat', 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:0px; text-align: center; width:100%; background:#fff; table-layout: fixed;"
-                                    border="0" align="center">
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey("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");
+        const msg = {
+            to: req.body.mail,
+            bcc: "trippospace@gmail.com",
+            from: 'Booking-Confirmation@trippospace.com',
+            subject: `BOOKING CONFORMATION FOR - ${req.body.title.toUpperCase()}`,
+            text: 'grow your business with trippospace',
+            html: `<body class="iOSGmailAppfix" style="margin:0; padding:0; background-color:#F2F2F2;">
+            <table id="EmailWrapper" cellpadding="0" cellspacing="0" border="0" align="center"
+            style="background-color: #f2f2f2; border:none; font-size: 0; width:100%">
+              <tr>
+                <td class="topCell" style="text-align: center;">
+                  <table cellpadding="0" cellspacing="0" style="font-family: 'Gotham SSm A', 'Montserrat', 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:0px; text-align: center; width:inherit; max-width: 640px; display: inline-table;"
+                  border="0" align="center" width="640">
+                    <tr>
+                      <td style="padding-bottom:10px;">
+                        <table cellpadding="0" cellspacing="0" style="font-family: 'Gotham SSm A', 'Montserrat', 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:0px; text-align: center; width:100%; background:#fff; table-layout: fixed;"
+                        border="0" align="center">
 
-                                    <tr>
-                                        <td style="font-size:20px; font-weight: 600; text-transform: uppercase; color: #252528; padding:20px 25px;">TRIPPOSPACE COMMUNITY</td>
-                                    </tr>
-                                    <tr>
-                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">YOUR ORDER FOR - ${req.body.title} IS SUCCESSFUL</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">We will notify you with further uPdates.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">TRIP DETAILS</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TRIP TITLE : ${req.body.title}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">DEPARTURE DATE : ${formatDate(req.body.date)}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TRAVELERS : ${req.body.quantity}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">CUSTOMER DETAILS</td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.customer.phone} - ${req.body.customer.email}</td>
-                                    </tr>
-                                    <tr>
-                                      <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">Manage your bookings at www.trippospace.com/user/me</td>
-                                    </tr>                                     
-                                    </table>
-                                   </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
+                        <tr>
+                            <td style="font-size:20px; font-weight: 600; text-transform: uppercase; color: #252528; padding:20px 25px;">TRIPPOSPACE COMMUNITY</td>
+                        </tr>
+                        <tr>
+                          <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">YOUR BOOKING FOR ${req.body.title.toUpperCase()} IS SUCCESSFUL</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">We will notify you with further updates.</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">TRIP DETAILS</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TRIP TITLE : ${req.body.title.toUpperCase()}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">DEPARTURE DATE : ${formatDate(req.body.date).toUpperCase()}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TRAVELERS : ${req.body.quantity}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">TOTAL AMOUNT : ${req.body.quantity}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">AMOUNT PAID : ${req.body.quantity}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">PAYMENT PENDING : ${req.body.quantity}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">CUSTOMER DETAILS</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">PHONE : ${req.body.customer.phone}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">MAIL : ${req.body.customer.email}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #2a2a2a; font-weight:bold; padding:0 25px 20px 25px;">MANAGE YOUR BOOKINGS AT www.trippospace.com/user/me</td>
+                        </tr>                                     
                         </table>
-                    
-                        <table cellpadding="0" cellspacing="0" border="0" align="center" style="font-size:0; width:300px;">
-                          <tr>
-                            <td style="width:25%;">
-                                <a href="https://www.facebook.com/trippospace/"
-                                target="_blank">
-                                <img src="https://cdn-s3.touchofmodern.com/email/social-icon-facebook.png" width="22"
-                                height="22" alt="Facebook"/>
-                                </a>
-                            </td>
-                            <td style="width:25%;">
-                                <a href="https://www.instagram.com/trippospace/"
-                                target="_blank">
-                                <img src="https://cdn-s3.touchofmodern.com/email/social-icon-instagram.png" width="22"
-                                height="22" alt="Instagram"/>
-                                </a>
-                            </td>
-                            <td style="width:25%;">
-                                <a href="https://www.youtube.com/channel/UCNHrjKwSe-JSe2o9EKyZZmQ?view_as=subscriber" target="_blank">
-                                <img src="https://cdn-s3.touchofmodern.com/doorbuster/yt.png" width="22" height="22"
-                                alt="Youtube"/>
-                                </a>
-                            </td>
-                            <td style="width:25%;">
-                                <a href="https://twitter.com/trippospace"
-                                target="_blank">
-                                <img src="https://cdn-s3.touchofmodern.com/email/social-icon-twitter.png" width="22"
-                                height="22" alt="Twitter"/>
-                                </a>
-                            </td>
-                          </tr>
-                        </table>     
-                      </body>`};
-            
-                      sgMail.send(msg);
-                      resolve({ message : "Reset link sent" })
-               
+                        </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+        
+            <table cellpadding="0" cellspacing="0" border="0" align="center" style="font-size:0; width:300px;">
+              <tr>
+                <td style="width:20%;">
+                    <a href="https://www.facebook.com/trippospace/"
+                    target="_blank">
+                    <img src="https://img.icons8.com/android/96/000000/facebook.png" width="22"
+                    height="22" alt="Facebook"/>
+                    </a>
+                </td>
+                <td style="width:20%;">
+                    <a href="https://www.instagram.com/trippospace/"
+                    target="_blank">
+                    <img src="https://img.icons8.com/android/96/000000/instagram.png" width="22"
+                    height="22" alt="Instagram"/>
+                    </a>
+                </td>
+                <td style="width:20%;">
+                    <a href="https://www.youtube.com/channel/UCNHrjKwSe-JSe2o9EKyZZmQ?view_as=subscriber" target="_blank">
+                    <img src="https://img.icons8.com/android/96/000000/start.png" width="22" height="22"
+                    alt="Youtube"/>
+                    </a>
+                </td>
+                <td style="width:20%;">
+                    <a href="https://twitter.com/trippospace"
+                    target="_blank">
+                    <img src="https://img.icons8.com/android/96/000000/twitter.png" width="22"
+                    height="22" alt="Twitter"/>
+                    </a>
+                </td>
+                <td style="width:20%;">
+                    <a href="tel:+918971780778"
+                    target="_blank">
+                    <img src="https://img.icons8.com/android/96/000000/outgoing-call.png" width="22"
+                    height="22" alt="Call"/>
+                    </a>
+                </td>
+              </tr>
+            </table>     
+          </body>`};
+          sgMail.send(msg);
+          resolve({ message : "Confirmation mail sent" })     
         });
     },
 
