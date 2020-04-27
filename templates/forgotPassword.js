@@ -164,7 +164,7 @@ module.exports = {
                             <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Departure date : ${formatDate(req.body.date).toLowerCase()}</td>
                         </tr>
                         <tr>
-                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Travelers : ${req.body.quantity}</td>
+                            <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">${req.body.quantity === 1 ? "Traveler" : "Travelers"} : ${req.body.quantity}</td>
                         </tr>
                         <tr>
                             <td style="font-family:'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size:15px; color: #4a494b; padding:0 25px 20px 25px;">Total amount : Rs.${formatPrice(req.body.price)}</td>
@@ -196,36 +196,36 @@ module.exports = {
               </tr>
             </table>
         
-            <table cellpadding="0" cellspacing="0" border="0" align="center" style="font-size:0; width:300px;">
+            <table cellpadding="0" cellspacing="0" border="0" align="center" style="font-size:0; width:90vw;">
               <tr style="width:100%;display:flex;justify-content:space-evenly">
-                <td>
+                <td width="20%">
                     <a href="https://www.facebook.com/trippospace/"
                     target="_blank">
                     <img src="https://img.icons8.com/android/96/000000/facebook.png" width="22"
                     height="22" alt="Facebook"/>
                     </a>
                 </td>
-                <td>
+                <td width="20%">
                     <a href="https://www.instagram.com/trippospace/"
                     target="_blank">
                     <img src="https://img.icons8.com/android/96/000000/instagram.png" width="22"
                     height="22" alt="Instagram"/>
                     </a>
                 </td>
-                <td>
+                <td width="20%">
                     <a href="https://www.youtube.com/channel/UCNHrjKwSe-JSe2o9EKyZZmQ?view_as=subscriber" target="_blank">
                     <img src="https://img.icons8.com/android/96/000000/start.png" width="22" height="22"
                     alt="Youtube"/>
                     </a>
                 </td>
-                <td>
+                <td width="20%">
                     <a href="https://twitter.com/trippospace"
                     target="_blank">
                     <img src="https://img.icons8.com/android/96/000000/twitter.png" width="22"
                     height="22" alt="Twitter"/>
                     </a>
                 </td>
-                <td>
+                <td width="20%">
                     <a href="tel:+918971780778"
                     target="_blank">
                     <img src="https://img.icons8.com/android/96/000000/outgoing-call.png" width="22"
