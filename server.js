@@ -1,47 +1,46 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-import { Category } from "./app/models/category"
-var Trip = require('./app/models/trips');
-var Cart = require("./app/models/cart")
-var Organizer = require('./app/models/organizers');
-var Customer = require('./app/models/customers');
-var Users = require("./app/models/users");
-var TeeOrder = require("./app/models/teeOrder")
-var Places = require("./app/models/places");
-var Gift = require("./app/models/gift")
-var Reviews = require("./app/models/reviews")
-var Organizerstats = require("./app/models/organizerstats")
-var UpcomingTrips = require("./app/models/upcomingTrips")
-var Shopping = require("./app/models/shop")
-var Tripreviews = require("./app/models/tripReview")
-var Pendingreview = require("./app/models/pendingReview")
-var Mytrips = require("./app/models/myTrips")
-var Videos =  require("./app/models/videos")
-var cors = require('cors');
-var AWS = require('aws-sdk');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const Trip = require('./app/models/trips');
+const Cart = require("./app/models/cart")
+const Organizer = require('./app/models/organizers');
+const Customer = require('./app/models/customers');
+const Users = require("./app/models/users");
+const TeeOrder = require("./app/models/teeOrder")
+const Places = require("./app/models/places");
+const Gift = require("./app/models/gift")
+const Reviews = require("./app/models/reviews")
+const Organizerstats = require("./app/models/organizerstats")
+const UpcomingTrips = require("./app/models/upcomingTrips")
+const Category = require("./app/models/category")
+const Shopping = require("./app/models/shop")
+const Tripreviews = require("./app/models/tripReview")
+const Pendingreview = require("./app/models/pendingReview")
+const Mytrips = require("./app/models/myTrips")
+const cors = require('cors');
+const AWS = require('aws-sdk');
 const fs = require('fs');
 const fileType = require('file-type');
 const multiparty = require('multiparty');
-var Templates = require('./templates/forgotPassword');
+const Templates = require('./templates/forgotPassword');
 const jwt = require('jsonwebtoken');
 
-AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(cors());
 
-const accessTokenSecret = 'shettydhanush13@hwt.com';
+const accessTokenSecret = 'shettydhanush13@jwt.com';
+
+AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
 
 s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
-var port = process.env.PORT || 3000;
-
 mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
 
-var router = express.Router();
+const router = express.Router();
 
 app.use('/api', router)
 
@@ -364,34 +363,35 @@ router.route('/multi-trip/:tripsArray')
         });
     });
 
-router.route('/tripCategory/:category')
+app.use('/tripCategory/:category', require('./traveler-api/category'))
 
-    //to get details of a trip by tipId
-    .get(function (req, res) {
-        Trip.find({ tags: { $all: [req.params.category] }, isActive:true }, function (err, trip) {
-            if (err) {
-                res.send(err)
-            }
-            let city = ["ALL"]
-            for (let i = 0; i < trip.length; i++) {
-                city.push(trip[i].booking.departureCity)
-            }
-            var city1 = [...new Set(city)]
-            if (req.query.departure === "ALL") {
-                res.json({
-                    trips: trip,
-                    search: city1,
-                    selected: "ALL"
-                })
-            } else {
-                res.json({
-                    trips: trip.filter(ele => ele.booking.departureCity === req.query.departure),
-                    search: city1,
-                    selected: req.query.departure
-                })
-            }
-        });
-    })
+// router.route('/tripCategory/:category')
+//     //to get details of a trip by tipId
+//     .get(function (req, res) {
+//         Trip.find({ tags: { $all: [req.params.category] }, isActive:true }, function (err, trip) {
+//             if (err) {
+//                 res.send(err)
+//             }
+//             let city = ["ALL"]
+//             for (let i = 0; i < trip.length; i++) {
+//                 city.push(trip[i].booking.departureCity)
+//             }
+//             var city1 = [...new Set(city)]
+//             if (req.query.departure === "ALL") {
+//                 res.json({
+//                     trips: trip,
+//                     search: city1,
+//                     selected: "ALL"
+//                 })
+//             } else {
+//                 res.json({
+//                     trips: trip.filter(ele => ele.booking.departureCity === req.query.departure),
+//                     search: city1,
+//                     selected: req.query.departure
+//                 })
+//             }
+//         });
+//     })
 
 router.route('/from/:place')
 
