@@ -45,7 +45,7 @@ mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.
 
 const router = express.Router();
 
-app.use('/api', router)
+// app.use('/api', router)
 
 router.use(function (req, res, next) {
     console.log("middleware");
