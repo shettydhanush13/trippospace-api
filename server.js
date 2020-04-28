@@ -41,7 +41,7 @@ s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
 
 const router = express.Router();
-app.use('/api', router)
+// app.use('/api', router)
 
 router.use(function (req, res, next) {
     console.log("middleware");
@@ -311,9 +311,9 @@ router.route('/verify-otp')
         .then(verification_check => res.send(verification_check.status));
     })
 
-app.use('/trip', require("./traveler-api/tripRUD"))
+app.use('/api/trip', require("./traveler-api/tripRUD"))
 
-app.use('/tripCategory', require('./traveler-api/category'))
+app.use('/api/tripCategory', require('./traveler-api/category'))
 
 router.route('/multi-trip/:tripsArray')
     .patch(function (req, res) {
