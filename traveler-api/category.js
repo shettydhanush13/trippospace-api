@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Trip = require('../app/models/trips');
 
-router.route('/')
+router.route('/:category')
     //to get details of a trip by tipId
     .get(function (req, res) {
         console.log("hello world",req)

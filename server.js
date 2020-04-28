@@ -363,7 +363,7 @@ router.route('/multi-trip/:tripsArray')
         });
     });
 
-app.use('/tripCategory/:category', require('./traveler-api/category'))
+app.use('/tripCategory', require('./traveler-api/category'))
 
 // router.route('/tripCategory/:category')
 //     //to get details of a trip by tipId 
