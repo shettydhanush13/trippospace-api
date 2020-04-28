@@ -26,6 +26,8 @@ const multiparty = require('multiparty');
 const Templates = require('./templates/forgotPassword');
 const jwt = require('jsonwebtoken');
 
+const path = require('path')
+
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,7 +52,7 @@ router.use(function (req, res, next) {
     next();
 });
 
-//to test if the api is working
+// to test if the api is working
 router.get('/', function (req, res) {
     res.json({ message: "Welcome to trippospace" });
     s3.listBuckets(function (err, data) {
@@ -62,6 +64,7 @@ router.get('/', function (req, res) {
     });
 });
 
+// app.use('/api', require("./traveler-api/test"))
 
 // abstracts function to upload a file returning a promise
 const uploadFile = (buffer, name, type) => {
@@ -364,7 +367,7 @@ router.route('/multi-trip/:tripsArray')
         });
     });
 
-app.use('/api/tripCategory', require('./traveler-api/category'))
+app.use('api/tripCategory', require('./traveler-api/category'))
 
 // router.route('/tripCategory/:category')
 //     //to get details of a trip by tipId 
