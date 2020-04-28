@@ -1273,11 +1273,14 @@ router.route('/placesByMonth/:month')
 
 router.route('/trendingPlacesByMonth/:month')
     .get(function (req, res) {
+
+        const shuffle = array => array.sort(() => Math.random() - 0.5);
+
         Places.find({ months: { $all: [req.params.month] } }, function (err, place) {
             if (err) {
                 res.send(err)
             }
-            res.send(place.slice(0, 6))
+            res.send(shuffle(place).slice(0, 6))
         });
     });
 
