@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+import { Category } from "./app/models/category"
 var Trip = require('./app/models/trips');
 var Cart = require("./app/models/cart")
 var Organizer = require('./app/models/organizers');
@@ -13,7 +14,6 @@ var Gift = require("./app/models/gift")
 var Reviews = require("./app/models/reviews")
 var Organizerstats = require("./app/models/organizerstats")
 var UpcomingTrips = require("./app/models/upcomingTrips")
-var Category = require("./app/models/category")
 var Shopping = require("./app/models/shop")
 var Tripreviews = require("./app/models/tripReview")
 var Pendingreview = require("./app/models/pendingReview")

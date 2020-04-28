@@ -7,4 +7,4 @@ var categorySchema = new schema({
     trips: Number,
 });
 
-module.exports = mongoose.model('categories', categorySchema)
+export default mongoose.model('categories', categorySchema)
