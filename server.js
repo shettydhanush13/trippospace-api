@@ -27,7 +27,6 @@ const Templates = require('./templates/forgotPassword');
 const jwt = require('jsonwebtoken');
 
 const path = require('path')
-
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,15 +35,12 @@ app.use(cors());
 app.use(express.static(path.join(__dirname,'public')))
 
 const accessTokenSecret = 'shettydhanush13@jwt.com';
-
 AWS.config.update({ region: 'us-west-2', accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', secretAccessKey: "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" });
-
 s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
 mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
 
 const router = express.Router();
-
 app.use('/api', router)
 
 router.use(function (req, res, next) {
@@ -185,7 +181,6 @@ router.route('/my-trips')
     });
 
 router.route('/my-trips/:user')
-    //to get details of all the shop items
     .get(function (req, res) {
         Mytrips.find({userId:req.params.user},function (err, trips) {
             if (err) {
@@ -316,46 +311,9 @@ router.route('/verify-otp')
         .then(verification_check => res.send(verification_check.status));
     })
 
-router.route('/trip/:tripid')
-    //to get details of a trip by tripId
-    .get(function (req, res) {
-        var query = {
-            _id: req.params.tripid
-        };
-        Trip.find(query, function (err, trip) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(trip)
-        });
-    })
+app.use('/trip', require("./traveler-api/tripRUD"))
 
-    //to delete a trip by tripId
-    .delete(function (req, res) {
-        var query = {
-            _id: req.params.tripid
-        };
-        Trip.deleteOne(query, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({message:"trip deleted succesfully"})
-        });
-    })
-    
-    //to edit a trip by tripId
-    .patch(function (req, res) {
-        var query = {
-            _id: req.params.tripid
-        };
-        Trip.update(query, { $set: req.body }, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "trip data updated" })
-        });
-    });
-
+app.use('/tripCategory', require('./traveler-api/category'))
 
 router.route('/multi-trip/:tripsArray')
     .patch(function (req, res) {
@@ -367,35 +325,6 @@ router.route('/multi-trip/:tripsArray')
         });
     });
 
-app.use('/tripCategory', require('./traveler-api/category'))
-
-// router.route('/tripCategory/:category')
-//     //to get details of a trip by tipId 
-//     .get(function (req, res) {
-//         Trip.find({ tags: { $all: [req.params.category] }, isActive:true }, function (err, trip) {
-//             if (err) {
-//                 res.send(err)
-//             }
-//             let city = ["ALL"]
-//             for (let i = 0; i < trip.length; i++) {
-//                 city.push(trip[i].booking.departureCity)
-//             }
-//             var city1 = [...new Set(city)]
-//             if (req.query.departure === "ALL") {
-//                 res.json({
-//                     trips: trip,
-//                     search: city1,
-//                     selected: "ALL"
-//                 })
-//             } else {
-//                 res.json({
-//                     trips: trip.filter(ele => ele.booking.departureCity === req.query.departure),
-//                     search: city1,
-//                     selected: req.query.departure
-//                 })
-//             }
-//         });
-//     })
 
 router.route('/from/:place')
 
