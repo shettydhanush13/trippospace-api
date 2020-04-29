@@ -3,21 +3,15 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Trip = require('./app/models/trips');
-const Cart = require("./app/models/cart")
 const Organizer = require('./app/models/organizers');
-const Customer = require('./app/models/customers');
 const Users = require("./app/models/users");
-const TeeOrder = require("./app/models/teeOrder")
 const Places = require("./app/models/places");
-const Gift = require("./app/models/gift")
 const Reviews = require("./app/models/reviews")
 const Organizerstats = require("./app/models/organizerstats")
 const UpcomingTrips = require("./app/models/upcomingTrips")
 const Category = require("./app/models/category")
-const Shopping = require("./app/models/shop")
 const Tripreviews = require("./app/models/tripReview")
 const Pendingreview = require("./app/models/pendingReview")
-const Mytrips = require("./app/models/myTrips")
 const cors = require('cors');
 const AWS = require('aws-sdk');
 const fs = require('fs');
@@ -41,7 +35,6 @@ s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
 
 const router = express.Router();
-// app.use('/api', router)
 
 router.use(function (req, res, next) {
     console.log("middleware");
@@ -60,7 +53,6 @@ router.get('/', function (req, res) {
     });
 });
 
-// app.use('/api', require("./traveler-api/test"))
 
 // abstracts function to upload a file returning a promise
 const uploadFile = (buffer, name, type) => {
@@ -94,149 +86,6 @@ router.route('/upload')
         });
     })
 
-
-// ORGANIZER APP API
-
-router.route('/trip')
-    //to post a new trip
-    .post(function (req, res) {
-        var trip = new Trip();
-        trip.title = req.body.title;
-        trip.destination = req.body.destination;
-        trip.thumb = req.body.thumb;
-        trip.isFav = req.body.isFav;
-        trip.isActive = req.body.isActive;
-        trip.description = req.body.description;
-        trip.tags = req.body.tags;
-        trip.images = req.body.images;
-        trip.reviews = req.body.reviews;
-        trip.place = req.body.place;
-        trip.organizer = req.body.organizer;
-        trip.booking = req.body.booking;
-        trip.date = req.body.date;
-        trip.partialPay = req.body.partialPay;
-        trip.tripTypes = req.body.tripTypes;
-        trip.itinerary = req.body.itinerary;
-        trip.pickup = req.body.pickup;
-        trip.inclusions = req.body.inclusions;
-        trip.exclusions = req.body.exclusions;
-        trip.credits = req.body.credits;
-        trip.organizerId = req.body.organizerId;
-        trip.organizerName = req.body.organizerName;
-        trip.terms = req.body.terms;
-        trip.cancellationPolicy = req.body.cancellationPolicy
-        trip.thingsToCarry = req.body.thingsToCarry
-        trip.notes = req.body.notes
-        trip.save(function (err, response) {
-            if (err) {
-                res.send(err)
-            } else {
-                res.send(response)
-            }
-        });
-    })
-
-    //to get details of all the trips
-    .get(function (req, res) {
-        var query = {
-            isActive: true
-        };
-        Trip.find(query, function (err, trip) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(trip)
-        });
-    });
-
-router.route('/my-trips')
-    //to post a new trip
-    .post(function (req, res) {
-        var myTrip = new Mytrips();
-        myTrip.name = req.body.name
-        myTrip.title = req.body.title
-        myTrip.views = req.body.views
-        myTrip.latitude = req.body.latitude
-        myTrip.longitude = req.body.longitude
-        myTrip.images = req.body.images
-        myTrip.blog = req.body.blog
-        myTrip.userId = req.body.userId
-        myTrip.userName = req.body.userName
-        myTrip.save(function (err, response) {
-            if (err) {
-                res.send(err)
-            } else {
-                res.send(response)
-            }
-        });
-    })
-
-    .get(function (req, res) {
-        Mytrips.find({},function (err, trips) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(trips)
-        });
-    });
-
-router.route('/my-trips/:user')
-    .get(function (req, res) {
-        Mytrips.find({userId:req.params.user},function (err, trips) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(trips)
-        });
-    });
-
-router.route('/my-trips/:id')
-    .patch(function (req, res) {
-        var query = {
-            _id: req.params.id
-        };
-        Mytrips.updateOne(query, { $set: req.body }, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "views updated" })
-        });
-    })
-
-    .delete(function (req, res) {
-        var query = {
-            _id: req.params.id
-        };
-        Mytrips.deleteOne(query, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({message:"trip deleted succesfully"})
-        });
-    })
-
-router.route('/shopping')
-    //to get details of all the shop items
-    .get(function (req, res) {
-        Shopping.find({},function (err, items) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(items)
-        });
-    });
-
-router.route('/shopping/:id')
-    //to get details of all the shop items
-    .get(function (req, res) {
-        var query = {_id:req.params.id};
-        Shop.findOne(query, function (err, item) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(item)
-        });
-    });
 
 router.route('/cash/:id')
     //to get details of all the shop items
@@ -311,387 +160,85 @@ router.route('/verify-otp')
         .then(verification_check => res.send(verification_check.status));
     })
 
-app.use('/api/trip', require("./traveler-api/tripRUD"))
+ 
 
-app.use('/api/tripCategory', require('./traveler-api/category'))
+    app.use('/api/trip', require("./traveler-api/tripCRUD"))
 
-router.route('/multi-trip/:tripsArray')
-    .patch(function (req, res) {
-        Trip.update({ "_id": { $in: JSON.parse(req.params.tripsArray) } }, { $set: req.body }, { multi:true } , function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "trip data updated" })
-        });
-    });
+    app.use('/api/tripCategory', require('./traveler-api/category'))
+
+    app.use('/api/my-trips', require("./traveler-api/completedTripCRUD"))
+
+    app.use('/api/shopping', require("./traveler-api/shoppingItemsData"))
+
+    app.use('/api/multi-trip', require("./traveler-api/MutipleTripsUpdate"))
+
+    app.use('/api/from', require("./traveler-api/getTripFromDepartureCity"))
+
+    app.use('/api/gift', require("./traveler-api/getTripFromDepartureCity"))
+
+    app.use('/api/organizer', require("./traveler-api/organizerCRUD"))
+
+    app.use('/api/teeOrder', require("./traveler-api/teeOrder"))
+
+    app.use('/api/cart', require("./traveler-api/cartData"))
+
+    app.use('/api/inactive', require("./traveler-api/getInactiveTrips"))
+
+    app.use('/api/bookmark', require("./traveler-api/bookmarkTrip"))
+
+    app.use('/api/customer', require("./traveler-api/customerMaintenance"))
+
+    app.use('/api/user', require("./traveler-api/userCRUD"))
+
+    app.use('/api/updateCategory', require("./traveler-api/updateCategoryData"))
+
+    app.use('/api/inactiveAllDates', require("./traveler-api/inactiveAllDates"))
+
+    // app.use('/api/places', require("./traveler-api/inactiveAllDates"))
 
 
-router.route('/from/:place')
 
-    //to get details of a trip depatrting from a particular city
+    router.route('/places/:name')
     .get(function (req, res) {
-        var query = {
-            "booking.departureCity": req.params.place
-        }
-        Trip.find(query, function (err, trip) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(trip)
-        });
-    })
-
-
-router.route('/gift')
-
-    //to add a new gift card
-    .post(function (req, res) {
-        var gift = new Gift();
-        gift.code = req.body.code,
-        gift.value = req.body.value,
-        gift.redeemed = false
-        gift.save(function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "gift card created succesfully" })
-        });
-    });
-
-router.route('/gift/:code')
-    //to add a new gift card
-    .get(function (req, res) {
-        Gift.findOne({code:req.params.code},function (err, card) {
-            if (err) {
-                res.send(err)
-            }else{
-                if(card === null){
-                    res.json({error:"INVALID CODE"})
-                }else{
-                    if(card.redeemed){
-                        res.json({error:"CODE ALREADY REDEEMED"})
-                    }else{
-                        Gift.updateOne({code:req.params.code},{$set : {redeemed:true}},function (err, status) {
-                            if (err) {
-                                res.send(err)
-                            }else{
-                                res.json({value: card.value})
-                            }
-                        })
-                    }
-                } 
-            }
-        });
-    });
-
-router.route('/organizer')
-
-    //to add a new organizer
-    .post(function (req, res) {
-        var organizer = new Organizer();
-        organizer.name = req.body.name;
-        organizer.username = req.body.username;
-        organizer.profile_pic = req.body.profile_pic;
-        organizer.cover_pic = req.body.cover_pic;
-        organizer.website = req.body.website;
-        organizer.location = req.body.location;
-        organizer.description = req.body.description;
-        organizer.contact = req.body.contact;
-        organizer.social = req.body.social;
-        organizer.rating = req.body.rating;
-        organizer.save(function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "organizer added succesfully" })
-        });
-    })
-
-    //3
-    //to get list of all organizers
-    .get(function (req, res) {
-        Organizer.find(function (err, organizer) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(organizer)
-        });
-    });
-
-router.route('/organizer/trips/:id')
-    .get(function (req, res) {
-        var query = {
-            organizerId: req.params.id,
-            isActive: true
-        };
-        Trip.find(query, function (err, trip) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(trip)
-        });
-    });
-
-router.route('/organizer/:id')
-
-    //to get details of a particular organizer
-    .get(function (req, res) {
-        var query = {
-            _id: req.params.id
-        };
-        Organizer.find(query, function (err, organizer) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(organizer)
-        });
-    })
-
-    //to edit organizer details
-    .patch(function (req, res) {
-        var query = {
-            _id: req.params.id
-        };
-        Organizer.update(query, { $set: req.body }, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "organizer data updated" })
-        });
-    })
-
-    //to delete an organizer
-    .delete(function (req, res) {
-        var query = {
-            _id: req.params.id
-        };
-        Organizer.deleteOne(query, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "organizer deleted succesfully" })
-        });
-    });
-
-
-router.route('/bookmark/:id')
-    //get bookmarked trips for an organizer
-    .get(function (req, res) {
-        Trip.find({ "isFav": true, "isActive": true,  organizerId: req.params.id }, function (err, trip) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(trip)
-        });
-    })
-
-router.route('/teeOrder')
-    //to post a new trip
-    .post(function (req, res) {
-        var tee = new TeeOrder();
-        tee.dateOfPurchase = req.body.dateOfPurchase,
-        tee.delivered = req.body.delivered
-        tee.waybill = req.body.waybill
-        tee.orderId = req.body.orderId
-        tee.refnum = req.body.refnum
-        tee.title = req.body.title
-        tee.price = req.body.price
-        tee.thumb = req.body.thumb
-        tee.color = req.body.color
-        tee.colorCode = req.body.colorCode
-        tee.size = req.body.size
-        tee.userId = req.body.userId
-        tee.quantity = req.body.quantity
-        tee.save(function (err, response) {
+        Trip.find({ place: { $all: [req.params.name] }, isActive:true }, function (err, trip) {
             if (err) {
                 res.send(err)
             } else {
-                res.send(response._id)
-            }
-        });
-    })
-
-router.route('/teeOrder/:id')
-    .get(function (req, res) {
-        TeeOrder.find({ userId: req.params.id }, function (err, orders) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(orders)
-        });
-    })
-
-router.route('/cart')
-    //to post a new trip
-    .post(function (req, res) {
-        var cart = new Cart();
-        cart.productId = req.body.productId,
-        cart.title = req.body.title,
-        cart.price = req.body.price
-        cart.thumb = req.body.thumb
-        cart.color = req.body.color
-        cart.size = req.body.size
-        cart.userId = req.body.userId
-        cart.quantity = 1
-        cart.save(function (err, response) {
-            if (err) {
-                res.send(err)
-            } else {
-                res.send(response._id)
-            }
-        });
-    })
-
-router.route('/cart/:id')
-    .get(function (req, res) {
-        Cart.find({ userId: req.params.id }, function (err, item) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(item)
-        });
-    })
-
-router.route('/cart/:id')
-    .delete(function (req, res) {
-        Cart.deleteOne({ _id: req.params.id }, function (err, response) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(response)
-        });
-    })
-
-router.route('/inactive/:id')
-    //get inactive trips for an organizer
-    .get(function (req, res) {
-        Trip.find({ "isActive": false, organizerId: req.params.id }, function (err, trip) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(trip)
-        });
-    })
-
-router.route('/updateCategory')
-    //get inactive trips for an organizer
-    .post(function (req, res) {
-        let query = {
-            id: { $in : req.body.tags}
-        }
-        let action = req.body.action
-
-        Category.find(query, function (err, categories) {
-            if (err) {
-                res.send(err)
-            }
-            for(let i = 0; i < categories.length; i++){
-                Category.update({id:categories[i].id},{$set : {trips : categories[i].trips+action }}, function (err, status){
-                    if (err) {
-                        res.send(err)
-                    }
-                    if(i === categories.length-1 ){
-                        res.send("categories updated")
-                    }
-                });
-            }
-        });
-    })
-
-
-router.route('/inactive')
-    //active or inactive a trip
-    .post(function (req, res) {
-
-        const updateDates = (date) => {
-            for(let i = 0;i<date.length;i++){
-                if(date[i].value == req.body.tripId){
-                    if(req.body.type === "inactive"){
-                        date[i].active = !date[i].active
-                    }else if(req.body.type === "delete"){
-                        date.splice(i, 1);
-                    }   
+                let city = ["ALL"]
+                for (let i = 0; i < trip.length; i++) {
+                    city.push(trip[i].booking.departureCity)
+                }
+                var city1 = [...new Set(city)]
+                if (req.query.departure === "ALL") {
+                    res.json({
+                        trips: trip,
+                        search: city1,
+                        selected: "ALL"
+                    })
+                } else {
+                    res.json({
+                        trips: trip.filter(ele => ele.booking.departureCity === req.query.departure),
+                        search: city1,
+                        selected: req.query.departure
+                    })
                 }
             }
-            return date;
-        }
-        
-        Trip.update({_id: req.body.tripId}, { $set: req.body.isActive }, function (err) {
-            if (err) {
-                res.send(err)
-            }
-           
-            Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":req.body.type === "addNewDate" ? req.body.allDates : updateDates(req.body.allDates)} }, {multi: true} , function (err) {
-                if (err) {
-                    res.send(err)
-                }
-                res.json({ message: "all dates updated" })
-            });
-        });
-                
+        })
     });
 
-router.route("/inactiveAllDates")
-    .post(function(req,res){
-            let allDate = req.body.allDates
-            let activeId = req.body.activeId
-
-            const updateDates = (date) => {
-                for(let i = 0;i<date.length;i++){
-                    if(date[i].value == activeId){
-                        if(req.body.type === "inactive"){
-                            date[i].active = !date[i].active
-                        }else if(req.body.type === "delete"){
-                            date.splice(i, 1);
-                        }   
-                    }
-                }
-                return date;
+router.route('/places')
+    .get(function (req, res) {
+        Places.find({}, function (err, place) {
+            if (err) {
+                res.send(err)
             }
-
-            Trip.update({ _id : { $in : req.body.datesArray }}, { $set: {"booking.allDates":req.body.type === "addNewDate" ? allDate : updateDates(allDate)} }, {multi: true} , function (err) {
-                if (err) {
-                    res.send(err)
-                }
-                res.json({ message: "all dates updated" })
-            });
+            res.send(place)
+        });
     });
 
 
-router.route('/bookmark/:tripId')
-    //bookmark or unbookmark a trip
-    .patch(function (req, res) {
-        var query = {
-            _id: req.params.tripId
-        };
 
-        Trip.update(query, { $set: req.body }, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "bookmarks updated" })
-        });
-    })
-
-//
-router.route('/customer')
-    //bookmark or unbookmark a trip
-    .post(function (req, res) {
-        var customer = new Customer();
-        customer.name = req.body.name;
-        customer.mail = req.body.mail;
-        customer.phone = req.body.phone;
-        customer.organizer = req.body.organier;
-        customer.source = req.body.source;
-        customer.save(function (err, res) {
-            if (err) {
-                res.send(err)
-            }
-            res.send({ "id": response })
-        });
-    });
-
-router.route('/referal')
+    router.route('/referal')
     //to add a new organizer
     .post(function (req, res) {
         Users.findOne({referalCode:req.body.code}, function (err, user) {
@@ -704,33 +251,8 @@ router.route('/referal')
            }
         });
     })
+//
 
-router.route('/customer/:tripId')
-
-    .get(function (req, res) {
-        var query = {
-            _id: req.params.tripId
-        }
-        Trip.find(query, function (err, trip) {
-            if (err) {
-                res.send(err)
-            }
-            res.send({ "customers": trip[0].booking.customerList })
-        });
-    })
-
-    //update customer list of a trip
-    .patch(function (req, res) {
-        var query = {
-            _id: req.params.tripId
-        };
-        Trip.update(query, { $set: req.body }, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ message: "customer list updated" })
-        });
-    });
 
 router.route('/complete-trip')
     .post(function (req, res) {
@@ -836,56 +358,6 @@ router.route('/trip-review')
     });
 });
 
-router.route('/register')
-
-    //to register a new user
-    .post(function (req, res) {
-        var users = new Users();
-
-        users.first_name = req.body.first_name;
-        users.last_name = req.body.last_name;
-        users.username = req.body.username;
-        users.password = req.body.password;
-        users.email = req.body.email;
-        users.phone = req.body.phone;
-        users.profile_pic = req.body.profile_pic;
-        users.stats = req.body.stats;
-        users.referalCode = req.body.referalCode;
-        users.social = req.body.social
-        users.save(function (err, trip) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ "success": "user added succesfully : " + trip._id })
-        }); 
-    });
-
-router.route('/user/:userId')
-
-    .patch(function (req, res) {
-        var query = {
-            _id: req.params.userId
-        };
-        Users.update(query, { $set: req.body }, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.json({ success: "users list updated" })
-        });
-    })
-
-    .get(function (req, res) {
-        var query = {
-            _id: req.params.userId
-        }
-        Users.findOne(query, function (err, user) {
-            if (err) {
-                res.send(err)
-            }
-            console.log("user : ", user)
-            res.send(user)
-        });
-    });
 
 router.route('/login')
     //to check if user exist
@@ -1156,43 +628,6 @@ router.route('/changePassword/:id')
         })
     });
 
-router.route('/places/:name')
-    .get(function (req, res) {
-        Trip.find({ place: { $all: [req.params.name] }, isActive:true }, function (err, trip) {
-            if (err) {
-                res.send(err)
-            } else {
-                let city = ["ALL"]
-                for (let i = 0; i < trip.length; i++) {
-                    city.push(trip[i].booking.departureCity)
-                }
-                var city1 = [...new Set(city)]
-                if (req.query.departure === "ALL") {
-                    res.json({
-                        trips: trip,
-                        search: city1,
-                        selected: "ALL"
-                    })
-                } else {
-                    res.json({
-                        trips: trip.filter(ele => ele.booking.departureCity === req.query.departure),
-                        search: city1,
-                        selected: req.query.departure
-                    })
-                }
-            }
-        })
-    });
-
-router.route('/places')
-    .get(function (req, res) {
-        Places.find({}, function (err, place) {
-            if (err) {
-                res.send(err)
-            }
-            res.send(place)
-        });
-    });
 
 router.route('/placesByMonth/:month')
     .get(function (req, res) {
@@ -1275,18 +710,6 @@ router.route('/placesSearch')
         });
     });
 
-router.route('/trips/:tripsArray')
-    //4
-    //to get details of multiple trips by ids
-    .get(function (req, res) {
-        Trip.find({ "_id": { $in: JSON.parse(req.params.tripsArray) } }, function (err, trips) {
-            if (err) {
-                res.send(err)
-            } else {
-                res.send(trips)
-            }
-        });
-    });
 
     
 router.route('/mutiplePlaces')
@@ -1459,11 +882,4 @@ router.route('/home/:userId')
     });
 
 app.listen(port);
-
-
 console.log("working at port : ", port)
-
-
-
-
-
