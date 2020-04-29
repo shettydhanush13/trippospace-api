@@ -32,4 +32,20 @@ router.route('/:userId')
         Users.findOne(query, (err,user) => err ? res.send(err) : res.send(user))
     });
 
+router.route('/cash/:id')
+    //to get trippo-cash details of a user using userId
+    .get((req, res) => {
+        const query = { _id : req.params.id }
+        Users.findOne(query, (err, user) => err ? res.send(err) : res.send(user.stats))
+    });
+
+router.route('/referal')
+    //to refer a user
+    .post(function (req, res) {
+        const query = { referalCode : req.body.code }
+        Users.findOne(query, (err, user) => user === null ? res.send("invalid referal code")
+        : 
+        Users.updateOne(query, { $set : { "stats.credits" : user.stats.credits + 200 } }, () => res.send("referal successful")))         
+    })
+
 module.exports = router
