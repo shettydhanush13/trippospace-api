@@ -4,7 +4,7 @@ const Trip = require('../app/models/trips');
 const Places = require('../app/models/places');
 const Users = require('../app/models/users');
 
-router.route('/placesSearch')
+router.route('/')
     //get search results data
     .get((req, res) => {
         Trip.find({}, { place: 1 }, (err, places) => {
@@ -20,7 +20,7 @@ router.route('/placesSearch')
                 for (let i = 0; i < place.length; i++) {
                     arr2.push(place[i].title)
                 }
-                Users.find({}, { first_name: 1, last_name:1, _id:1, username:1, profile_pic:1}, (err, user) => {
+                Users.find({}, { first_name: 1, last_name: 1, _id: 1, username: 1, profile_pic: 1}, (err, user) => {
                     let arr3 = [];
                     for (let i = 0; i < user.length; i++) {
                         arr3.push(user[i])
