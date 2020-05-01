@@ -21,7 +21,7 @@ router.route('/trendingPlacesByMonth/:month')
     .get((req, res) => {
         const shuffle = array => array.sort(() => Math.random() - 0.5);
         const query = { months: { $all: [req.params.month] } }
-        Places.find(query, (err, places) => err ? res.send(err) : res.send(shuffle(place).slice(0, 6)))
+        Places.find(query, (err, places) => err ? res.send(err) : res.send(shuffle(places).slice(0, 6)))
     });
 
 router.route('/explore/:place')
