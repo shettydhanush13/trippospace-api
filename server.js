@@ -11,9 +11,6 @@ app.use(cors());
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
 
-// const router = express.Router();
-// router.use((req, res, next) => next());
-
 const path = require('path')
 app.use(express.static(path.join(__dirname,'public')))
 
