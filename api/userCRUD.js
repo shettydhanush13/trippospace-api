@@ -39,7 +39,7 @@ router.route('/cash/:id')
         Users.findOne(query, (err, user) => err ? res.send(err) : res.send(user.stats))
     });
 
-router.route('/updateCredits/:id')
+router.route('/updateCredits')
     //to get trippo-cash details of a user using userId
     .post((req, res) => {
         const query = { _id : req.body.id }
