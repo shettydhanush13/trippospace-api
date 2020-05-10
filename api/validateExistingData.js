@@ -16,7 +16,7 @@ router.route('/checkUsername')
     .post((req, res) => {
         const query = { username: req.body.username }
         Users.findOne(query, (err, user) => err ? res.send(err) : 
-        user !== null ? res.json({ username: true }) : res.json({ username : false }))
+        user !== null ? res.json({ username: true, id : user._id }) : res.json({ username : false }))
     });
 
 router.route('/checkEmail')
