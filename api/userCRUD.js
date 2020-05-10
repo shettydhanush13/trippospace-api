@@ -44,7 +44,7 @@ router.route('/updateCredits')
     .post((req, res) => {
         const query = { _id : req.body.id }
         Users.findOne(query, (err, user) => err ? res.send(err) : 
-        Users.updateOne(query, { $set : {"stats.credits" : user.stats.credits + req.body.credits}}, (err, res) => err ? res.send(err) :  res.send("credits send successfully")))
+        Users.updateOne(query, { $set : {"stats.credits" : user.stats.credits + req.body.credits}}, (err) => err ? res.send(err) :  res.send("credits send successfully")))
     });
 
 
