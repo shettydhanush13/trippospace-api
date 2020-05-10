@@ -39,6 +39,15 @@ router.route('/cash/:id')
         Users.findOne(query, (err, user) => err ? res.send(err) : res.send(user.stats))
     });
 
+router.route('/updateCredits/:id')
+    //to get trippo-cash details of a user using userId
+    .post((req, res) => {
+        const query = { _id : req.body.id }
+        Users.findOne(query, (err, user) => err ? res.send(err) : 
+        Users.updateOne(query, { $set : {"stats.credits" : user.stats.credits + req.body.credits}}, (err, res) => err ? res.send(err) :  res.send("credits send successfully")))
+    });
+
+
 router.route('/referal')
     //to refer a user
     .post(function (req, res) {
