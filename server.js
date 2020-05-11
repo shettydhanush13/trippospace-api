@@ -16,6 +16,8 @@ app.use(express.static(path.join(__dirname,'public')))
 
 app.use('/api/trip', require('./api/tripCRUD'))
 
+app.use('/api/auth', require('./api/Auth'))
+
 app.use('/api/tripCategory', require('./api/category'))
 
 app.use('/api/my-trips', require('./api/completedTripCRUD'))
