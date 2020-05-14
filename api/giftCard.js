@@ -25,7 +25,7 @@ router.route('check/:code')
 
 router.route('apply/:code')
     //to redeem a gift card
-    .get((req, res) => {
+    .patch((req, res) => {
         const query = { code : req.params.code }
         Gift.updateOne(query, { $set : { redeemed : true } }, err => err ? res.send(err) : res.json({value: card.value}))
     });
