@@ -20,7 +20,7 @@ router.route('/check/:code')
         : 
         card === null ? res.json({error:"INVALID CODE"})
         :
-        card.redeemed ? res.json({error:"CODE ALREADY REDEEMED"}) : res.json({value: ParseInt(card.value)}))
+        card.redeemed ? res.json({error:"CODE ALREADY REDEEMED"}) : res.json({value: parseInt(card.value)}))
     });
 
 router.route('/apply')
