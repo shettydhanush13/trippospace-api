@@ -12,7 +12,7 @@ router.route('/')
         gift.save(err => err ? res.send(err) : res.json({ message: "gift card created succesfully" }))
     });
 
-router.route('check/:code')
+router.route('/check/:code')
     //to check a gift card is valid
     .get((req, res) => {
         const query = { code : req.params.code }
@@ -23,7 +23,7 @@ router.route('check/:code')
         card.redeemed ? res.json({error:"CODE ALREADY REDEEMED"}) : res.json({value: ParseInt(card.value)}))
     });
 
-router.route('apply')
+router.route('/apply')
     //to redeem a gift card
     .patch((req, res) => {
         const query = { code : req.body.code }
