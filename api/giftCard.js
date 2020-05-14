@@ -23,11 +23,11 @@ router.route('check/:code')
         card.redeemed ? res.json({error:"CODE ALREADY REDEEMED"}) : res.json({value: ParseInt(card.value)}))
     });
 
-router.route('apply/:code')
+router.route('apply')
     //to redeem a gift card
     .patch((req, res) => {
-        const query = { code : req.params.code }
-        Gift.updateOne(query, { $set : { redeemed : true } }, err => err ? res.send(err) : res.json({value: card.value}))
+        const query = { code : req.body.code }
+        Gift.updateOne(query, { $set : { redeemed : true } }, err => err ? res.send(err) : res.send("card redeemed successfully"))
     });
 
 module.exports = router
