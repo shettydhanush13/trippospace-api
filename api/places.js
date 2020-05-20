@@ -28,7 +28,7 @@ router.route('/explore/:place')
     //to get place details using place name
     .get((req, res) => {
         const query = { title: req.params.place }
-        Places.find(query, (err, place) => err ? res.send(err) : res.send(place)).limit(1)
+        Places.find(query, (err, place) => err ? res.send(err) : res.send(place[0])).limit(1)
     });
     
 router.route('/mutiplePlaces')
