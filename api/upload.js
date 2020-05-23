@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const imagemin = require('imagemin');
-const imageminJpegtran = require('imagemin-jpegtran');
-const imageminPngquant = require('imagemin-pngquant');
-
 const AWS = require('aws-sdk');
 AWS.config.update({ 
     region: 'us-west-2', 
@@ -40,24 +36,8 @@ router.route('/')
                 const type = fileType(buffer);
                 const timestamp = Date.now().toString();
                 const fileName = `CompressionTest/${timestamp}-lg`;
-                // const data = await uploadFile(buffer, fileName, type);
-
-                // async () => {
-                    const files = await imagemin([path], {
-                        destination: 'build/images',
-                        plugins: [
-                            imageminJpegtran(),
-                            imageminPngquant({
-                                quality: [0.6, 0.8]
-                            })
-                        ]
-                    });
-                 
-                    console.log(files);
-                    //=> [{data: <Buffer 89 50 4e …>, destinationPath: 'build/images/foo.jpg'}, …]
-                // }
-
-                return response.status(200).send(files);
+                const data = await uploadFile(buffer, fileName, type);
+                return response.status(200).send(data);
             } catch (error) {
                 return response.status(400).send(error);
             }
