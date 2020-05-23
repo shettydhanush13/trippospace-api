@@ -9,6 +9,13 @@ router.route('/')
         Places.find({}, (err, place) => err ? res.send(err) : res.send(place))
     });
 
+router.route('/:placeId')
+    //to get all places data
+    .patch((req, res) => {
+        const query = { _id: req.params.placeId }
+        Places.updateOne(query, { $set : req.body}, err => err ? res.send(err) : res.send("place data updated successfully"))
+    });
+
 router.route('/placesByMonth/:month')
     //to get all places to visit in a month
     .get((req, res) => {
