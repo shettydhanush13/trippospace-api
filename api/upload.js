@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const sharp = require('sharp');
+// const sharp = require('sharp');
 
 const AWS = require('aws-sdk');
 AWS.config.update({ 
@@ -37,13 +37,13 @@ router.route('/')
                 const type = fileType(buffer);
                 const timestamp = Date.now().toString();
                 const fileName = `CompressionTest/${timestamp}-lg`;
-                sharp(buffer)            
-                .resize(200)            
-                .toBuffer()            
-                .then( newBuffer => {
+                // sharp(buffer)            
+                // .resize(200)            
+                // .toBuffer()            
+                // .then( newBuffer => {
                     const data = await uploadFile(newBuffer, fileName, type);
                     return response.status(200).send(data); 
-                })
+                // })
             } catch (error) {
                 return response.status(400).send(error);
             }
