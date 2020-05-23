@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const imagemin = require('imagemin');
-// const imageminJpegtran = require('imagemin-jpegtran');
+const imageminJpegtran = require('imagemin-jpegtran');
 const imageminPngquant = require('imagemin-pngquant');
 
 const AWS = require('aws-sdk');
@@ -46,7 +46,7 @@ router.route('/')
                     const files = await imagemin([path], {
                         destination: 'build/images',
                         plugins: [
-                            // imageminJpegtran(),
+                            imageminJpegtran(),
                             imageminPngquant({
                                 quality: [0.6, 0.8]
                             })
