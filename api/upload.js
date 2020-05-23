@@ -35,7 +35,7 @@ router.route('/')
                 const buffer = fs.readFileSync(path);
                 const type = fileType(buffer);
                 const timestamp = Date.now().toString();
-                const fileName = `place/${timestamp}-lg`;
+                const fileName = `place/${timestamp}-trpspc`;
                 const data = await uploadFile(buffer, fileName, type);
                 return response.status(200).send(data);
             } catch (error) {
