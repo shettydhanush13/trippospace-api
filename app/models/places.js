@@ -7,7 +7,8 @@ var placesSchema = new schema({
     months: Array,
     thumb : String,
     desc : String,
-    article: Object
+    article: Object,
+    coOrdinates : Object
 });
 
 module.exports = mongoose.model('places', placesSchema)
