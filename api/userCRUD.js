@@ -36,8 +36,7 @@ router.route('/cash/:id')
     //to get trippo-cash details of a user using userId
     .get((req, res) => {
         const query = { _id : req.params.id }
-        console.log("query :", query)
-        Users.findOne(query, (err, user) => err ? res.send(err) : console.log("user :", user) )
+        Users.findOne(query, (err, user) => err ? res.send(err) : res.send(user.stats))
     });
 
 router.route('/updateCredits')
