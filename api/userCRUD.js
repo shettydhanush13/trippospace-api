@@ -32,12 +32,12 @@ router.route('/:userId')
         Users.findOne(query, (err,user) => err ? res.send(err) : res.send(user))
     });
 
-// router.route('/cash/:id')
-//     //to get trippo-cash details of a user using userId
-//     .get((req, res) => {
-//         const query = { _id : req.params.id }
-//         Users.findOne(query, (err, user) => err ? res.send(err) : res.send(user.stats))
-//     });
+router.route('/cash/:id')
+    //to get trippo-cash details of a user using userId
+    .get((req, res) => {
+        const query = { _id : req.params.id }
+        Users.findOne(query, (err, user) => err ? res.send(err) : res.send(user.stats))
+    });
 
 router.route('/updateCredits')
     //to get trippo-cash details of a user using userId
