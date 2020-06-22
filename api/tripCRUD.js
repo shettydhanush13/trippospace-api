@@ -61,4 +61,6 @@ router.route('/:tripid')
         Trip.updateOne(query, { $set: req.body }, err => err ? res.send(err) : res.json({ message: "trip data updated" }))
     });
 
+    
+
 module.exports = router

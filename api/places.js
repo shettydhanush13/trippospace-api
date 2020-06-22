@@ -45,6 +45,13 @@ router.route('/mutiplePlaces')
         Places.find(query, (err, place) => err ? res.send(err) : res.send(place))
     });
 
+router.route('/mutiplePlacesById/:array')
+    //to get multiple places at once using array of tripId
+    .get((req, res) => {
+        const query = { _id : { $in: JSON.parse(req.params.array) } }
+        Places.find(query, (err,places) => err ? res.send(err) : res.send(places))
+    });
+
 router.route('/:name')
     //to get all trips to a place by place name
     .get((req, res) => {
