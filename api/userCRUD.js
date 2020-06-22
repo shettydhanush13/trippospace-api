@@ -15,7 +15,8 @@ router.route('/')
         users.profile_pic = req.body.profile_pic;
         users.stats = req.body.stats;
         users.referalCode = req.body.referalCode;
-        users.social = req.body.social
+        users.social = req.body.social;
+        users.bucketList = []
         users.save((err, trip) => err ? res.send(err) : res.json({ "success": "user added succesfully : " + trip._id }))
     });
 

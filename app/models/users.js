@@ -10,6 +10,7 @@ var usersSchema = new schema({
     phone: String,
     profile_pic: String,
     stats: Object,
+    bucketList:Array,
     social:Object,
     referalCode:String,
 });
