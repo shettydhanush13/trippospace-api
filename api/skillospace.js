@@ -14,7 +14,7 @@ router.route('/add-user')
         let skillUser = new SkillUser();
         skillUser.info = req.body.info;
         skillUser.courses = req.body.courses;
-        SkillUser.save((err, user) => err ? res.send(err) : res.json({ success: "user added succesfully", user : user }))
+        skillUser.save((err, user) => err ? res.send(err) : res.json({ success: "user added succesfully", user : user }))
     });
 
 router.route('/send-otp')
