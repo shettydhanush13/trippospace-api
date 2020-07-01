@@ -1,13 +1,9 @@
-var mongoose = require("mongoose")
-var schema = mongoose.Schema
+let mongoose = require("mongoose")
+let schema = mongoose.Schema
 
-var skillUsersSchema = new schema({
-    name: String,
-    email: String,
-    phone: String,
-    profile_pic: String,
-    stats: Object,
-    referalCode:String,
+let skillUsersSchema = new schema({
+    info : Object,
+    courses : Object
 });
 
 module.exports = mongoose.model('skillUsers', skillUsersSchema)

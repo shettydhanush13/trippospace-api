@@ -12,9 +12,8 @@ router.route('/add-user')
     //to register a new user
     .post((req, res) => {
         let skillUser = new SkillUser();
-        skillUser.name = req.body.name;
-        skillUser.phone = req.body.phone;
-        skillUser.email = req.body.email;
+        skillUser.info = req.body.info;
+        skillUser.courses = req.body.courses;
         SkillUser.save((err, user) => err ? res.send(err) : res.json({ success: "user added succesfully", user : user }))
     });
 
@@ -33,29 +32,6 @@ router.route('/verify-otp')
         .create({to: req.body.phone, code: req.body.code})
         .then(verification_check => res.send(verification_check.status));
     })
-
-
-    {
-        "info" : {
-            "name" : name.toLowerCase(),
-            "phone" : phone,
-            "email" : email.toLowerCase(),
-            "profile_pic" : Config.profile_pic
-        },
-        "courses" : {
-            "ongoing" : [],
-            "completed" : []
-        }
-    }
-// router.route('/login')
-//     //user login
-//     .post((req, res) => {
-//         const query = { username: req.body.username }
-//         SkillUser.findOne(query, (err, user) => err ? res.send(err) 
-//         : 
-//         user !== null ? req.body.password === user.password ? [user.password = null,res.json({ user })] : res.json({ "message": "incorrect password" }) 
-//         : res.json({ "message": "username does not exist" }))
-//     });
 
 module.exports = router
 
