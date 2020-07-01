@@ -17,6 +17,13 @@ router.route('/add-user')
         skillUser.save((err, user) => err ? res.send(err) : res.json({ success: "user added succesfully", user : user }))
     });
 
+router.route('/get-user/:phone')
+    //to get details of a user by phone number
+    .get((req, res) => {
+        let query = { "info.phone" : req.params.phone };
+        SkillUser.findOne(query, (err, user) => err ? res.send(err) : res.send(user));
+    })
+
 router.route('/send-otp')
     .post(function (req, res) {
         client.verify.services(servicesId)
