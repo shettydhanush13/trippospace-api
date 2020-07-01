@@ -74,7 +74,7 @@ app.use('/api/otp', require('./api/otp'))
 
 app.use('/api/upload', require('./api/upload'))
 
-app.use('/api/skillopsace', require('./api/skillospace'))
+app.use('/api/skillospace', require('./api/skillospace'))
 
 const port = process.env.PORT || 3000;
 app.listen(port);
