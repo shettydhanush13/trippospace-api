@@ -53,6 +53,7 @@ router.route('/getIamUser')
 
 router.route('/createIamUser')
     .post((request, response) => {
+        request.body.Tags = [{"email" : "a@b.cc", "firstName" : "firstName",  "lastName" : "lastName"}]
         iam.createUser(request.body, (err, data) => {
             if (err) response.send(err); // an error occurred
             else {
