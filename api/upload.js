@@ -39,7 +39,7 @@ router.route('/listIamUser')
     .post((request, response) => {
         iam.listUsers(request.body, (err, data) => {
             if (err) response.send(err); // an error occurred
-            else response.send(data);           // successful response
+            else response.send(data); // successful response
         });
     })
 
@@ -47,19 +47,28 @@ router.route('/getIamUser')
     .post((request, response) => {
         iam.getUser(request.body, (err, data) => {
             if (err) response.send(err); // an error occurred
-            else response.send(data);           // successful response
+            else response.send(data); // successful response
         });
     })
 
 router.route('/createIamUser')
     .post((request, response) => {
-        let tempBody = {...request.body}
-        tempBody.Tags = [{Key : "email" , Value : "a@b.cc"},{Key : "firstName" , Value : "firstName"},{Key : "lastName" , Value : "lastName"}]
-        iam.createUser(tempBody, (err, data) => {
+        let createUserObj = {
+            UserName : request.body.UserName,
+            Tags : [
+                {Key : "email" , Value : request.body.Email},
+                {Key : "firstName" , Value : request.body.FirstName},
+                {Key : "lastName" , Value : request.body.LastName}
+            ]
+        }
+        iam.createUser(createUserObj, (err, data) => {
             if (err) response.send(err); // an error occurred
             else {
-				request.body.GroupName = "UniqloTestUsers"
-				iam.addUserToGroup(request.body, (err, groupdata) => {
+                let AddtoGroupObj = {
+                    UserName : request.body.UserName,
+                    GroupName : "UniqloTestUsers"
+                }
+				iam.addUserToGroup(AddtoGroupObj, err => {
 					if (err) response.send(err); // an error occurred
 					else response.send(data); // successful response
 				});
@@ -77,9 +86,11 @@ router.route('/updateIamUser')
 
 router.route('/deleteIamUser')
     .post((request, response) => {
-        let tempBody = {...request.body}
-        tempBody.GroupName = "UniqloTestUsers"
-        iam.removeUserFromGroup(tempBody, (err, data) => {
+        let RemoveFromGroupObj = {
+            UserName : request.body.UserName,
+            GroupName : "UniqloTestUsers"
+        }
+        iam.removeUserFromGroup(RemoveFromGroupObj, err => {
             if (err) response.send(err); // an error occurred
             else{
                 iam.deleteUser(request.body, (err, data2) => {
@@ -89,14 +100,6 @@ router.route('/deleteIamUser')
               };
           });
         })
-
-router.route('/addUserToIamGroup')
-    .post((request, response) => {
-        iam.addUserToGroup(request.body, (err, data) => {
-            if (err) response.send(err); // an error occurred
-            else response.send(data); // successful response
-        });
-    })
 
 router.route('/')
     //to upload an image to s3
