@@ -34,16 +34,22 @@ const uploadFile = (buffer, name, type) => {
     return s3.upload(params).promise();
 };
 
-router.route('/iam')
+router.route('/getIamUser')
     //to upload an image to s3
     .post((request, response) => {
-        // var params = {
-        //     UserName: "Bob"
-        //    };
-           iam.getUser(request.body, function(err, data) {
-             if (err) response.send(err); // an error occurred
-             else     response.send(data);           // successful response
-           });
+        iam.getUser(request.body, function(err, data) {
+            if (err) response.send(err); // an error occurred
+            else     response.send(data);           // successful response
+        });
+    })
+
+router.route('/createIamUser')
+    //to upload an image to s3
+    .post((request, response) => {
+        iam.createUser(request.body, function(err, data) {
+            if (err) response.send(err); // an error occurred
+            else     response.send(data);           // successful response
+          });
     })
 
 router.route('/')
