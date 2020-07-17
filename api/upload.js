@@ -34,6 +34,14 @@ const uploadFile = (buffer, name, type) => {
     return s3.upload(params).promise();
 };
 
+router.route('/listIamUser')
+    .post((request, response) => {
+        iam.listUsers(request.body, function(err, data) {
+            if (err) response.send(err); // an error occurred
+            else     response.send(data);           // successful response
+        });
+    })
+
 router.route('/getIamUser')
     .post((request, response) => {
         iam.getUser(request.body, function(err, data) {
