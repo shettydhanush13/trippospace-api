@@ -16,7 +16,7 @@ var iam = new AWS.IAM({apiVersion: '2010-05-08'});
 //     accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', 
 //     secretAccessKey: "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" 
 // })
-// s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
 
 const fs = require('fs');
@@ -71,6 +71,14 @@ router.route('/deleteIamUser')
         iam.deleteUser(request.body, function(err, data) {
             if (err) response.send(err); // an error occurred
             else     response.send(data); // successful response
+          });
+    })
+
+router.route('/addUserToIamGroup')
+    .post((request, response) => {
+        iam.addUserToGroup(request.body, function(err, data) {
+            if (err) response.send(err); // an error occurred
+            else response.send(data); // successful response
           });
     })
 
