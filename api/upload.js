@@ -22,6 +22,7 @@ s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 const fs = require('fs');
 const fileType = require('file-type');
 const multiparty = require('multiparty');
+const { Request } = require('aws-sdk');
 
 const uploadFile = (buffer, name, type) => {
     const params = {
@@ -36,37 +37,29 @@ const uploadFile = (buffer, name, type) => {
 
 router.route('/listIamUser')
     .post((request, response) => {
-        iam.listUsers(request.body, function(err, data) {
+        iam.listUsers(request.body, (err, data) => {
             if (err) response.send(err); // an error occurred
-            else     response.send(data);           // successful response
+            else response.send(data);           // successful response
         });
     })
 
 router.route('/getIamUser')
     .post((request, response) => {
-        iam.getUser(request.body, function(err, data) {
+        iam.getUser(request.body, (err, data) => {
             if (err) response.send(err); // an error occurred
-            else     response.send(data);           // successful response
+            else response.send(data);           // successful response
         });
     })
-
-// router.route('/createIamUser')
-//     .post((request, response) => {
-//         iam.createUser(request.body, function(err, data) {
-//             if (err) response.send(err); // an error occurred
-//             else     response.send(data);           // successful response
-//           });
-//     })
 
 router.route('/createIamUser')
     .post((request, response) => {
         iam.createUser(request.body, (err, data) => {
             if (err) response.send(err); // an error occurred
             else {
-				request.body.GroupName = "UniqloIAM"
-				iam.addUserToGroup(request.body, function(err, groupdata) {
+				request.body.GroupName = "UniqloTestUsers"
+				iam.addUserToGroup(request.body, (err, groupdata) => {
 					if (err) response.send(err); // an error occurred
-					else response.send(groupdata); // successful response
+					else response.send(data); // successful response
 				});
 			};
         });
@@ -74,26 +67,33 @@ router.route('/createIamUser')
 
 router.route('/updateIamUser')
     .post((request, response) => {
-        iam.updateUser(request.body, function(err, data) {
+        iam.updateUser(request.body, (err, data) => {
             if (err) response.send(err); // an error occurred
-            else     response.send(data);           // successful response
-          });
+            else response.send(data); // successful response
+        });
     })
 
 router.route('/deleteIamUser')
     .post((request, response) => {
-        iam.deleteUser(request.body, function(err, data) {
+        let tempBody = {...request.body}
+        tempBody.GroupName = "UniqloTestUsers"
+        iam.removeUserFromGroup(tempBody, (err, data) => {
             if (err) response.send(err); // an error occurred
-            else     response.send(data); // successful response
+            else{
+                iam.deleteUser(request.body, (err, data2) => {
+                    if (err) response.send(err); // an error occurred
+                    else response.send(data2); // successful response
+                  });
+              };
           });
-    })
+        })
 
 router.route('/addUserToIamGroup')
     .post((request, response) => {
-        iam.addUserToGroup(request.body, function(err, data) {
+        iam.addUserToGroup(request.body, (err, data) => {
             if (err) response.send(err); // an error occurred
             else response.send(data); // successful response
-          });
+        });
     })
 
 router.route('/')
