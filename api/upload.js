@@ -55,7 +55,7 @@ router.route('/createIamUser')
     .post((request, response) => {
         let tempBody = {...request.body}
         tempBody.Tags = [{Key : "email" , Value : "a@b.cc"},{Key : "firstName" , Value : "firstName"},{Key : "lastName" , Value : "lastName"}]
-        iam.createUser(request.body, (err, data) => {
+        iam.createUser(tempBody, (err, data) => {
             if (err) response.send(err); // an error occurred
             else {
 				request.body.GroupName = "UniqloTestUsers"
