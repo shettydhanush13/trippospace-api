@@ -1,13 +1,23 @@
 const express = require('express');
 const router = express.Router();
 
-const AWS = require('aws-sdk');
+
+var AWS = require('aws-sdk');
 AWS.config.update({ 
     region: 'us-west-2', 
-    accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', 
-    secretAccessKey: "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" 
+    accessKeyId: 'AKIA24IHNYBA4XWTVTFV', 
+    secretAccessKey: "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" 
 })
-s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+var iam = new AWS.IAM({apiVersion: '2010-05-08'});
+
+// const AWS = require('aws-sdk');
+// AWS.config.update({ 
+//     region: 'us-west-2', 
+//     accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', 
+//     secretAccessKey: "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" 
+// })
+// s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+
 
 const fs = require('fs');
 const fileType = require('file-type');
@@ -23,6 +33,18 @@ const uploadFile = (buffer, name, type) => {
     };
     return s3.upload(params).promise();
 };
+
+router.route('/iam')
+    //to upload an image to s3
+    .post((request, response) => {
+        // var params = {
+        //     UserName: "Bob"
+        //    };
+           iam.getUser(request.body, function(err, data) {
+             if (err) console.log("iam err : ", err, err.stack); // an error occurred
+             else     console.log("iam res : ",data);           // successful response
+           });
+    })
 
 router.route('/')
     //to upload an image to s3
