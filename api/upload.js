@@ -50,12 +50,26 @@ router.route('/getIamUser')
         });
     })
 
+// router.route('/createIamUser')
+//     .post((request, response) => {
+//         iam.createUser(request.body, function(err, data) {
+//             if (err) response.send(err); // an error occurred
+//             else     response.send(data);           // successful response
+//           });
+//     })
+
 router.route('/createIamUser')
     .post((request, response) => {
-        iam.createUser(request.body, function(err, data) {
+        iam.createUser(request.body, (err, data) => {
             if (err) response.send(err); // an error occurred
-            else     response.send(data);           // successful response
-          });
+            else {
+				request.body.GroupName = "UniqloIAM"
+				iam.addUserToGroup(request.body, function(err, groupdata) {
+					if (err) response.send(err); // an error occurred
+					else response.send(groupdata); // successful response
+				});
+			};
+        });
     })
 
 router.route('/updateIamUser')
