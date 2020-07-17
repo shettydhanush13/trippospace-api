@@ -41,8 +41,8 @@ router.route('/iam')
         //     UserName: "Bob"
         //    };
            iam.getUser(request.body, function(err, data) {
-             if (err) console.log("iam err : ", err, err.stack); // an error occurred
-             else     console.log("iam res : ",data);           // successful response
+             if (err) response.send("iam err : ", err, err.stack); // an error occurred
+             else     response.send("iam res : ",data);           // successful response
            });
     })
 
