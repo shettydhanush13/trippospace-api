@@ -35,19 +35,18 @@ router
 	.post((req, res) => {
 		let query = { id: req.body.id };
 		SkillDiscussions.findOne(query, (discussion) => {
+			console.log('discussion : ', discussion);
 			if (discussion) {
 				SkillDiscussions.updateOne(
 					query,
 					{ $set: req.body.data },
-					(err) => (err ? res.send(err) : res.json({ message: 'discussion updated successfully' }))
+					(err) => (err ? res.send(err) : res.json({ update: discussion }))
 				);
 			} else {
 				let skillDiscussion = new SkillDiscussions();
 				skillDiscussion.id = req.body.id;
 				skillDiscussion.discussions = req.body.data;
-				skillDiscussion.save(
-					(err) => (err ? res.send(err) : res.json({ message: 'discussion created successfully' }))
-				);
+				skillDiscussion.save((err) => (err ? res.send(err) : res.json({ create: discussion })));
 			}
 		});
 	});
