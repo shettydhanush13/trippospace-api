@@ -31,10 +31,10 @@ router
 
 router
 	.route('/discussions')
-	//to get details of a user by phone number
+	//to update discussions
 	.post((req, res) => {
 		let query = { id: req.body.id };
-		SkillDiscussions.getOne(query, (discussion) => {
+		SkillDiscussions.findOne(query, (discussion) => {
 			if (discussion) {
 				SkillDiscussions.updateOne(
 					query,
@@ -54,7 +54,7 @@ router
 
 router
 	.route('/discussions/:id')
-	//to get details of a user by phone number
+	//to get discussions by lesson id
 	.get((req, res) => {
 		let query = { id: req.params.id };
 		SkillDiscussions.findOne(query, (err, discussion) => (err ? res.send(err) : res.send(discussion)));
