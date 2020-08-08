@@ -34,11 +34,22 @@ router
 	//to get details of a user by phone number
 	.post((req, res) => {
 		let query = { id: req.body.id };
-		SkillDiscussions.updateOne(
-			query,
-			{ $set: req.body.data },
-			(err, discussion) => (err ? res.send(err) : res.send(discussion))
-		);
+		SkillDiscussions.getOne(query, (discussion) => {
+			if (discussion) {
+				SkillDiscussions.updateOne(
+					query,
+					{ $set: req.body.data },
+					(err) => (err ? res.send(err) : res.json({ message: 'discussion updated successfully' }))
+				);
+			} else {
+				let skillDiscussion = new SkillDiscussions();
+				skillDiscussion.id = req.body.id;
+				skillDiscussion.discussions = req.body.data;
+				skillDiscussion.save(
+					(err) => (err ? res.send(err) : res.json({ message: 'discussion created successfully' }))
+				);
+			}
+		});
 	});
 
 router
