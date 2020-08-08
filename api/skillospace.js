@@ -57,7 +57,7 @@ router
 	//to get discussions by lesson id
 	.get((req, res) => {
 		let query = { id: req.params.id };
-		SkillDiscussions.findOne(query, (err, discussion) => (err ? res.send(err) : res.send(discussion)));
+		SkillDiscussions.find(query, (err, discussion) => (err ? res.send(err) : res.send(discussion)));
 	});
 
 router.route('/send-otp').post(function(req, res){
