@@ -38,7 +38,7 @@ router
 			if (discussion) {
 				SkillDiscussions.updateOne(
 					query,
-					{ $set: req.body.data },
+					{ $set: { discussions: req.body.data } },
 					(err) => (err ? res.send(err) : res.json({ message: 'discussion updated succesfully' }))
 				);
 			} else {
