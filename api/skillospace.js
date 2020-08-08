@@ -34,19 +34,20 @@ router
 	//to update discussions
 	.post((req, res) => {
 		let query = { id: req.body.id };
-		SkillDiscussions.find(query, (err, discussion) => {
-			console.log('discussion : ', query, discussion);
+		SkillDiscussions.findOne(query, (err, discussion) => {
 			if (discussion) {
 				SkillDiscussions.updateOne(
 					query,
 					{ $set: req.body.data },
-					(err) => (err ? res.send(err) : res.json({ update: discussion }))
+					(err) => (err ? res.send(err) : res.json({ message: 'discussion updated succesfully' }))
 				);
 			} else {
 				let skillDiscussion = new SkillDiscussions();
 				skillDiscussion.id = req.body.id;
 				skillDiscussion.discussions = req.body.data;
-				skillDiscussion.save((err) => (err ? res.send(err) : res.json({ create: discussion })));
+				skillDiscussion.save(
+					(err) => (err ? res.send(err) : res.json({ message: 'discussion created succesfully' }))
+				);
 			}
 		});
 	});
