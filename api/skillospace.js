@@ -34,7 +34,7 @@ router
 	//to update discussions
 	.post((req, res) => {
 		let query = { id: req.body.id };
-		SkillDiscussions.findOne(query, (discussion) => {
+		SkillDiscussions.find(query, (discussion) => {
 			console.log('discussion : ', query, discussion);
 			if (discussion) {
 				SkillDiscussions.updateOne(
