@@ -8,9 +8,18 @@ app.use(bodyParser.json())
 const cors = require('cors');
 app.use(cors());
 
-const mongoose = require('mongoose');
-// mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
-mongoose.connect('mongodb+srv://dhanush:5$Recieved@cluster0.ejkuv.mongodb.net/trippospace?retryWrites=true&w=majority');
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://dhanush:5$Recieved@cluster0.ejkuv.mongodb.net/trippospace?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+    console.log("db connected")
+    // perform actions on the collection object
+    // client.close();
+});
+
+// const mongoose = require('mongoose');
+// // mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
+// mongoose.connect('mongodb+srv://dhanush:5$Recieved@cluster0.ejkuv.mongodb.net/trippospace?retryWrites=true&w=majority');
 
 const path = require('path')
 app.use(express.static(path.join(__dirname,'public')))
