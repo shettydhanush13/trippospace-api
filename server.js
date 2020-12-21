@@ -9,14 +9,17 @@ const cors = require('cors');
 app.use(cors());
 
 const mongoose = require('mongoose');
-
-const uri = 'mongodb+srv://dhanush:5$Recieved@cluster0.ejkuv.mongodb.net/trippospace?retryWrites=true&w=majority';
-
-mongoose.connect(uri, { useNewUrlParser: true }, (err, db) => {
-    console.log("connected to database")
+// mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
+let password = encodeURIComponent("5$Recieved")
+const uri = "mongodb+srv://dhanush:" + password +"@cluster0.ejkuv.mongodb.net/trippospace?retryWrites=true&w=majority";
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+const connection = mongoose.connection;
+console.log(mongoose.version);
+connection.once("open", () => {
+    console.log("MongoDB database connection established successfully");
 });
 
-const path = require('path')
+const path = require('path');
 app.use(express.static(path.join(__dirname,'public')))
 
 app.use('/api/trip', require('./api/tripCRUD'))
