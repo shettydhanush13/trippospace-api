@@ -9,7 +9,12 @@ const cors = require('cors');
 app.use(cors());
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
+
+const uri = 'mongodb+srv://dhanush:5$Recieved@cluster0.ejkuv.mongodb.net/trippospace?retryWrites=true&w=majority';
+
+mongoose.connect(uri, { useNewUrlParser: true }, (err, db) => {
+    console.log("connected to database")
+});
 
 const path = require('path')
 app.use(express.static(path.join(__dirname,'public')))
@@ -73,6 +78,8 @@ app.use('/api/notifications', require('./api/notifications'))
 app.use('/api/otp', require('./api/otp'))
 
 app.use('/api/upload', require('./api/upload'))
+
+app.use('/api/quote', require('./api/quote'))
 
 app.use('/api/skillospace', require('./api/skillospace'))
 
