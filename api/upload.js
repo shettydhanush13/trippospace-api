@@ -1,28 +1,16 @@
 const express = require('express');
 const router = express.Router();
-
-
-var AWS = require('aws-sdk');
-AWS.config.update({ 
-    region: 'us-west-2', 
-    accessKeyId: 'AKIA24IHNYBA4XWTVTFV', 
-    secretAccessKey: "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" 
-})
-var iam = new AWS.IAM({apiVersion: '2010-05-08'});
-
-// const AWS = require('aws-sdk');
-// AWS.config.update({ 
-//     region: 'us-west-2', 
-//     accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', 
-//     secretAccessKey: "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" 
-// })
-s3 = new AWS.S3({ apiVersion: '2006-03-01' });
-
-
 const fs = require('fs');
 const fileType = require('file-type');
 const multiparty = require('multiparty');
-const { Request } = require('aws-sdk');
+
+const AWS = require('aws-sdk');
+AWS.config.update({ 
+    region: 'us-west-2', 
+    accessKeyId: 'AKIAYTSD6F4Z3JZZ76UQ', 
+    secretAccessKey: "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" 
+})
+s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
 const uploadFile = (buffer, name, type) => {
     const params = {
@@ -34,72 +22,6 @@ const uploadFile = (buffer, name, type) => {
     };
     return s3.upload(params).promise();
 };
-
-router.route('/listIamUser')
-    .post((request, response) => {
-        iam.listUsers(request.body, (err, data) => {
-            if (err) response.send(err); // an error occurred
-            else response.send(data); // successful response
-        });
-    })
-
-router.route('/getIamUser')
-    .post((request, response) => {
-        iam.getUser(request.body, (err, data) => {
-            if (err) response.send(err); // an error occurred
-            else response.send(data); // successful response
-        });
-    })
-
-router.route('/createIamUser')
-    .post((request, response) => {
-        let createUserObj = {
-            UserName : request.body.UserName,
-            Tags : [
-                {Key : "email" , Value : request.body.Email},
-                {Key : "firstName" , Value : request.body.FirstName},
-                {Key : "lastName" , Value : request.body.LastName}
-            ]
-        }
-        iam.createUser(createUserObj, (err, data) => {
-            if (err) response.send(err); // an error occurred
-            else {
-                let AddtoGroupObj = {
-                    UserName : request.body.UserName,
-                    GroupName : "UniqloTestUsers"
-                }
-				iam.addUserToGroup(AddtoGroupObj, err => {
-					if (err) response.send(err); // an error occurred
-					else response.send(data); // successful response
-				});
-			};
-        });
-    })
-
-router.route('/updateIamUser')
-    .post((request, response) => {
-        iam.updateUser(request.body, (err, data) => {
-            if (err) response.send(err); // an error occurred
-            else response.send(data); // successful response
-        });
-    })
-
-router.route('/deleteIamUser')
-    .post((request, response) => {
-        let RemoveFromGroupObj = {
-            UserName : request.body.UserName,
-            GroupName : "UniqloTestUsers"
-        }
-        iam.removeUserFromGroup(RemoveFromGroupObj, err => {
-            if (err) response.send(err); // an error occurred
-            else{
-                iam.deleteUser(request.body, (err, data2) => {
-                    if (err) response.send(err); // an error occurred
-                    else response.send(data2); // successful response
-                  });
-              };
-          });
-        })
 
 router.route('/')
     //to upload an image to s3
