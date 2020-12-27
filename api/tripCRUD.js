@@ -5,6 +5,17 @@ const Trip = require('../app/models/trips');
 router.route('/')
     //to post a new trip
     .post((req, res) => {
+        const shuffleArray = array => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array
+        }
+        const generateTripId = () => {
+            let id = `${req.body.title}${req.body.organizerId}${req.body.date}`
+            return shuffleArray(id.split("")).slice(0,12).join("")
+        }
         let trip = new Trip();
         trip.title = req.body.title;
         trip.destination = req.body.destination;
@@ -32,6 +43,7 @@ router.route('/')
         trip.cancellationPolicy = req.body.cancellationPolicy;
         trip.thingsToCarry = req.body.thingsToCarry;
         trip.notes = req.body.notes;
+        trip.tripId = generateTripId()
         trip.save((err, response) => err ? res.send(err) : res.send(response));
     })
 

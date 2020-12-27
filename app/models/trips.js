@@ -33,7 +33,8 @@ var tripsSchema = new schema({
     terms: String,
     cancellationPolicy:String,
     thingsToCarry: Array,
-    notes:Array
+    notes:Array,
+    tripId:String
 });
 
 module.exports = mongoose.model('trip', tripsSchema)

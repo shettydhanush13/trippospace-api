@@ -2,6 +2,8 @@ var mongoose = require("mongoose")
 var schema = mongoose.Schema
 
 var upcomingTripsSchema = new schema({
+    transactionId:String,
+    bookingId:String,
     thumb:String,
     tripId:String,
     tripTitle:String,

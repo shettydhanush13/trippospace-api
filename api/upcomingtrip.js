@@ -19,6 +19,17 @@ router.route('/:id')
 router.route('/')
     //add a trip to upcoming trips
     .post((req, res) => {
+        const shuffleArray = array => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array
+        }
+        const generateBookingId = () => {
+            let id = `${req.body.userId}${req.body.tripId}${req.body.date}`
+            return shuffleArray(id.split("")).slice(0,12).join("")
+        }
         let upcomingtrips = new UpcomingTrips();
         upcomingtrips.tripTitle = req.body.tripTitle;
         upcomingtrips.thumb = req.body.thumb;
@@ -29,7 +40,9 @@ router.route('/')
         upcomingtrips.days = req.body.days
         upcomingtrips.userId = req.body.userId
         upcomingtrips.travelers = req.body.travelers,
-        upcomingtrips.price = req.body.price
+        upcomingtrips.price = req.body.price,
+        upcomingtrips.bookingId = generateBookingId()
+        upcomingtrips.transactionId = req.body.transactionId
         upcomingtrips.save((err, response) => err ? res.send(err) : res.send(response))
     })
 
