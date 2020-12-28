@@ -13,7 +13,9 @@ var upcomingTripsSchema = new schema({
     days:Number,
     userId:String,
     travelers : Number,
-    price : Number
+    price : Number,
+    organizerId : String,
+    whatsappLink : String
 });
 
 module.exports = mongoose.model('upcomingtrips', upcomingTripsSchema)

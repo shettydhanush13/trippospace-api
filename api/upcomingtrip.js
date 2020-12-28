@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const UpcomingTrips = require('../app/models/upcomingTrips');
 
+// router.route('/checkUpcomingTrip')
+//     .post((req, res) => {
+//         const query = { userId : req.body.u, tripId:req.query.t }
+//         console.log("query : ",query,req.query)
+//         UpcomingTrips.find(query, (err, trip) => err ? res.send(err) : trip === null ? res.send(false) : res.send(trip))
+// });
+
 router.route('/:userId')
     //to get upcoming trips by user Id
     .get((req, res) => {
@@ -12,8 +19,22 @@ router.route('/:userId')
 router.route('/:id')
     //edit upcoming trip
     .patch((req, res) => {
-        const query = { _id :req.params.id }
-        UpcomingTrips.update(query, { $set : req.body }, (err, trip) => err ? res.send(err) : res.send(trip))
+        const query = { _id : req.params.id }
+        UpcomingTrips.updateOne(query, { $set : req.body }, (err, trip) => err ? res.send(err) : res.send(trip))
+    });
+
+router.route('/whatsappLink/:tripId')
+    //edit upcoming trip
+    .get((req, res) => {
+        const query = { tripId : req.params.tripId }
+        UpcomingTrips.findOne(query, (err, trip) => err ? res.send(err) : res.send(trip.whatsappLink))
+    });
+
+router.route('/edit/:tripId')
+    //edit upcoming trip
+    .patch((req, res) => {
+        const query = { tripId : req.params.tripId }
+        UpcomingTrips.updateMany(query, { $set : req.body }, (err, trip) => err ? res.send(err) : res.send(trip))
     });
 
 router.route('/')
@@ -43,13 +64,9 @@ router.route('/')
         upcomingtrips.price = req.body.price,
         upcomingtrips.bookingId = generateBookingId()
         upcomingtrips.transactionId = req.body.transactionId
+        upcomingtrips.organizerId = req.body.organizerId
+        upcomingtrips.whatsappLink = ""
         upcomingtrips.save((err, response) => err ? res.send(err) : res.send(response))
-    })
-
-router.route('/check-upcoming-trip')
-    .get((req, res) => {
-        const query = { userId : req.query.u, tripId:req.query.t }
-        UpcomingTrips.find(query, (err, trip) => err ? res.send(err) : trip === null ? res.send(false) : res.send(trip))
-});
+    });
 
 module.exports = router

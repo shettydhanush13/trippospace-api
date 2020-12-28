@@ -9,12 +9,10 @@ const cors = require('cors');
 app.use(cors());
 
 const mongoose = require('mongoose');
-// mongoose.connect('mongodb://heroku_4bnf62cl:659mqm9veus9q1rurnobmbkq93@ds229088.mlab.com:29088/heroku_4bnf62cl');
 let password = encodeURIComponent("5$Recieved")
 const uri = "mongodb+srv://dhanush:" + password +"@cluster0.ejkuv.mongodb.net/trippospace?retryWrites=true&w=majority";
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 const connection = mongoose.connection;
-console.log(mongoose.version);
 connection.once("open", () => {
     console.log("MongoDB database connection established successfully");
 });
@@ -71,6 +69,8 @@ app.use('/api/stats', require('./api/stats'))
 app.use('/api/places', require('./api/places'))
 
 app.use('/api/upcomingtrip', require('./api/upcomingtrip'))
+
+app.use('/api/cancelTrip', require('./api/cancelTrip'))
 
 app.use('/api/pendingTrips', require('./api/pendingTrips'))
 
