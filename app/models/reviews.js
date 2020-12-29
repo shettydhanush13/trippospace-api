@@ -9,7 +9,8 @@ var reviewsSchema = new schema({
     tripDate:String,
     rating:Number,
     review: String,
-    organizer:String
+    organizer:String,
+    bookingId : String
 });
 
 module.exports = mongoose.model('reviews', reviewsSchema)

@@ -14,7 +14,8 @@ var tripreviewsSchema = new schema({
     organizerId: String,
     tripTitle: String,
     days:Number,
-    date:String
+    date:String,
+    bookingId : String
 });
 
 module.exports = mongoose.model('tripreviews', tripreviewsSchema)

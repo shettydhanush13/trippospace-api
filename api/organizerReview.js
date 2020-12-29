@@ -13,6 +13,7 @@ router.route('/')
         reviews.rating = req.body.rating,
         reviews.review = req.body.review,
         reviews.organizer = req.body.organizerId
+        reviews.bookingId = req.body.bookingId
         reviews.save((err, response) => err ? res.send(err) : res.json({ id : response })) 
     });
 

@@ -27,7 +27,7 @@ router.route('/whatsappLink/:tripId')
     //edit upcoming trip
     .get((req, res) => {
         const query = { tripId : req.params.tripId }
-        UpcomingTrips.findOne(query, (err, trip) => err ? res.send(err) : res.send(trip.whatsappLink))
+        UpcomingTrips.findOne(query, (err, trip) => err ? res.send(err) : res.send(trip ? trip.whatsappLink : ""))
     });
 
 router.route('/edit/:tripId')

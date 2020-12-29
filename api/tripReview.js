@@ -19,6 +19,7 @@ router.route('/')
         tripreviews.tripTitle = req.body.tripTitle,
         tripreviews.days = req.body.days
         tripreviews.date = req.body.date
+        tripreviews.bookingId = req.body.bookingId
         tripreviews.save((err, response) => err ? res.send(err) 
         : 
         Pendingreview.deleteOne({ _id: req.body.pendingId }, err => err ? res.send(err) : res.send(response._id))) 
