@@ -20,6 +20,7 @@ const uploadFile = (buffer, name, type) => {
         ContentType: type.mime,
         Key: `${name}.${type.ext}`
     };
+    console.log("params : ",params)
     return s3.upload(params).promise();
 };
 
@@ -38,11 +39,17 @@ router.route('/')
                 const type = fileType(buffer);
                 const timestamp = Date.now().toString();
                 const fileName = `place/${timestamp}-trpspc`;
+                console.log("s3 error path : ",path)
+                console.log("s3 error type : ",type)
+                console.log("s3 error timestamp : ",timestamp)
+                console.log("s3 error fileName : ",fileName)
+                console.log("s3 error buffer : ",buffer)
                 const data = await uploadFile(buffer, fileName, type);
+                console.log("s3 error data : ",data)
                 return response.status(200).send(data);
-            } catch (error) {
-                console.log("s3 error : ",JSON.stringify(error))
-                return response.status(400).send(error);
+            } catch (error2) {
+                console.log("s3 error : ",JSON.stringify(error2))
+                return response.status(400).send(error2);
             }
         });
     })
