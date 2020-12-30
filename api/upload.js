@@ -28,27 +28,24 @@ router.route('/')
     //to upload an image to s3
     .post((request, response) => {
         const form = new multiparty.Form();
+        console.log("form  : ",form)
         form.parse(request, async (error, fields, files) => {
-            if (error) {
-                console.log("s3 error 1 : ",JSON.stringify(error))
-                throw new Error(error)
-            }
             try {
                 const path = files.file[0].path;
-                const buffer = fs.readFileSync(path);
-                const type = fileType(buffer);
-                const timestamp = Date.now().toString();
-                const fileName = `place/${timestamp}-trpspc`;
                 console.log("s3 error path : ",path)
-                console.log("s3 error type : ",type)
-                console.log("s3 error timestamp : ",timestamp)
-                console.log("s3 error fileName : ",fileName)
+                const buffer = fs.readFileSync(path);
                 console.log("s3 error buffer : ",buffer)
+                const type = fileType(buffer);
+                console.log("s3 error type : ",type)
+                const timestamp = Date.now().toString();
+                console.log("s3 error timestamp : ",timestamp)
+                const fileName = `place/${timestamp}-trpspc`;
+                console.log("s3 error fileName : ",fileName)
                 const data = await uploadFile(buffer, fileName, type);
                 console.log("s3 error data : ",data)
                 return response.status(200).send(data);
             } catch (error2) {
-                console.log("s3 error : ",JSON.stringify(error2))
+                console.log("s3 error 2 : ",JSON.stringify(error2))
                 return response.status(400).send(error2);
             }
         });
