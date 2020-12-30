@@ -28,7 +28,10 @@ router.route('/')
     .post((request, response) => {
         const form = new multiparty.Form();
         form.parse(request, async (error, fields, files) => {
-            if (error) throw new Error(error);
+            if (error) {
+                console.log("s3 error 1 : ",JSON.stringify(error))
+                throw new Error(error)
+            }
             try {
                 const path = files.file[0].path;
                 const buffer = fs.readFileSync(path);
