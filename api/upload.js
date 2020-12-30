@@ -38,6 +38,7 @@ router.route('/')
                 const data = await uploadFile(buffer, fileName, type);
                 return response.status(200).send(data);
             } catch (error) {
+                console.log("s3 error : ",JSON.stringify(error))
                 return response.status(400).send(error);
             }
         });
