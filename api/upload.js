@@ -31,6 +31,7 @@ router.route('/')
         console.log("form  : ",form)
         form.parse(request, async (error, fields, files) => {
             try {
+                console.log("s3 error files : ",files)
                 const path = files.file[0].path;
                 console.log("s3 error path : ",path)
                 const buffer = fs.readFileSync(path);
