@@ -78,13 +78,15 @@ app.use('/api/completedTrips', require('./api/completedTrips'))
 
 app.use('/api/notifications', require('./api/notifications'))
 
+app.use("/api/bookingDetails", require("./api/bookingDetails"))
+
 app.use('/api/otp', require('./api/otp'))
 
 app.use('/api/upload', require('./api/upload'))
 
 app.use('/api/quote', require('./api/quote'))
 
-app.use('/api/skillospace', require('./api/skillospace'))
+app.use('/api/refund', require('./api/refunds'))
 
 const port = process.env.PORT || 3000;
 app.listen(port);

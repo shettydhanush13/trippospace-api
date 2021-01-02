@@ -20,7 +20,7 @@ const uploadFile = (buffer, name, type) => {
         ContentType: type.mime,
         Key: `${name}.${type.ext}`
     };
-    console.log("params : ",params)
+    // console.log("params : ",params)
     return s3.upload(params).promise();
 };
 
@@ -28,25 +28,17 @@ router.route('/')
     //to upload an image to s3
     .post((request, response) => {
         const form = new multiparty.Form();
-        console.log("form  : ",form)
         form.parse(request, async (error, fields, files) => {
             try {
-                console.log("s3 error files : ",files)
+                // console.log("s3 error files : ",files)
                 const path = files.file[0].path;
-                console.log("s3 error path : ",path)
                 const buffer = fs.readFileSync(path);
-                console.log("s3 error buffer : ",buffer)
                 const type = fileType(buffer);
-                console.log("s3 error type : ",type)
                 const timestamp = Date.now().toString();
-                console.log("s3 error timestamp : ",timestamp)
                 const fileName = `place/${timestamp}-trpspc`;
-                console.log("s3 error fileName : ",fileName)
                 const data = await uploadFile(buffer, fileName, type);
-                console.log("s3 error data : ",data)
                 return response.status(200).send(data);
             } catch (error2) {
-                console.log("s3 error 2 : ",JSON.stringify(error2))
                 return response.status(400).send(error2);
             }
         });

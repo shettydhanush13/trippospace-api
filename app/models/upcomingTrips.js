@@ -13,7 +13,9 @@ var upcomingTripsSchema = new schema({
     days:Number,
     userId:String,
     travelers : Number,
-    price : Number,
+    price : String,
+    paid : String,
+    pending : String,
     organizerId : String,
     whatsappLink : String
 });

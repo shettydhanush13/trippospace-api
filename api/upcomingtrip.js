@@ -12,8 +12,16 @@ const UpcomingTrips = require('../app/models/upcomingTrips');
 router.route('/:userId')
     //to get upcoming trips by user Id
     .get((req, res) => {
-        const query = { userId : req.params.userId }
+        const query = { userId : req.params.userId, travelers : { $gt: 0 } }
         UpcomingTrips.find(query, (err, trips) => err ? res.send(err) : res.send(trips))
+    });
+
+    
+router.route('/trip/:tripId')
+//to get upcoming trips by user Id
+    .get((req, res) => {
+        const query = { _id : req.params.tripId }
+        UpcomingTrips.findOne(query, (err, trips) => err ? res.send(err) : res.send(trips))
     });
 
 router.route('/:id')
@@ -40,6 +48,7 @@ router.route('/edit/:tripId')
 router.route('/')
     //add a trip to upcoming trips
     .post((req, res) => {
+        let bookingId = ""
         const shuffleArray = array => {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -51,6 +60,7 @@ router.route('/')
             let id = `${req.body.userId}${req.body.tripId}${req.body.date}`
             return shuffleArray(id.split("")).slice(0,12).join("")
         }
+        bookingId = generateBookingId()
         let upcomingtrips = new UpcomingTrips();
         upcomingtrips.tripTitle = req.body.tripTitle;
         upcomingtrips.thumb = req.body.thumb;
@@ -62,11 +72,13 @@ router.route('/')
         upcomingtrips.userId = req.body.userId
         upcomingtrips.travelers = req.body.travelers,
         upcomingtrips.price = req.body.price,
-        upcomingtrips.bookingId = generateBookingId()
+        upcomingtrips.paid = req.body.paid,
+        upcomingtrips.pending = req.body.pending,
+        upcomingtrips.bookingId = bookingId
         upcomingtrips.transactionId = req.body.transactionId
         upcomingtrips.organizerId = req.body.organizerId
         upcomingtrips.whatsappLink = ""
-        upcomingtrips.save((err, response) => err ? res.send(err) : res.send(response))
+        upcomingtrips.save((err) => err ? res.send(err) : res.json({ bookingId }))
     });
 
 module.exports = router
