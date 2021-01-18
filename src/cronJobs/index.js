@@ -16,7 +16,7 @@ cron.schedule(
 );
 
 cron.schedule(
-    "*/1 * * * *",
+  "30 12 * * *",
     () => {
       console.log(`Cron job function for raising refund request to razorpay called`);
       refundRequest();
