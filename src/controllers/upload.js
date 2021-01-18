@@ -18,7 +18,6 @@ const uploadFile = (buffer, name, type) => {
         ContentType: type.mime,
         Key: `${name}.${type.ext}`
     };
-    console.log("oarams : ",params)
     return s3.upload(params).promise();
 };
 
@@ -31,7 +30,6 @@ router.route('/')
           const timestamp = Date.now().toString();
           const fileName = `place/${timestamp}-trpspc`;
           const data = await uploadFile(buffer, fileName, type);
-          console.log("data : ",data)
           return response.status(200).send(data);
         } catch (error) {
            return response.status(400).send(error);

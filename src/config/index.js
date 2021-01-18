@@ -19,8 +19,9 @@ const config = {
         secretAccessKey: process.env.AWSsecretAccessKey
     },
     razorPayConfig : {
-        razorpayId : process.env.razorpayId,
-        razorPaySecret : process.env.razorPaySecret
+        id : process.env.razorpayId,
+        secret : process.env.razorPaySecret,
+        baseUrl : "https://api.razorpay.com/v1/payments"
     },
     twillioConfig : {
         accountSid : process.env.twillioAccountSid,

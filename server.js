@@ -2,8 +2,7 @@ const express = require('express');
 const app = express();
 
 const { config } = require("./src/config")
-
-const {logConfig, mongoConfig} = config
+const { logConfig, mongoConfig } = config
 
 //Import cron functions to initiate cron
 const { bookmarkInfo } = require('./src/cronJobs');
