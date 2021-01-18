@@ -1,0 +1,4 @@
+node_modules
+logs/organizers.log
+logs/users.log
+package-lock.json
