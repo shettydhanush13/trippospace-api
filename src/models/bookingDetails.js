@@ -6,6 +6,7 @@ const bookingDetailsSchema = new schema( {
     bookingId : String,
     user : Object,
     date : String,
+    created_at : String,
     organizerId : String,
     transactionId : String,
     price : String,

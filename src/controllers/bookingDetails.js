@@ -10,6 +10,7 @@ router.route('/')
         bookingDetails.bookingId = req.body.bookingId
         bookingDetails.user = req.body.user
         bookingDetails.date = req.body.date
+        bookingDetails.created_at = req.body.created_at,
         bookingDetails.organizerId = req.body.organizerId
         bookingDetails.transactionId = req.body.transactionId
         bookingDetails.price = req.body.price

@@ -45,6 +45,8 @@ app.use('/api/gift', require('./src/controllers/giftCard'))
 
 app.use('/api/organizer', require('./src/controllers/organizerCRUD'))
 
+app.use('/api/payouts', require('./src/controllers/payouts'))
+
 app.use('/api/teeOrder', require('./src/controllers/teeOrder'))
 
 app.use('/api/cart', require('./src/controllers/cartData'))

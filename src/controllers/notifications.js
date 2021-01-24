@@ -2,13 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Users = require('../models/users');
 const Organizer = require('../models/organizers')
-const Templates = require('../templates/mailTemplates');
+const Templates = require('../templates');
 const UserNotifications = require("../models/userNotifications")
 const OrganizerNotifications = require("../models/organizerNotifications")
 const BookingDetails = require("../models/bookingDetails")
 const CancelRequest = require("../models/cancellationRequest")
 const UpcomingTrips = require("../models/upcomingTrips");
-const cancellationRequest = require('../models/cancellationRequest');
 
 router.route('/user')
     .post((req, res) => {
@@ -124,20 +123,6 @@ router.route('/organizer/settle/:id')
     });
 
 
-router.route('/shop-notification')
-    .post((req, res) => {
-        Templates.ShopNotification(req)
-        .then(response => res.json(response))
-        .catch(error => res.send(error))
-    })
-
-router.route('/passport-notification')
-    .post((req, res) => {
-        Templates.PassportNotification(req)
-        .then(response => res.json(response))
-        .catch(error => res.send(error))
-    })
-
 router.route('/welcome-mail')
     .post((req, res) => {
         Templates.Welcome(req)
@@ -147,7 +132,7 @@ router.route('/welcome-mail')
 
 router.route('/reset-password')
     .post((req, res) => {
-        Templates.ForgotPassword(req,Users,Organizer)
+        Templates.ForgotPassword(req, Users, Organizer)
         .then(response => res.json(response))
         .catch(error => res.send(error))
     });

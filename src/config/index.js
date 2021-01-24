@@ -21,12 +21,18 @@ const config = {
     razorPayConfig : {
         id : process.env.razorpayId,
         secret : process.env.razorPaySecret,
-        baseUrl : "https://api.razorpay.com/v1/payments"
+        baseUrl : "https://api.razorpay.com/v1"
     },
     twillioConfig : {
         accountSid : process.env.twillioAccountSid,
         authToken : process.env.twillioAuthToken,
         servicesId : process.env.twillioServicesId
+    },
+    sendGrid : {
+        apiKey : process.env.sendGridApiKey
+    },
+    organizerCommissions : {
+        "5dedd09ef2d0210017c99497" : Math.floor(100/10)
     }
 }
 

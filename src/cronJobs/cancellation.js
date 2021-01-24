@@ -14,8 +14,8 @@ const refund = async ({refund, ticketId, transactionId, bookingId }) => {
         "receipt": `Receipt No. ${ticketId}`
       }
       
-    await axios.post(`${baseUrl}/${transactionId}/refund`, body, { headers : { Authorization: basicAuth } })
-    .then((res) => {
+    await axios.post(`${baseUrl}/payments/${transactionId}/refund`, body, { headers : { Authorization: basicAuth } })
+    .then(async (res) => {
         updateBody = {
             refunded : true,
             refundId : res.data.id,

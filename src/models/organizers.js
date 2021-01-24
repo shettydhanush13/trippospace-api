@@ -13,15 +13,9 @@ const organizersSchema = new schema({
     trips: Array,
     rating: Number,
     reviews: Array,
-    social: {
-        facebook: String,
-        twitter: String,
-        instagram: String
-    },
-    contact: {
-        phone: String,
-        mail: String,
-    }
+    social: Object,
+    accountId : String,
+    contact: Object
 });
 
 module.exports = mongoose.model('organizer', organizersSchema)
