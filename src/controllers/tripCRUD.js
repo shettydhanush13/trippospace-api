@@ -13,7 +13,7 @@ router.route('/')
             return array
         }
         const generateTripId = () => {
-            let id = `${req.body.title}${req.body.organizerId}${req.body.date}`
+            let id = `${req.body.title}${req.body.organizerId}${req.body.date}`.replace(/ /g,"").replace(/-/g,"")
             return shuffleArray(id.split("")).slice(0,12).join("")
         }
         let trip = new Trip();

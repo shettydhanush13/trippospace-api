@@ -8,6 +8,7 @@ const OrganizerNotifications = require("../models/organizerNotifications")
 const BookingDetails = require("../models/bookingDetails")
 const CancelRequest = require("../models/cancellationRequest")
 const UpcomingTrips = require("../models/upcomingTrips");
+const { config } = require('../config')
 
 router.route('/user')
     .post((req, res) => {
@@ -41,10 +42,10 @@ router.route('/organizer')
 
 router.route('/organizer/:organizerId')
     .get(async (req,res) => {
-        const query = { organizerId : req.params.organizerId }
-        let count = await OrganizerNotifications.find(query)
+        const query = { organizerId : req.params.organizerId, type : req.query.type }
         let notifications = await OrganizerNotifications.find(query).sort({ "timestamp": -1 }).skip(0).limit(100)
-        res.json({notifications,count:count.length})
+        const { refund, commission } = config.organizerCommissions[req.params.organizerId]
+        res.json({notifications, refund, commission})
     });
 
 router.route('/organizer/confirm/:id')
@@ -60,33 +61,32 @@ router.route('/organizer/confirm/:id')
             let id = `${req.body.tripId}${req.body.bookingId}${req.body.organizerId}`
             return shuffleArray(id.split("")).slice(0,12).join("")
         }
-        const query = { _id : req.params.id }
+
+        const query = { bookingId : req.body.bookingId }
         const body = {
-            "content.cancelled": true,
-            "content.refundPercentage" : req.body.refundPercentage,
-            "content.pending" : req.body.pending,
-        }
-        const query2 = { bookingId : req.body.bookingId }
-        const body2 = {
             cancelled : req.body.cancelled,
-            refunded : req.body.refunded
+            refunded : req.body.refunded,
+            pending : req.body.pending,
         }
-        const body3 = {
+
+        const body2 = {
             travelers : req.body.travelers,
             credits : 50*req.body.travelers,
             pending : req.body.pending,
             price : req.body.price
         }
-        const query4 = { "content.bookingId" : req.body.bookingId, type : "BOOKING"}
-        const body4 = {
+
+        const query3 = { "content.bookingId" : req.body.bookingId, type : "BOOKING"}
+        const body3 = {
             "content.pending" : req.body.pending,
             "content.quantity" : req.body.travelers,
-            "content.price" : req.body.price
+            "content.price" : req.body.price,
         }
-        await BookingDetails.updateOne(query2, {$set : body2})
-        await OrganizerNotifications.updateOne(query, {$set : body})
-        await OrganizerNotifications.updateOne(query4, {$set : body4 })
-        await UpcomingTrips.updateOne(query2, {$set : body3})
+
+        await BookingDetails.findOneAndUpdate(query, {$set : body})
+        await OrganizerNotifications.findOneAndRemove({ _id : req.params.id })
+        await OrganizerNotifications.findOneAndUpdate(query3, {$set : body3 })
+        await UpcomingTrips.findOneAndUpdate(query, {$set : body2})
         
         let cancelRequest = new CancelRequest();
         cancelRequest.ticketId = generateCancelTicket()
@@ -108,17 +108,22 @@ router.route('/organizer/confirm/:id')
         cancelRequest.refundId = ""
         cancelRequest.refundDate = ""
         await cancelRequest.save();
-        res.json({ message: "cancellation request confirmed" })
+        res.json({ message: "cancellation request accepted" })
     });
 
-router.route('/organizer/settle/:id')
+router.route('/organizer/settle/:notificationId')
     .patch(async (req,res) => {
-        const query = { _id : req.params.id }
+        const query = { _id : req.params.notificationId }
         const body = {
             "content.settleUp": true,
             "content.paid": req.body.paid,
             "content.pending": 0,
         }
+        const body2 = {
+            "paid": req.body.paid,
+            "pending": 0,
+        }
+        await BookingDetails.findOneAndUpdate({_id : req.body.bookingId}, {$set : body2})
         OrganizerNotifications.updateOne(query, {$set : body}, err => err ? res.send(err) : res.json({ message: "cancellation request confirmed" }))
     });
 

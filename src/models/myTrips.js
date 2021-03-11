@@ -7,6 +7,7 @@ const myTripsSchema = new schema({
     views: Number,
     latitude:Number,
     longitude: Number,
+    date : String,
     images: Array,
     blog : String,
     userId: String,

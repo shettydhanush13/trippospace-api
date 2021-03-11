@@ -32,7 +32,18 @@ const config = {
         apiKey : process.env.sendGridApiKey
     },
     organizerCommissions : {
-        "5dedd09ef2d0210017c99497" : Math.floor(100/10)
+        "5dedd09ef2d0210017c99497" : {
+            commission : 10,
+            refund : {
+                0: 0,
+                1 : 50,
+                7 : 100,
+            }
+        }
+    },
+    cancellationPolicy : {
+        2 : Math.floor(100/50),
+        7 : Math.floor(100/100),
     }
 }
 

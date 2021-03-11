@@ -3,6 +3,7 @@ const schema = mongoose.Schema
 
 const bookingDetailsSchema = new schema( {
     tripId : String,
+    tripName : String,
     bookingId : String,
     user : Object,
     date : String,
@@ -12,6 +13,7 @@ const bookingDetailsSchema = new schema( {
     price : String,
     slots : String,
     paid : String,
+    pending : String,
     gift : String,
     creditsReedeemed : String,
     status : Array,

@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const Organizerstats = require('../models/organizerstats');
+const {config} = require('../config')
 
 router.route('/')
     //to get completed trip stats
-    .get(function (req, res) {
+    .get((req, res) => {
         Organizerstats.find({},{ trips : 0, organizerName : 0, organizerId :0, _id : 0 }, (err, data) => err ? res.send(err) : res.send(data))
     });
 
@@ -15,11 +16,11 @@ router.route('/')
         organizerstats.organizerName = req.body.organizerName;
         organizerstats.organizerId = req.body.organizerId;
         organizerstats.trips = {
-            "2020" : [],
-            "2021" : []
+            "2021" : [],
+            "2022" : []
         };
         organizerstats.stats = {
-            "2020" : [
+            "2021" : [
                 {
                     "revenue" : 0,
                     "slots" : 0,
@@ -93,7 +94,7 @@ router.route('/')
                     "month" : "dec"
                 }
             ],
-            "2021" : [
+            "2022" : [
                 {
                     "revenue" : 0,
                     "slots" : 0,
@@ -177,11 +178,11 @@ router.route('/reset/:organizerId')
         let query = {organizerId : req.params.organizerId}
         let body = {
             trips : {
-                "2020" : [],
-                "2021" : []
+                "2021" : [],
+                "2022" : []
             },
             stats : {
-                "2020" : [
+                "2021" : [
                     {
                         "revenue" : 0,
                         "slots" : 0,
@@ -255,7 +256,7 @@ router.route('/reset/:organizerId')
                         "month" : "dec"
                     }
                 ],
-                "2021" : [
+                "2022" : [
                     {
                         "revenue" : 0,
                         "slots" : 0,
@@ -336,9 +337,10 @@ router.route('/reset/:organizerId')
 
 router.route('/:organizerId')
     //to get stats of organizer using organizerId
-    .get((req, res) => {
+    .get(async (req, res) => {
         const query = { organizerId : req.params.organizerId }
-        Organizerstats.findOne(query, (err, data) => err ? res.send(err) : res.send(data))
+        let stats = await Organizerstats.findOne(query)
+        res.send({data : stats, commission : config.organizerCommissions[req.params.organizerId].commission })
     })
 
     .patch((req, res) => {

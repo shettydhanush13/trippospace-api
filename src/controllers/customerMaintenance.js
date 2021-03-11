@@ -26,6 +26,18 @@ router.route('/:tripId')
     .patch((req, res) => {
         const query = { _id: req.params.tripId }
         Trip.updateOne(query, { $set: req.body }, err => err ? res.send(err) : res.json({ message: "customer list updated" }))
+    })
+
+    //update customer list of a trip
+    .delete((req, res) => {
+        let { partial, bookingId, slots } = req.body
+        let { tripId } = req.params
+        let query = partial ? { tripId, "booking.customerList.bookingId" : bookingId } : { tripId }
+        let updatequery = partial ? 
+        { $set : {"booking.customerList.$.slots" : slots }}
+        :
+        { $pull : {"booking.customerList" : { bookingId }}}
+        Trip.updateOne(query, updatequery, (err,data) => err ? res.send(err) : res.json(data))
     });
 
 module.exports = router

@@ -7,6 +7,7 @@ router.route('/')
     .post((req, res) => {
         let bookingDetails = new BookingDetails();
         bookingDetails.tripId = req.body.tripId
+        bookingDetails.tripName = req.body.tripName
         bookingDetails.bookingId = req.body.bookingId
         bookingDetails.user = req.body.user
         bookingDetails.date = req.body.date
@@ -16,6 +17,7 @@ router.route('/')
         bookingDetails.price = req.body.price
         bookingDetails.slots = req.body.slots
         bookingDetails.paid = req.body.paid
+        bookingDetails.pending = req.body.pending
         bookingDetails.gift = req.body.gift
         bookingDetails.creditsReedeemed = req.body.creditsReedeemed
         bookingDetails.status = req.body.status

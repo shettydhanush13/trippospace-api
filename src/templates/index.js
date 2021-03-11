@@ -19,13 +19,13 @@ module.exports = {
               let html = forgotPassword(resetCode)
               const msg = {
                 to: mail,
-                from: 'password-reset@trippospace.com',
+                from: 'passwords@trippospace.com',
                 subject: 'LINK TO RESET YOUR PASSWORD',
                 html: baseTemplate(html)
               };
               sgMail.send(msg).catch(err => console.log(err))
               resolve({ message : "Reset link sent" })
-          } else resolve({ error: "Use regestered email" })
+          } else resolve({ error: "Use registered email" })
       })
     });
   },
@@ -38,7 +38,7 @@ module.exports = {
       const msg = {
           to: customer.email,
           bcc: "trippospace@gmail.com",
-          from: 'Booking-Confirmation@trippospace.com',
+          from: 'bookings@trippospace.com',
           subject: `BOOKING CONFORMATION FOR ${title.toUpperCase()}`,
           html: baseTemplate(html)
         }
@@ -72,7 +72,7 @@ module.exports = {
     const msg = {
         to: email,
         bcc: "trippospace@gmail.com",
-        from: 'important@trippospace.com',
+        from: 'info@trippospace.com',
         subject: `TRIPPOSPACE QUOTE RECEIVED`,
         html: baseTemplate(html)
       };

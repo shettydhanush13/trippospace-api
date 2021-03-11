@@ -2,13 +2,6 @@ const express = require('express');
 const router = express.Router();
 const UpcomingTrips = require('../models/upcomingTrips');
 
-// router.route('/checkUpcomingTrip')
-//     .post((req, res) => {
-//         const query = { userId : req.body.u, tripId:req.query.t }
-//         console.log("query : ",query,req.query)
-//         UpcomingTrips.find(query, (err, trip) => err ? res.send(err) : trip === null ? res.send(false) : res.send(trip))
-// });
-
 router.route('/:userId')
     //to get upcoming trips by user Id
     .get((req, res) => {
@@ -57,10 +50,10 @@ router.route('/')
             return array
         }
         const generateBookingId = () => {
-            let id = `${req.body.userId}${req.body.tripId}${req.body.date}`
+            let id = `${req.body.userId}${req.body.tripId}${req.body.date}`.replace(/ /g,"").replace(/-/g,"")
             return shuffleArray(id.split("")).slice(0,12).join("")
         }
-        bookingId = generateBookingId()
+        bookingId = generateBookingId();
         let upcomingtrips = new UpcomingTrips();
         upcomingtrips.tripTitle = req.body.tripTitle;
         upcomingtrips.thumb = req.body.thumb;

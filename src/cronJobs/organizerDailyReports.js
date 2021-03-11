@@ -19,8 +19,8 @@ const sendMail = async (organizersToPay, today) => {
                 const fs = require("fs");            
                 const msg = {
                     to: organizer.contact.mail,
-                    from: 'important@trippospace.com',
-                    subject: `IMPORTANT : TRIPPOSPACE DAILY REPORT (${today})`,
+                    from: 'info@trippospace.com',
+                    subject: `TRIPPOSPACE DAILY REPORT (${today})`,
                     text: `Daily trips booking information report for ${today}`,
                     attachments: [
                         {

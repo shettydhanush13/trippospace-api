@@ -34,7 +34,7 @@ cron.schedule(
   );
 
 cron.schedule(
-  "30 23 * * * *",
+  "30 23 * * *",
     () => {
       console.log(`Cron job function for organizer daily reports`);
       organizerDailyReports();
