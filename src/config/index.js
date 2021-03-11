@@ -45,6 +45,7 @@ const config = {
         2 : Math.floor(100/50),
         7 : Math.floor(100/100),
     }
+    
 }
 
 module.exports = { config };
