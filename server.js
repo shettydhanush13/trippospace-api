@@ -17,12 +17,12 @@ log4js.configure(logConfig);
 const cors = require('cors');
 app.use(cors());
 
-const mongoose = require('mongoose');
-mongoose.connect(mongoConfig.uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
-const connection = mongoose.connection;
-connection.once("open", () => {
-    console.log("MongoDB database connection established successfully");
-});
+// const mongoose = require('mongoose');
+// mongoose.connect(mongoConfig.uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
+// const connection = mongoose.connection;
+// connection.once("open", () => {
+//     console.log("MongoDB database connection established successfully");
+// });
 
 const path = require('path');
 app.use(express.static(path.join(__dirname,'public')))
