@@ -1,30 +1,28 @@
-const Bookings = require('../models/organizerNotifications');
+const log4js = require('log4js');
+const logger = log4js.getLogger("organizers"); 
+const Bookings = require('../models/bookingDetails');
 const Organizer = require('../models/organizers');
+const Notification = require('../models/organizerNotifications')
 const Payouts = require("../models/payouts")
 
-const { config } = require("../config")
-
-const calculatePayout = (price, paid, organizerId) => {
-    let commission = Math.floor(price/config.organizerCommissions[organizerId])
-    let payout = paid - commission
-    return payout < 0 ? 0 : payout
-}
-
-const Total =  (data, type) => {
+const Total = (data, type) => {
     let total = 0
-    for(let i=0; i<data.length; i++) total+=data[i][type]
+    for(let i=0; i < data.length; i++) total+=data[i][type]
     return total
 }
 
-const processPayments = async (organizersToPay, Paydata) => {
+const processPayments = async (organizersToPay, Paydata, bookings) => {
+    let bookingIds = []
+    for(let i = 0; i< bookings.length; i++) bookingIds.push(bookings[i].bookingId)
     for(let i = 0; i< organizersToPay.length; i++) {
-        let organizerToPay = organizersToPay[i]
+        const organizerToPay = organizersToPay[i]
         await Organizer.findOne({_id : organizerToPay}, (err, organizer) => {
-            if(err) console.log(err)
+            if(err) logger.error(err)
             else {
-                let payouts = new Payouts();
+                const payouts = new Payouts();
                 payouts.name = organizer.name
                 payouts.id = organizer._id
+                payouts.bookingIds = bookingIds
                 payouts.date = new Date().toISOString().split("T")[0]
                 payouts.mail = organizer.contact.mail
                 payouts.accountId = organizer.accountId
@@ -34,12 +32,14 @@ const processPayments = async (organizersToPay, Paydata) => {
                 payouts.commission = Total(Paydata[organizer._id], "Booking handling charges + GST")
                 payouts.toBePaid = Total(Paydata[organizer._id], "Pending from Trippospace")
                 payouts.settled = false
-                payouts.save(async (err, response) => {
-                    if(err) console.log(err)
+                payouts.save(async (err) => {
+                    if(err) logger.error(err)
                     else {
-                        await Bookings.updateMany({organizerId : organizerToPay}, { $set : { "content.payout" : true }}, (err, organizer) => {
-                            if(err) console.log(err)
-                            else console.log(organizer)
+                        const query = { organizerId : organizerToPay }
+                        await Bookings.updateMany(query, { $set : { isPayout : true }})
+                        await Notification.updateMany(query, { $set : { "content.payout" : true }}, err => {
+                            if(err) logger.error(err)
+                            else logger.info(`payout data of ${organizer.name} updated for booking Ids : ${JSON.stringify(bookingIds)}`)
                         })
                     }
                 });
@@ -51,36 +51,52 @@ const processPayments = async (organizersToPay, Paydata) => {
 const formatBookings = async (bookings) => {
     let list = []
     let paymentDetails = []
-    for(let i = 0; i< bookings.length; i++) {
+    for(i in bookings) {
         let booking = bookings[i]
-        list.push(bookings[i].organizerId)
-        const { bookingId, price, paid, pending, quantity } = booking.content
+        list.push(booking.organizerId)
+        const { 
+            organizerId,
+            bookingDate,
+            bookingId,
+            slots,
+            cancelled,
+            grossPrice,
+            pending,
+            pendingAfterCancellation,
+            refundCredits,
+            refundAmount,
+            commission,
+            Payout
+        } = booking
         paymentDetails.push({
-            organizerId : booking.organizerId,
-            "Booking date" : booking.timestamp,
+            "organizerId" : organizerId,
+            "Booking date" : bookingDate,
             "Booking ID" : bookingId,
-            "Travelers" : quantity,
-            "Gross Revenue" : price,
-            "To be collected from customer" : pending,
-            "Booking handling charges + GST" : Math.floor(price/config.organizerCommissions[booking.organizerId]),
-            "Pending from Trippospace" : calculatePayout(price,paid,booking.organizerId)
+            "Travelers" : slots-cancelled,
+            "Gross Revenue" : cancelled > 0 ? grossPrice-(pending-pendingAfterCancellation)-refundAmount-refundCredits : grossPrice,
+            "To be collected from customer" : cancelled > 0 ? pendingAfterCancellation : pending,
+            "Booking handling charges + GST" : commission,
+            "Pending from Trippospace" : Payout
         })
     }
-    let organizersToPay = Array.from(new Set(list));
+
+    const organizersToPay = Array.from(new Set(list));
     let payouts = {}
     for(let i = 0; i< organizersToPay.length; i++){
-        let organizerToPay = organizersToPay[i]
+        const organizerToPay = organizersToPay[i]
         payouts[organizerToPay] = paymentDetails.filter((e) => e.organizerId === organizerToPay)
     }
-    return {organizersToPay,payouts}
+    return { organizersToPay, payouts }
 }
 
 const organizerPayouts = async () => {
-    Bookings.find({ "content.payout" : false }, async (err, bookings) => {
-        if(err) console.log(err)
+    logger.info(`Cron job function creating organizer payouts`);
+    await Bookings.find({ isPayout : false }, async (err, bookings) => {
+        if(err) logger.error(err)
         else {
-            let {organizersToPay,payouts} = await formatBookings(bookings)
-            processPayments(organizersToPay, payouts)
+            const { organizersToPay, payouts } = await formatBookings(bookings)
+            logger.info(`payouts data : ${JSON.stringify(payouts)}`) 
+            processPayments(organizersToPay, payouts, bookings)
         }
     })
 }

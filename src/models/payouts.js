@@ -4,6 +4,7 @@ const schema = mongoose.Schema
 const payoutsSchema = new schema( {
     name: String,
     id : String,
+    bookingIds : Array,
     date : String,
     mail: String,
     accountId : String,

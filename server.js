@@ -18,7 +18,7 @@ const cors = require('cors');
 app.use(cors());
 
 const mongoose = require('mongoose');
-mongoose.connect(mongoConfig.uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+mongoose.connect(mongoConfig.uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false });
 const connection = mongoose.connection;
 connection.once("open", () => {
     console.log("MongoDB database connection established successfully");
@@ -33,9 +33,9 @@ app.use('/api/auth', require('./src/controllers/Auth'))
 
 app.use('/api/tripCategory', require('./src/controllers/category'))
 
-app.use('/api/my-trips', require('./src/controllers/completedTripCRUD'))
+app.use('/api/query', require('./src/controllers/query'))
 
-app.use('/api/shopping', require('./src/controllers/shoppingItemsData'))
+app.use('/api/my-trips', require('./src/controllers/completedTripCRUD'))
 
 app.use('/api/multi-trip', require('./src/controllers/MutipleTripsUpdate'))
 
@@ -47,9 +47,7 @@ app.use('/api/organizer', require('./src/controllers/organizerCRUD'))
 
 app.use('/api/payouts', require('./src/controllers/payouts'))
 
-app.use('/api/teeOrder', require('./src/controllers/teeOrder'))
-
-app.use('/api/cart', require('./src/controllers/cartData'))
+app.use('/api/payment_links', require('./src/controllers/paymentLinks'))
 
 app.use('/api/inactive', require('./src/controllers/getInactiveTrips'))
 

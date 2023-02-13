@@ -33,6 +33,7 @@ const config = {
     },
     organizerCommissions : {
         "5dedd09ef2d0210017c99497" : {
+            name : "Direwolf Travels",
             commission : 10,
             refund : {
                 0: 0,

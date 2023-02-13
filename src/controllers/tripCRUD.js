@@ -69,10 +69,68 @@ router.route('/:tripid')
     
     //to edit a trip by tripId
     .patch((req, res) => {
-        const query = { _id: req.params.tripid };
+        const query = { tripId: req.params.tripid };
         Trip.updateOne(query, { $set: req.body }, err => err ? res.send(err) : res.json({ message: "trip data updated" }))
     });
 
-    
+router.route('/id/:tripid')
+    //to get details of a trip by tripId
+    .get((req, res) => {
+        const query = { tripId: req.params.tripid };
+        Trip.findOne(query, (err, trip) => err ? res.send(err) : res.send(trip));
+    });
+
+router.route('/includes/:place')
+    //to get details of a trip by tripId
+    .get(async (req, res) => {
+        const { budget, type, nights, price } = req.query
+        let n = JSON.parse(nights).sort()
+        let b = JSON.parse(budget).sort()
+        let ltNights = 0
+        let gtNights = 100
+        let ltBudget = 0
+        let gtBudget = 10000000
+        if(n.length > 0){
+            gtNights = Number(n[n.length-1].split("-")[1])
+            ltNights = Number(n[0].split("-")[0])
+        }
+        if(b.length > 0){
+            gtBudget = Number(b[b.length-1].split("-")[1])
+            ltBudget = Number(b[0].split("-")[0])
+        }
+        console.log(gtBudget, ltBudget)
+
+        if(req.params.place.includes("category-")) {
+            let query = { tags : { $all : req.params.place.split("category-")[1]}, "tripTypes.value" : { $lte : gtBudget, $gte : ltBudget }, "booking.days" : { $lte : gtNights, $gte : ltNights } }
+            const trips = await Trip.find(query).sort({'booking.lowestPrice': (price === "a") ? 1 : -1});
+            res.send(trips)
+        } else {
+            Trip.aggregate([
+                // Match first to reduce documents to those where the array contains the match
+                { "$match": {
+                    "place": { "$regex": req.params.place, "$options": "i" }
+                }},
+        
+                // Unwind to "de-normalize" the document per array element
+                { "$unwind": "$place" },
+        
+                // Now filter those document for the elements that match
+                { "$match": {
+                    "place": { "$regex": req.params.place, "$options": "i" }
+                }},
+        
+                // Group back as an array with only the matching elements
+                { "$group": {
+                    "_id": "$_id"
+                }}
+            ],
+            (err,results) => {
+                let idList = []
+                for(let i=0; i<results.length; i++) idList.push(results[i]._id)
+                const query = { _id: { $in : idList },"tripTypes.value" : { $lte : gtBudget, $gte : ltBudget }, "booking.days" : { $lte : gtNights, $gte : ltNights } };
+                Trip.find(query, (err, trip) => err ? res.send(err) : res.send(trip)).sort({'booking.lowestPrice': (price === "a") ? 1 : -1});
+            })
+        }
+    });
 
 module.exports = router

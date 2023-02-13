@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Organizerstats = require('../models/organizerstats');
 const {config} = require('../config')
+const { trips, stats } = require('../static/stats')
 
 router.route('/')
     //to get completed trip stats
@@ -11,165 +12,19 @@ router.route('/')
 
 router.route('/')
     //to get completed trip stats
-    .post((req, res) => {
-        let organizerstats = new Organizerstats();
-        organizerstats.organizerName = req.body.organizerName;
-        organizerstats.organizerId = req.body.organizerId;
-        organizerstats.trips = {
-            "2021" : [],
-            "2022" : []
-        };
-        organizerstats.stats = {
-            "2021" : [
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "jan"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "feb"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "mar"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "apr"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "may"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "jun"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "jul"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "aug"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "sep"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "oct"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "nov"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "dec"
-                }
-            ],
-            "2022" : [
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "jan"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "feb"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "mar"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "apr"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "may"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "jun"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "jul"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "aug"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "sep"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "oct"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "nov"
-                },
-                {
-                    "revenue" : 0,
-                    "slots" : 0,
-                    "tripsCount" : 0,
-                    "month" : "dec"
-                }
-            ]
-        };
-        organizerstats.save((err, response) => err ? res.send(err) : res.send(response));
+    .post(async (req, res) => {
+        const { organizerName, organizerId } = req.body
+        let statData = await Organizerstats.find({ organizerName, organizerId })
+        if(statData.length === 0){
+            let organizerstats = new Organizerstats();
+            organizerstats.organizerName = req.body.organizerName;
+            organizerstats.organizerId = req.body.organizerId;
+            organizerstats.trips = trips;
+            organizerstats.stats = stats;
+            organizerstats.save((err, response) => err ? res.send(err) : res.send({message : "stat added succesfully"}));
+        } else {
+            Organizerstats.findOneAndUpdate({ organizerName, organizerId }, { $set : req.body}, (err, response) => err ? res.send(err) : res.send({message : "stat updated succesfully"}))
+        }
     })
 
 router.route('/reset/:organizerId')
@@ -177,160 +32,8 @@ router.route('/reset/:organizerId')
     .patch((req, res) => {
         let query = {organizerId : req.params.organizerId}
         let body = {
-            trips : {
-                "2021" : [],
-                "2022" : []
-            },
-            stats : {
-                "2021" : [
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "jan"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "feb"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "mar"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "apr"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "may"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "jun"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "jul"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "aug"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "sep"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "oct"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "nov"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "dec"
-                    }
-                ],
-                "2022" : [
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "jan"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "feb"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "mar"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "apr"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "may"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "jun"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "jul"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "aug"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "sep"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "oct"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "nov"
-                    },
-                    {
-                        "revenue" : 0,
-                        "slots" : 0,
-                        "tripsCount" : 0,
-                        "month" : "dec"
-                    }
-                ]
-            }
+            trips,
+            stats
         }
         Organizerstats.updateOne(query, { $set : body}, (err, response) => err ? res.send(err) : res.send(response));
     })

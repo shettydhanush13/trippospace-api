@@ -62,48 +62,63 @@ router.route('/organizer/confirm/:id')
             return shuffleArray(id.split("")).slice(0,12).join("")
         }
 
-        const query = { bookingId : req.body.bookingId }
+        let { creditsRedeemed, commission, bookingId, date, cancelled, refunded, pending, refundPercentage, booked, travelers, price, grossPrice, tripId, user, organizerId, transactionId, paid } = req.body
+
+        let commissionPerSlot = (grossPrice/booked)*(commission/100) 
+        let refundCredits = (creditsRedeemed/booked)*cancelled*Number(refundPercentage)*0.01
+        let Totalcommission = commissionPerSlot*(booked- cancelled) + ((commissionPerSlot*cancelled)*(100-refundPercentage)*0.01)
+        let payout = paid-Totalcommission-refunded+(creditsRedeemed-refundCredits)
+
+        const query = { bookingId }
         const body = {
-            cancelled : req.body.cancelled,
-            refunded : req.body.refunded,
-            pending : req.body.pending,
+            cancelled,
+            refundAmount : refunded,
+            refundPercentage,
+            refundCredits,
+            pendingAfterCancellation: pending,
+            commission : Totalcommission,
+            Payout : payout
         }
 
         const body2 = {
-            travelers : req.body.travelers,
-            credits : 50*req.body.travelers,
-            pending : req.body.pending,
-            price : req.body.price
+            travelers,
+            credits : 50*travelers,
+            pending,
+            price
         }
 
-        const query3 = { "content.bookingId" : req.body.bookingId, type : "BOOKING"}
+        const query3 = { "content.bookingId" : bookingId, type : "BOOKING"}
         const body3 = {
-            "content.pending" : req.body.pending,
-            "content.quantity" : req.body.travelers,
-            "content.price" : req.body.price,
+            "content.pending" :pending,
+            "content.quantity" : travelers,
+            "content.price" : price,
+            "content.grossPrice" : grossPrice
         }
 
         await BookingDetails.findOneAndUpdate(query, {$set : body})
         await OrganizerNotifications.findOneAndRemove({ _id : req.params.id })
         await OrganizerNotifications.findOneAndUpdate(query3, {$set : body3 })
         await UpcomingTrips.findOneAndUpdate(query, {$set : body2})
-        
+
+        let creditRefund = ((Number(creditsRedeemed)/booked)*cancelled)*refundPercentage*0.01
+
         let cancelRequest = new CancelRequest();
         cancelRequest.ticketId = generateCancelTicket()
-        cancelRequest.tripId = req.body.tripId
-        cancelRequest.bookingId = req.body.bookingId
-        cancelRequest.user = req.body.user
-        cancelRequest.organizerId = req.body.organizerId
-        cancelRequest.transactionId = req.body.transactionId
-        cancelRequest.tripDate = req.body.date
+        cancelRequest.tripId = tripId
+        cancelRequest.bookingId = bookingId
+        cancelRequest.user = user
+        cancelRequest.organizerId = organizerId
+        cancelRequest.transactionId = transactionId
+        cancelRequest.tripDate = date
         cancelRequest.cancelDate = new Date()
-        cancelRequest.booked = req.body.booked
-        cancelRequest.cancelled = req.body.cancelled
-        cancelRequest.price = req.body.price
-        cancelRequest.paid = req.body.paid
-        cancelRequest.pending = req.body.pending
-        cancelRequest.refundPercentage = req.body.refundPercentage
-        cancelRequest.refund = req.body.refunded
+        cancelRequest.booked = booked
+        cancelRequest.cancelled = cancelled
+        cancelRequest.price = price
+        cancelRequest.paid = paid
+        cancelRequest.pending = pending
+        cancelRequest.refundPercentage = refundPercentage
+        cancelRequest.creditsRedeemed = creditRefund
+        cancelRequest.refund = Number(req.body.refunded)-creditRefund
         cancelRequest.refunded = false,
         cancelRequest.refundId = ""
         cancelRequest.refundDate = ""
@@ -111,6 +126,7 @@ router.route('/organizer/confirm/:id')
         res.json({ message: "cancellation request accepted" })
     });
 
+const Settlement = require('../models/settlePending');
 router.route('/organizer/settle/:notificationId')
     .patch(async (req,res) => {
         const query = { _id : req.params.notificationId }
@@ -120,11 +136,12 @@ router.route('/organizer/settle/:notificationId')
             "content.pending": 0,
         }
         const body2 = {
-            "paid": req.body.paid,
-            "pending": 0,
+            paid : req.body.paid,
+            pending: 0,
         }
         await BookingDetails.findOneAndUpdate({_id : req.body.bookingId}, {$set : body2})
-        OrganizerNotifications.updateOne(query, {$set : body}, err => err ? res.send(err) : res.json({ message: "cancellation request confirmed" }))
+        await Settlement.findOneAndDelete({ notificationId : req.params.notificationId })
+        await OrganizerNotifications.updateOne(query, {$set : body}, err => err ? res.send(err) : res.json({ message: "cancellation request confirmed" }))
     });
 
 

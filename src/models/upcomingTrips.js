@@ -13,8 +13,11 @@ const upcomingTripsSchema = new schema({
     days:Number,
     userId:String,
     travelers : Number,
+    grossPrice : String,
     price : String,
     paid : String,
+    netPaid : String,
+    creditsRedeemed: String,
     pending : String,
     organizerId : String,
     whatsappLink : String

@@ -55,18 +55,21 @@ router.route('/')
         }
         bookingId = generateBookingId();
         let upcomingtrips = new UpcomingTrips();
-        upcomingtrips.tripTitle = req.body.tripTitle;
-        upcomingtrips.thumb = req.body.thumb;
+        upcomingtrips.tripTitle = req.body.tripTitle
+        upcomingtrips.thumb = req.body.thumb
         upcomingtrips.tripId = req.body.tripId
         upcomingtrips.travelers = req.body.travelers
         upcomingtrips.credits = req.body.credits
         upcomingtrips.date = req.body.date
         upcomingtrips.days = req.body.days
         upcomingtrips.userId = req.body.userId
-        upcomingtrips.travelers = req.body.travelers,
-        upcomingtrips.price = req.body.price,
-        upcomingtrips.paid = req.body.paid,
-        upcomingtrips.pending = req.body.pending,
+        upcomingtrips.travelers = req.body.travelers
+        upcomingtrips.grossPrice = req.body.grossPrice
+        upcomingtrips.price = req.body.price
+        upcomingtrips.paid = req.body.paid
+        upcomingtrips.netPaid = req.body.netPaid
+        upcomingtrips.creditsRedeemed = req.body.creditsRedeemed
+        upcomingtrips.pending = req.body.pending
         upcomingtrips.bookingId = bookingId
         upcomingtrips.transactionId = req.body.transactionId
         upcomingtrips.organizerId = req.body.organizerId

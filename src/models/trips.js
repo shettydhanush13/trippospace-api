@@ -21,6 +21,7 @@ const tripsSchema = new schema({
         allDates: Array,
         departureCity: String,
         price: Number,
+        lowestPrice : Number
     },
     date: String,
     partialPay:Number,

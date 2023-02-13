@@ -1,4 +1,6 @@
-const Bookings = require('../models/organizerNotifications');
+const log4js = require('log4js');
+const logger = log4js.getLogger("organizers"); 
+const Bookings = require('../models/bookingDetails');
 const Organizer = require('../models/organizers');
 const jsonexport = require("jsonexport");
 const fs = require("fs");
@@ -38,18 +40,20 @@ const sendMail = async (organizersToPay, today) => {
 }
 
 const organizerDailyReports = async () => {
+    console.log(`Cron job function creating daily reports`);
     const today = new Date().toISOString().split("T")[0]
-    Bookings.find({ timestamp : today }, async (err, bookings) => {
-        if(err) console.log(err)
-        else {
-            let {organizersToPay, payouts} = await formatBookings(bookings)
-            console.log(organizersToPay,payouts)
-            for(let i=0; i< organizersToPay.length; i++) {
-                let organizerToPay = organizersToPay[i]
-                jsonexport(payouts[organizerToPay], async (err, csv) => {
-                    fs.writeFileSync(`./src/static/${organizerToPay}.csv`,csv);
-                });
-            } sendMail(organizersToPay, today)
+    Bookings.find({ bookingDate : today }, async (err, bookings) => {
+        if(err) logger.error(err)
+        else if(bookings.length > 0) {
+            const { organizersToPay, payouts } = await formatBookings(bookings)
+            console.log( organizersToPay, payouts )
+            // for(let i=0; i< organizersToPay.length; i++) {
+            //     let organizerToPay = organizersToPay[i]
+            //     jsonexport(payouts[organizerToPay], async (err, csv) => {
+            //         fs.writeFileSync(`./src/static/${organizerToPay}.csv`,csv);
+            //     });
+            // }
+            // sendMail(organizersToPay, today)
         }
     })
 }

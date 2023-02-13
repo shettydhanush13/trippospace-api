@@ -16,6 +16,7 @@ const cancellationRequestSchema = new schema( {
     price : String,
     paid  : String,
     pending : String,
+    creditsRedeemed : String,
     refundPercentage : String,
     refund : String,
     refundId : String,
